@@ -3,7 +3,7 @@ use axum::{
     extract::{Form, State},
     http::StatusCode,
     response::{Html, IntoResponse},
-    routing::{get, post},
+    routing::get,
     Router,
 };
 use csv::ReaderBuilder;

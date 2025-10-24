@@ -66,7 +66,7 @@
             <tfoot>
               <tr>
                 <td colspan="4" class="right">Subscriptions Subtotal (per month)</td>
-                <td class="money">${{ format!("{:.2}", totals.subs_total) }}</td>
+                <td class="money">${{ format!("{:.2}", self.totals.subs_total) }}</td>
               </tr>
             </tfoot>
           </table>
@@ -101,11 +101,11 @@
             <tfoot>
               <tr>
                 <td colspan="4" class="right">One-shot Deposit Subtotal (pay now)</td>
-                <td class="money">${{ format!("{:.2}", totals.ones_deposit_total) }}</td>
+                <td class="money">${{ format!("{:.2}", self.totals.ones_deposit_total) }}</td>
               </tr>
               <tr>
                 <td colspan="4" class="right">One-shot Full Value (info)</td>
-                <td class="money">${{ format!("{:.2}", totals.ones_full_total) }}</td>
+                <td class="money">${{ format!("{:.2}", self.totals.ones_full_total) }}</td>
               </tr>
             </tfoot>
           </table>
@@ -116,9 +116,9 @@
         <h3>Grand Totals</h3>
         <div class="totals">
           <div>Pay-Now Total (Monthly subs + One-shot deposit)</div>
-          <div class="money">${{ format!("{:.2}", totals.grand_pay_now) }}</div>
+          <div class="money">${{ format!("{:.2}", self.totals.grand_pay_now) }}</div>
           <div>Full Value (Monthly subs + One-shot full)</div>
-          <div class="money">${{ format!("{:.2}", totals.grand_full_value) }}</div>
+          <div class="money">${{ format!("{:.2}", self.totals.grand_full_value) }}</div>
         </div>
       </section>
 
