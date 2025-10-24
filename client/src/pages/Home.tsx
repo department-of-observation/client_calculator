@@ -142,13 +142,24 @@ export default function Home() {
         compress: true
       });
 
-      // Convert to PNG
-      const imgData = await result.toPng();
+      // Convert to PNG - snapdom returns an object with src property
+      console.log('Calling toPng...');
+      const pngResult = await result.toPng();
+      console.log('toPng result:', pngResult);
+      console.log('toPng result type:', typeof pngResult);
+      console.log('toPng result.src:', pngResult?.src);
+      
+      const imgData = pngResult.src;
+      
+      if (!imgData) {
+        throw new Error('Failed to generate PNG: no src property');
+      }
       
       // Create a temporary image to get dimensions
       const img = new Image();
-      await new Promise((resolve) => {
+      await new Promise((resolve, reject) => {
         img.onload = resolve;
+        img.onerror = reject;
         img.src = imgData;
       });
 
