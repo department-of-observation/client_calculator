@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Pricing Calculator (SGD)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --ink:#0a1f3d; --blue:#1e5a9e; --paper:#fafbfd; --line:#e5e7eb;
+      --soft:#f5f8fb; --accent:#4a90d9;
+    }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif; margin:0; background:var(--paper); color:var(--ink); }
+    header { padding:16px 24px; background:white; border-bottom:1px solid var(--line); position:sticky; top:0; }
+    h1 { margin:0; font-size:20px; }
+    main { max-width: 1000px; margin: 24px auto 64px; padding: 0 16px; }
+    .card { background:white; border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:24px; }
+    table { width:100%; border-collapse: collapse; }
+    th, td { padding:10px 8px; border-bottom:1px solid var(--line); text-align:left; }
+    th { font-size:14px; color:#334155; background:var(--soft); }
+    tfoot td { font-weight:600; }
+    .money { text-align:right; white-space:nowrap; }
+    .muted { color:#475569; }
+    input[type="number"] { width: 90px; padding:6px 8px; border:1px solid var(--line); border-radius:8px; font: inherit; background:#fff; }
+    .hint { font-size:12px; color:#64748b; }
+    .totals { display:grid; grid-template-columns: 1fr auto; gap:8px; }
+    .right { text-align:right; }
+    .pill { display:inline-block; padding:2px 8px; border-radius:999px; background:var(--soft); font-size:12px; color:#334155; }
+    .grid-2 { display:grid; gap:24px; grid-template-columns: 1fr; }
+    @media (min-width: 900px) { .grid-2 { grid-template-columns: 1fr 1fr; } }
+    .submitbar { position:sticky; bottom:0; background:rgba(255,255,255,0.9); backdrop-filter: blur(6px); border-top:1px solid var(--line); padding:12px 16px; }
+    .btn { background:var(--blue); color:white; border:0; padding:10px 16px; border-radius:10px; font-weight:600; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Pricing Calculator — {{ currency }} (Deposit for one-shot = {{ (deposit_multiplier * 100.0) as usize }}%)</h1>
+    <div class="hint">Enter <b>Qty</b> and <b>% Disc</b> for any rows you need, then “Recalculate”.</div>
+  </header>
+
+  <main>
+    <form method="post" action="/" autocomplete="off">
+      <div class="grid-2">
+        <section class="card">
+          <h2>Subscriptions <span class="pill">Pay monthly</span></h2>
+          <table>
+            <thead>
+              <tr>
+                <th style="width:40%">Item</th>
+                <th class="money">Unit</th>
+                <th>Qty</th>
+                <th>% Disc</th>
+                <th class="money">Line</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for r in subs %}
+              <tr>
+                <td>{{ r.name }}</td>
+                <td class="money">${{ format!("{:.2}", r.unit_price) }}</td>
+                <td><input type="number" name="qty_{{ r.id }}" min="0" step="1" value="{{ r.qty }}"></td>
+                <td><input type="number" name="disc_{{ r.id }}" min="0" max="100" step="0.01" value="{{ r.discount_pct }}"></td>
+                <td class="money">${{ format!("{:.2}", r.full_amount) }}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4" class="right">Subscriptions Subtotal (per month)</td>
+                <td class="money">${{ format!("{:.2}", totals.subs_total) }}</td>
+              </tr>
+            </tfoot>
+          </table>
+        </section>
+
+        <section class="card">
+          <h2>One-shot Packages <span class="pill">50% deposit</span></h2>
+          <table>
+            <thead>
+              <tr>
+                <th style="width:40%">Item</th>
+                <th class="money">Unit</th>
+                <th>Qty</th>
+                <th>% Disc</th>
+                <th class="money">Line</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for r in ones %}
+              <tr>
+                <td>{{ r.name }}</td>
+                <td class="money">${{ format!("{:.2}", r.unit_price) }}</td>
+                <td><input type="number" name="qty_{{ r.id }}" min="0" step="1" value="{{ r.qty }}"></td>
+                <td><input type="number" name="disc_{{ r.id }}" min="0" max="100" step="0.01" value="{{ r.discount_pct }}"></td>
+                <td class="money">
+                  ${{ format!("{:.2}", r.deposit_amount) }}
+                  <span class="muted">(${{ format!("{:.2}", r.full_amount) }})</span>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4" class="right">One-shot Deposit Subtotal (pay now)</td>
+                <td class="money">${{ format!("{:.2}", totals.ones_deposit_total) }}</td>
+              </tr>
+              <tr>
+                <td colspan="4" class="right">One-shot Full Value (info)</td>
+                <td class="money">${{ format!("{:.2}", totals.ones_full_total) }}</td>
+              </tr>
+            </tfoot>
+          </table>
+        </section>
+      </div>
+
+      <section class="card">
+        <h3>Grand Totals</h3>
+        <div class="totals">
+          <div>Pay-Now Total (Monthly subs + One-shot deposit)</div>
+          <div class="money">${{ format!("{:.2}", totals.grand_pay_now) }}</div>
+          <div>Full Value (Monthly subs + One-shot full)</div>
+          <div class="money">${{ format!("{:.2}", totals.grand_full_value) }}</div>
+        </div>
+      </section>
+
+      <div class="submitbar">
+        <button class="btn" type="submit">Recalculate</button>
+        <span class="hint" style="margin-left:12px;">Tip: set Qty and Discounts, then recalc.</span>
+      </div>
+    </form>
+  </main>
+</body>
+</html>
