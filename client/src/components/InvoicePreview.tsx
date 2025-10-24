@@ -24,7 +24,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
     const allRows = [...subscriptionRows, ...oneshotRows];
 
     return (
-      <div ref={ref} className="bg-white text-black p-12 min-h-[297mm]" style={{ width: '210mm' }}>
+      <div ref={ref} className="p-12 min-h-[297mm]" style={{ width: '210mm', backgroundColor: '#ffffff', color: '#000000' }}>
         {/* Header */}
         <div className="border-2 border-black mb-6">
           <div className="flex justify-between items-start p-6 border-b-2 border-black">
@@ -85,7 +85,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
 
           {/* Items Table */}
           <div>
-            <div className="grid grid-cols-12 gap-2 p-4 bg-gray-100 border-b border-black font-bold text-sm">
+              <div className="grid grid-cols-12 gap-2 p-4 border-b font-bold text-sm" style={{ backgroundColor: '#f3f4f6', borderColor: '#000000' }}>
               <div className="col-span-1">#</div>
               <div className="col-span-6">Item & Description</div>
               <div className="col-span-2 text-right">Qty</div>
@@ -101,12 +101,12 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                 : discountedAmount;
 
               return (
-                <div key={row.id} className="grid grid-cols-12 gap-2 p-4 border-b border-gray-300 text-sm">
+                <div key={row.id} className="grid grid-cols-12 gap-2 p-4 border-b text-sm" style={{ borderColor: '#d1d5db' }}>
                   <div className="col-span-1">{index + 1}</div>
                   <div className="col-span-6">
                     <div className="font-semibold">{row.name}</div>
                     {row.discount > 0 && (
-                      <div className="text-xs text-gray-600 mt-1">Discount: {row.discount}%</div>
+                      <div className="text-xs mt-1" style={{ color: '#4b5563' }}>Discount: {row.discount}%</div>
                     )}
                   </div>
                   <div className="col-span-2 text-right">{row.quantity.toFixed(2)}</div>
@@ -124,11 +124,11 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
               <div className="italic">{numberToWords(grandTotal)}</div>
             </div>
             <div className="border-l-2 border-black">
-              <div className="flex justify-between p-4 border-b border-gray-300">
+              <div className="flex justify-between p-4 border-b" style={{ borderColor: '#d1d5db' }}>
                 <span className="font-bold">Sub Total</span>
                 <span>{formatCurrency(subscriptionTotal + oneshotDepositTotal)}</span>
               </div>
-              <div className="flex justify-between p-4 bg-gray-100">
+              <div className="flex justify-between p-4" style={{ backgroundColor: '#f3f4f6' }}>
                 <span className="font-bold text-lg">Total</span>
                 <span className="font-bold text-lg">SGD{formatCurrency(grandTotal)}</span>
               </div>
@@ -153,7 +153,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
         </div>
 
         {/* Footer */}
-        <div className="text-center text-sm text-gray-600 mt-8">
+        <div className="text-center text-sm mt-8" style={{ color: '#4b5563' }}>
           <div>POWERED BY</div>
         </div>
       </div>
