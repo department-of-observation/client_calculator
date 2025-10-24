@@ -27,7 +27,7 @@ import {
 } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import { snapdom } from '@zumer/snapdom';
 
 export default function Home() {
   const [pricingItems, setPricingItems] = useState<PricingItem[]>([]);
@@ -133,14 +133,25 @@ export default function Home() {
 
     try {
       const element = invoiceRef.current;
-      const canvas = await html2canvas(element, {
+      
+      // Use snapdom to capture the element
+      const result = await snapdom(element, {
         scale: 2,
-        useCORS: true,
-        logging: false,
-        backgroundColor: '#ffffff'
+        embedFonts: true,
+        backgroundColor: '#ffffff',
+        compress: true
       });
 
-      const imgData = canvas.toDataURL('image/png');
+      // Convert to PNG
+      const imgData = await result.toPng();
+      
+      // Create a temporary image to get dimensions
+      const img = new Image();
+      await new Promise((resolve) => {
+        img.onload = resolve;
+        img.src = imgData;
+      });
+
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
@@ -148,7 +159,7 @@ export default function Home() {
       });
 
       const imgWidth = 210; // A4 width in mm
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const imgHeight = (img.height * imgWidth) / img.width;
 
       pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
       pdf.save(`${invoiceConfig.invoiceNumber}.pdf`);
