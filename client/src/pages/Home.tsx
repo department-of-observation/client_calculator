@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Upload, Plus, Download, FileText, Settings, Printer } from 'lucide-react';
+import { Upload, Plus, Download, FileText, Settings, Printer, X } from 'lucide-react';
 import readXlsxFile from 'read-excel-file';
 import type { PricingItem, CalculatorRow as CalculatorRowType } from '../../../shared/types';
 import type { InvoiceConfig } from '../../../shared/invoice-types';
@@ -261,10 +261,10 @@ export default function Home() {
                   {/* POS Grid */}
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-2 max-h-[600px] overflow-y-auto">
                     {filteredItems.map((item) => (
-                      <TooltipLockable key={item.name} content={item.description || item.shortDescription || ''}>
+                      <TooltipLockable key={item.name} content={item.shortDescription || ''}>
                         <button
                           onClick={() => addRow(item)}
-                          className="w-full bg-background hover:bg-accent border-2 border-border hover:border-primary rounded-lg p-4 text-left transition-all active:scale-95"
+                          className="w-full h-full bg-background hover:bg-accent border-2 border-border hover:border-primary rounded-lg p-4 text-left transition-all active:scale-95"
                         >
                           <div className="font-semibold text-sm mb-1 line-clamp-2">{item.name}</div>
                           <div className="text-lg font-bold text-primary">{formatCurrency(item.price)}</div>
