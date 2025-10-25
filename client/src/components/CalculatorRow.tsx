@@ -12,11 +12,12 @@ interface CalculatorRowProps {
 
 export default function CalculatorRow({ row, onUpdate, onDelete }: CalculatorRowProps) {
   const { displayAmount, originalAmount } = calculateLineTotal(row);
-  const showOriginal = row.category === 'oneshot';
+  const showOriginal = row.category === 'oneshot' && !row.isFullPayment;
+  const showToggle = row.category === 'oneshot';
 
   return (
     <div className="grid grid-cols-12 gap-3 items-center py-3 border-b border-border">
-      <div className="col-span-4 text-sm font-medium">{row.name}</div>
+      <div className="col-span-3 text-sm font-medium">{row.name}</div>
       <div className="col-span-2 text-sm text-muted-foreground">
         {formatCurrency(row.price)}
       </div>
@@ -41,6 +42,21 @@ export default function CalculatorRow({ row, onUpdate, onDelete }: CalculatorRow
           />
           <span className="text-sm text-muted-foreground">%</span>
         </div>
+      </div>
+      <div className="col-span-1 flex justify-center">
+        {showToggle ? (
+          <Button
+            variant={row.isFullPayment ? "default" : "outline"}
+            size="sm"
+            onClick={() => onUpdate(row.id, { isFullPayment: !row.isFullPayment })}
+            className="h-8 px-3 text-xs"
+            title={row.isFullPayment ? "Full payment" : "50% deposit"}
+          >
+            {row.isFullPayment ? "Full" : "50%"}
+          </Button>
+        ) : (
+          <span className="text-sm text-muted-foreground">—</span>
+        )}
       </div>
       <div className="col-span-1 text-sm font-semibold text-right">
         {showOriginal ? (

@@ -32,10 +32,11 @@ export default function CategorySection({
 
       <div className="bg-card rounded-lg border border-border p-4">
         <div className="grid grid-cols-12 gap-3 pb-3 border-b border-border font-semibold text-sm text-muted-foreground">
-          <div className="col-span-4">Item</div>
+          <div className="col-span-3">Item</div>
           <div className="col-span-2">Unit Price</div>
           <div className="col-span-2">Quantity</div>
           <div className="col-span-2">Discount</div>
+          <div className="col-span-1 text-center">Payment</div>
           <div className="col-span-1 text-right">Total</div>
           <div className="col-span-1"></div>
         </div>

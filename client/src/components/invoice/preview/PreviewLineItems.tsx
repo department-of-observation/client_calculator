@@ -18,14 +18,20 @@ export function PreviewLineItems({ rows }: InvoiceLineItemsProps) {
           row.price,
           row.quantity,
           row.discount,
-          row.category
+          row.category,
+          row.isFullPayment
         );
+
+        // Add "50% Deposit - " prefix for oneshot items in deposit mode
+        const displayName = row.category === 'oneshot' && !row.isFullPayment 
+          ? `50% Deposit - ${row.name}` 
+          : row.name;
 
         return (
           <div key={row.id} className="grid grid-cols-12 gap-2 p-4 border-b text-sm" style={{ borderColor: '#d1d5db' }}>
             <div className="col-span-1">{index + 1}</div>
             <div className="col-span-6">
-              <div className="font-semibold">{row.name}</div>
+              <div className="font-semibold">{displayName}</div>
               {row.Description && (
                 <div className="text-xs mt-1" style={{ color: '#6b7280', lineHeight: '1.4' }}>{row.Description}</div>
               )}

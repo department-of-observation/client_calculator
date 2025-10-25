@@ -4,7 +4,9 @@ export const ONESHOT_DEPOSIT_MULTIPLIER = 0.5;
 
 /**
  * Calculate the line total for a row
- * For oneshot items: applies deposit multiplier (shows deposit amount)
+ * For oneshot items: 
+ *   - If isFullPayment is true: shows full amount
+ *   - If isFullPayment is false/undefined: applies deposit multiplier (shows deposit amount)
  * For subscription items: shows full amount
  */
 export function calculateLineTotal(row: CalculatorRow): {
@@ -14,7 +16,7 @@ export function calculateLineTotal(row: CalculatorRow): {
   const baseAmount = row.price * row.quantity;
   const discountedAmount = baseAmount * (1 - row.discount / 100);
   
-  if (row.category === 'oneshot') {
+  if (row.category === 'oneshot' && !row.isFullPayment) {
     return {
       displayAmount: discountedAmount * ONESHOT_DEPOSIT_MULTIPLIER,
       originalAmount: discountedAmount

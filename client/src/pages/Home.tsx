@@ -82,7 +82,8 @@ export default function Home() {
       ...item,
       id: `${Date.now()}-${Math.random()}`,
       quantity: 1,
-      discount: 0
+      discount: 0,
+      isFullPayment: false // Default to deposit mode for oneshot items
     };
     setRows([...rows, newRow]);
     toast.success(`Added ${item.name}`);
