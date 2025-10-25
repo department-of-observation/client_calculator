@@ -1,18 +1,393 @@
-name,price,category
-WordPress Package A (per page),250,oneshot
-WordPress Package B (per page),150,oneshot
-Custom-coded Package A (per page),300,oneshot
-Custom-coded Package B (per page),200,oneshot
-Keyword Analysis Package,2000,oneshot
-SEO Audit,250,oneshot
-Organic Social Media Management,1000,subscription
-Social Media Setup,800,oneshot
-Video Basic (per minute),500,oneshot
-Video with Teleprompter (per minute),700,oneshot
-Video with Teleprompter + Lights (per minute),1000,oneshot
-Graphics (per page),50,oneshot
-Talent Release Form (per head),50,oneshot
-Shooting Permits (per location),200,oneshot
-Monthly Website Support Package,2000,subscription
-Monthly Website Maintenance Add-On,300,subscription
+name,price,category,Description
+WordPress Package A (per page),300,oneshot,"Website Build: 
+- Website built using a premium, professionally designed template
+- Colours, fonts, and layout adjusted to match your brand identity
+- Stock images integrated to match tone and aesthetic
+- Editable sections so you can update text & images without coding
+- Fully mobile responsive and cross-browser compatible
+- Speed optimization (image compression, caching setup, template performance tuning)
 
+Content Writing + SEO Optimization:
+- You provide us the key points / raw messaging, and we:
+- Write all website copy (clear, persuasive, on-brand, and structured for conversions)
+- Perform Keyword Research for your industry
+
+Create SEO-optimized:
+- Meta titles
+- Meta descriptions
+- On-page headers (H1, H2 structure)
+- CTA phrasing
+- Write messaging that guides the reader to take action
+- Ensure tone and voice match your brand positioning
+
+(Client only needs to provide bullet points, business information, and unique selling points — we handle the full writing and optimization.)
+
+Basic SEO Setup (Technical):
+- Semantic code structure for improved crawlability
+- Clean URL structure
+- Image alt text + compression
+- SSL setup (HTTPS)
+- XML sitemap + robots.txt configuration
+- Google Analytics integration
+- Google Search Console setup
+- Blog page created (empty, ready for posting)
+
+Client Responsibilities:
+- Domain & hosting setup costs
+- Any paid plugins required for special features
+- Provide key business points and service information for each page
+- Provide branding assets (logo, brand colours, fonts)
+- Provide page requirements (e.g., Home, About, Services, Contact)"
+WordPress Package B (per page),150,oneshot,"- Website built using a premium, professionally designed template
+- Stock images integrated to match branding and design
+- Editable sections: Client can update text and images without coding knowledge
+- Mobile responsive & cross-browser compatible design
+- Fast loading speed optimization (template adjustments, caching, compression)
+
+Basic SEO Setup:
+- Semantic code structure for crawlability
+- Optimized URL structure- Image alt text & compression
+- Meta titles & descriptions (client to provide, or available via Keyword Research
+Package)
+- SSL setup (HTTPS ready)
+- XML sitemap & robots.txt setup
+- Analytics & Blog
+- Blog page setup (blank, ready for publishing — articles not included)
+- Google Analytics & Google Search Console integration
+
+Exclusions / Client Responsibilities:
+- Domain, hosting, server, SSL certificates, and email setup costs
+- Ongoing plugin costs (if template or functionality requires paid plugins)
+- All website content (unless content creation is purchased separately)
+- Provide all key points & messaging for each page
+- Purchase Keyword Research Package if keyword-optimized SEO metadata is required"
+Wordpress Package C (per page),75,oneshot,"What’s Included:
+- Website built using a premium, professionally designed template
+- Template colours, fonts and layout adjusted to match your brand
+- Stock images included to support visual style
+- You will be able to edit text and images yourself (no coding required)
+- Mobile responsive and works across all major browsers
+- Basic speed optimisation (image compression, caching setup)
+
+Basic SEO Setup:
+- SEO-friendly page structure
+- Clean URL structure
+- Image alt text + compression
+- Meta titles & descriptions setup (based on the text you provide)
+- Sitemap + robots.txt submitted to Google
+- Google Analytics & Search Console linked
+
+Important Notes:
+This package uses a pre-built design template.
+This means:
+- You must provide all written content for each page (Unless content writing is purchased as an add-on)
+- Turnaround time is longer than our custom packages, because we will be fitting your content into the template layout.
+- If you want faster turnaround time, or if you prefer us to handle the content writing, consider upgrading to Package B or adding our Copywriting Add-On.
+
+Client Responsibilities:
+- Provide all text & messaging for the website pages
+- Provide branding assets (logo, colours)
+- Provide domain & hosting login
+- Cover any paid plugins or integrations (if needed)"
+Custom-coded Package A (per page),400,oneshot,"Custom Design & Development:
+- Fully custom website coded from scratch, no templates used
+- Unique design built to match your brand identity, style, and goals
+- Hand-coded front-end for maximum performance and flexibility
+- Clean, lightweight structure for fast loading
+- Mobile responsive and cross-browser compatible (Chrome, Safari, Edge, Firefox)
+- Scalable backend ready for future expansions (CMS, booking system, etc.)
+- Basic performance optimization (image compression, caching, and code minification)
+
+Content Copywriting + SEO Optimization:
+- Client provides key points and main ideas, and we handle everything else:
+- We write all website copy (Home, About, Services, etc.)
+- Define brand tone, voice, and key messaging
+
+Write SEO-optimized:
+- Meta titles & descriptions
+- Headings (H1, H2)
+- CTAs and body copy structured for conversions
+- Ensure content communicates authority, clarity, and brand story effectively
+ 
+Technical SEO Setup:
+- SEO-friendly HTML structure
+- Clean URL architecture
+- Image alt text + compression
+- Meta title & description fields (client to provide)
+- Google Analytics + Search Console integration
+- XML sitemap & robots.txt configuration
+- SEO-friendly code & structure
+- Fast-loading site with optimized assets
+- Google Analytics + Search Console linked
+- XML sitemap + robots.txt submitted to Google
+
+Client Responsibilities:
+- Provide all website text/copy
+- Provide brand assets (logo, fonts, colours)
+- Provide hosting & domain access
+- Cover paid plugin or integration costs (if required)"
+Custom-coded Package B (per page),200,oneshot,"Custom Design & Development:
+- Fully custom website coded from scratch, no templates used
+- Unique design built to match your brand identity, style, and goals
+- Hand-coded front-end for maximum performance and flexibility
+- Clean, lightweight structure for fast loading
+- Mobile responsive and cross-browser compatible (Chrome, Safari, Edge, Firefox)
+- Scalable backend ready for future expansions (CMS, booking system, etc.)
+- Basic performance optimization (image compression, caching, and code minification)
+
+Basic SEO Setup:
+- SEO-friendly HTML structure
+- Clean URL architecture
+- Image alt text + compression
+- Meta title & description fields (client to provide)
+- Google Analytics + Search Console integration
+- XML sitemap & robots.txt configuration
+
+Client Responsibilities:
+- Provide all website text/copy
+- Provide brand assets (logo, fonts, colours)
+- Provide hosting & domain access
+- Cover paid plugin or integration costs (if required)"
+Keyword Analysis Package,2000,oneshot,"- 1-hour discovery meeting with client to understand the business and discover
+keywords customers are likely to use
+- Keyword research including monthly search
+volumes and trends
+- On-page SEO guidelines (basic, non-technical) provided for client’s web developer
+- 2 keyword-optimised meta title options (under 60 characters)
+- 2 keyword-optimised meta description options (under 160 characters)
+- Guidelines for writing H1 and H2 headings
+- Guidelines for weaving keywords naturally into website content
+
+Bonus: 2 advanced SEO tips most marketing “professionals” don’t know about
+
+Turnaround time: 1 week"
+SEO Audit,250,oneshot,"- Check the website for SEO errors made by the developer and identify areas for improvement.
+
+Turnaround time: 3 days"
+Organic Social Media Management (1 platform only),500,subscription,"- 4 posts per month (client provides graphics or website assets)
+- Caption writing tailored to brand voice and marketing goals
+- Hashtag research and implementation to maximize reach and engagement
+- Scheduling and posting of all content on the chosen platform
+- Basic performance check and feedback (optional summary report)"
+Organic Social Media Management (4 platform only),1000,subscription,"- 4 posts per month (client provides graphics or website assets)
+- Cross-Posted to (YouTube Shorts, Facebook, Instagram and TikTok)
+- Caption writing tailored to brand voice and marketing goals (One set of captions for YouTube Shorts and TikTok and another set of captions for Facebook and Instagram)
+- Hashtag research and implementation to maximize reach and engagement
+- Scheduling and posting of all content on the chosen platform
+- Basic performance check and feedback (optional summary report)"
+Social Media Ads Management - 1 platform (Facebook & Instagram or TikTok Ads),2000,subscription,"- Up to 5 Campaigns
+- Setup of ad using multiple creatives
+- Copywriting
+- Lead Generation
+- Appointment setting AND/OR Pixels Tracking
+- A/B Testing for ad
+- Up to $20,000/month in ad budget management
+
+Not included:
+- Ad Budget"
+Ads Management - Google & YouTube (Google & YouTube Ads),3000,subscription,"Account Setup & Tracking:
+• Google Ads + YouTube Ads setup/optimization
+• Conversion tracking setup (Google Tag Manager + Analytics)
+• Audience segmentation (custom intent, remarketing, lookalike audiences)
+
+Campaign Strategy & Build:
+• Campaign structuring for lead generation, sales, or brand awareness
+• Keyword + audience targeting research
+• Ad formats selection (In-Stream, In-Feed, Bumper, Search, Performance Max)
+• Landing page review + conversion recommendations
+
+Ongoing Optimization:
+• Weekly performance monitoring & tweaking
+• Bid strategy and budget optimization
+• A/B testing (ad copy, CTAs, audiences)
+• Retargeting campaign setup for warm traffic
+• Monthly performance report + improvement plan
+
+Not included:
+- Ad Budget"
+Social Media Setup,800,oneshot,"Meta Setup (Facebook + Instagram Linked):
+- Creation or optimization of Facebook business page and Instagram account
+- Linking accounts via Meta Business Suite for unified management
+- Profile and cover photo setup
+- Bio, business information, and contact details configured
+- Call-to-action buttons added (e.g., WhatsApp, website, email)
+- Basic account settings configured for visibility, messaging, and discoverability
+
+TikTok Account Setup:
+- Creation of TikTok account (or optimization if account exists)
+- Profile photo and bio setup according to brand guidelines
+- Account linking (if applicable, e.g., website or other social handles)
+- Basic account settings configured for privacy and discoverability
+
+YouTube Channel Setup:
+- Creation or optimization of YouTube channel
+- Channel logo and banner design and upload
+- Channel description, business details, and contact information configured
+- Custom links and call-to-actions added to banner (e.g. website, email, socials)
+- Channel settings optimized for visibility, discoverability, and audience
+engagement
+
+Turnaround Time: 2 Days"
+Video Basic (per minute),500,oneshot,"- 1x video up to 1 minute long 
+- Includes scripting, planning, shooting and editing
+- Shot on professional camera in 4k
+- Subtitles included
+- Simple Graphics
+- Final Video Delivered in 1080p
+- Up to 1 hour shoot time
+- Up to 2x revisions"
+Video Basic (per minute) - midnight shoot,750,oneshot,"- 1x video up to 1 minute long 
+- Includes scripting, planning, shooting and editing
+- Midnight shoot (between 10pm - 7am)
+- Shot on professional camera in 4k
+- Subtitles included
+- Simple Graphics
+- Final Video Delivered in 1080p
+- Up to 1 hour shoot time
+- Up to 2x revisions"
+Video with Teleprompter (per minute),700,oneshot,"- 1x video up to 1 minute long 
+- Includes scripting, planning, shooting and editing
+- Shot on professional camera in 4k
+- Teleprompter
+- Subtitles included
+- Simple Graphics
+- Final Video Delivered in 1080p
+- Up to 1 hour shoot time
+- Up to 2x revisions"
+Video with Teleprompter (per minute) - midnight shoot,1050,oneshot,"- 1x video up to 1 minute long 
+- Includes scripting, planning, shooting and editing
+- Midnight shoot (between 10pm - 7am)
+- Shot on professional camera in 4k
+- Teleprompter
+- Subtitles included
+- Simple Graphics
+- Final Video Delivered in 1080p
+- Up to 1 hour shoot time
+- Up to 2x revisions"
+Video with Teleprompter + Lights (per minute),1000,oneshot,"- 1x video up to 1 minute long 
+- Includes scripting, planning, shooting and editing
+- Shot on professional camera in 4k
+- Teleprompter
+- 2x Lights Included
+- Subtitles included
+- Simple Graphics
+- Final Video Delivered in 1080p
+- Up to 1 hour shoot time
+- Up to 2x revisions"
+Video with Teleprompter + Lights (per minute) - midnight shoot,1500,oneshot,"- 1x video up to 1 minute long 
+- Includes scripting, planning, shooting and editing
+- Midnight shoot (between 10pm - 7am)
+- Shot on professional camera in 4k
+- Teleprompter
+- 2x Lights Included
+- Subtitles included
+- Simple Graphics
+- Final Video Delivered in 1080p
+- Up to 1 hour shoot time
+- Up to 2x revisions"
+Graphics (per page) - content written by client,50,oneshot,"- 1 page of graphic design for social media platforms
+
+Clients responsibilities:
+- Send us the content they want to feature on their infographic"
+Graphics (per page) - content written by us,150,oneshot,"- 1 page of graphic design for social media platforms
+- We write the content for the infographic based on client's key points
+
+Clients responsibilities:
+- Send us the key points of content they want to feature on their infographic"
+Talent Release Form (per head),50,oneshot,"- 1x Digital Talent Release Form
+- 1x digital copy for client and 1x copy for talent
+- Customised shoot details
+- Facilitate Signing of talent release form"
+Shooting Permits Admin Fee - Standard (per location),150,oneshot,"• Preparing and submitting filming/photography permit application
+• Communicating with venue/management for approval
+• Coordinating required documents and scheduling
+• Confirming clearance before shoot day
+
+Client Responsibilities:
+• Client pays any official permit or venue fees (if applicable)
+• Client provides accurate shoot details, ID/business info for forms
+• Client confirms date/time/location in advance
+
+This fee covers administrative coordination only. Official permit/location fees billed separately at cost."
+Shooting Permits Admin Fee - Private Venue (per location),250,oneshot,"• Permit application and approval request to venue management
+• Negotiation of shoot terms, timing and on-site conditions
+• Coordination of any required releases or insurance proof
+• Final confirmation before shoot day
+
+Client Responsibilities:
+• Client pays any private venue rental / clearance / management fees
+• Client provides shoot details, ID/company info, and brand assets if requested
+• Client confirms date/time/location in advance
+
+This fee covers administrative coordination only. Venue fees billed separately at cost."
+Shooting Permits Admin Fee - Complex / Government Permit (per location),400,oneshot,"• Submitting applications to government boards / town council / NParks, etc.
+• Handling document requirements, safety clearances, or compliance notes
+• Follow-ups and timeline tracking until approval
+• Final clearance confirmation before shoot day
+
+Client Responsibilities:
+• Client pays any government permit fees or additional compliance charges
+• Client provides identification and any required supporting documents promptly
+• Client confirms shoot date/time/location in advance
+
+This fee covers administrative coordination only. Government permit fees billed separately at cost."
+Location Sourcing (Administrative Service Only),200,oneshot,"• Researching and identifying suitable shoot locations based on client requirements
+• Contacting venues to check availability, regulations, and usage terms
+• Preparing and presenting a shortlist of viable location options
+• Coordinating initial discussions with venue management
+
+Client Responsibilities:
+• Client pays any venue rental fees, security deposits, or usage charges directly to the venue
+• Client must confirm which location to proceed with in a timely manner
+• Client is responsible for any venue-specific rules, insurance requirements, or on-site restrictions
+
+This fee covers location research and coordination only. Venue rental/usage fees are billed separately at cost."
+Monthly Website Support Package,2000,subscription,"- 4x SEO articles per month
+- 1x graphic per article
+- 2 keyword-optimised meta title options (under 60 characters)
+- 2 keyword-optimised meta description options (under 160 characters)
+- Backlinks to money making pages and external links"
+Monthly Website Maintenance Add-On,300,subscription,"Ongoing maintenance and technical support to ensure your website runs smoothly and any issues are promptly resolved.
+
+Inclusions (Up to 2 Hours Per Month):
+- Troubleshooting and fixing website bugs or technical issues
+- Minor updates to text and images
+- Monitoring website performance and uptime
+- Regular backups (weekly or monthly)
+- Support via email or messaging for website-related queries"
+1-hr Event Photography (40 photos per hour),300,oneshot,"- 40x edited photos per hour of event photography
+- Shot by professional photographer
+- Shot on professional camera with professional grade photography equipment
+- Sent to client via Dropbox or Google Drive
+
+Turnaround Time: 1-2 weeks"
+Outdoor Portrait Photo Package (10 photos),1800,oneshot,"- 10 professionally taken and edited portrait photos
+- 2-hour photographer-directed shoot (on-location or simple setup, no studio)
+- Full editing and retouching included
+- Custom direction for posing, composition, and mood
+
+Travel or location fees if shoot is outside a standard area (quoted separately)
+
+Client Responsibilities:
+- Bring wardrobe choices and props (if any)
+- Communicate preferences for style or mood
+- Provide access to the chosen location"
+Studio Portrait Photo Package (10 photos),2500,oneshot,"- 10 professionally taken and edited portrait photos
+- 2-hour studio shoot (includes photographer and full staging)
+- Editing and retouching included
+- Custom direction for posing, composition, and mood
+
+Client Responsibilities:
+Bring wardrobe choices and props (if any)
+Communicate preferences for style or mood"
+1x Additional Photo (Studio Portrait Photo Package),200,oneshot,Extra Photo for Studio Portrait Photo Package
+1-hr Extra Shoot Time,500,addon,Extra 1-hr of shoot time with no studio involved (covers full crew ONLY)
+1-hr Extra Studio Time ,700,addon,Extra 1-hr of studio time (covers full crew and studio use)
+Additional revisions - minor revisions (under 5 minor revisions),150,addon,1x additional revision for videos after the standard 2 revisions
+Re-edit fee - major revisions (more than 5 minor revisions or if video requires major rework),500,addon,1x additional revision for videos after the standard 2 revisions if more than 5 minor revisions or if video requires major rework
+Additional revisions - graphic (Per Page),50,addon,1x additional revision for graphics after the standard 2 revisions
+1-hr teleprompter use (Ala-Carte),250,addon,"- 1-hr of teleptompter use
+- Includes manpower to set-up, operate, tear down and transport"
+1-hr Professional Lighting use - 2x professional lights (Ala-Carte),350,addon,"- 1-hr of lighting use
+- Includes manpower to set-up, operate, tear down and transport"
+One-time project surcharge (short video),300,addon,Surcharge for one-time video projects
