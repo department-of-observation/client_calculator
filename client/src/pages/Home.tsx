@@ -29,7 +29,10 @@ export default function Home() {
   const [invoiceConfig, setInvoiceConfig] = useState<InvoiceConfig>(DEFAULT_INVOICE_CONFIG);
   const [showInvoice, setShowInvoice] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
-  const [expandedDescription, setExpandedDescription] = useState<string | null>(null);
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  const [hoverProgress, setHoverProgress] = useState(0);
+  const [lockedTooltip, setLockedTooltip] = useState<string | null>(null);
+  const hoverTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Load sample XLSX on mount
   useEffect(() => {
@@ -95,6 +98,65 @@ export default function Home() {
     setRows(rows.filter(row => row.id !== id));
     toast.success('Item removed');
   };
+
+  const handleInfoHoverStart = (itemName: string) => {
+    if (lockedTooltip) return; // Don't start if already locked
+    
+    setHoveredItem(itemName);
+    setHoverProgress(0);
+    
+    // Clear any existing timer
+    if (hoverTimerRef.current) {
+      clearInterval(hoverTimerRef.current);
+    }
+    
+    // Start progress timer
+    const startTime = Date.now();
+    const duration = 3000; // 3 seconds
+    
+    hoverTimerRef.current = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min((elapsed / duration) * 100, 100);
+      setHoverProgress(progress);
+      
+      if (progress >= 100) {
+        setLockedTooltip(itemName);
+        if (hoverTimerRef.current) {
+          clearInterval(hoverTimerRef.current);
+        }
+      }
+    }, 16); // ~60fps
+  };
+
+  const handleInfoHoverEnd = () => {
+    if (lockedTooltip) return; // Don't clear if locked
+    
+    if (hoverTimerRef.current) {
+      clearInterval(hoverTimerRef.current);
+      hoverTimerRef.current = null;
+    }
+    setHoveredItem(null);
+    setHoverProgress(0);
+  };
+
+  const closeLockedTooltip = () => {
+    setLockedTooltip(null);
+    setHoveredItem(null);
+    setHoverProgress(0);
+    if (hoverTimerRef.current) {
+      clearInterval(hoverTimerRef.current);
+      hoverTimerRef.current = null;
+    }
+  };
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverTimerRef.current) {
+        clearInterval(hoverTimerRef.current);
+      }
+    };
+  }, []);
 
   const exportData = () => {
     const totals = calculateTotals(rows);
@@ -272,14 +334,27 @@ export default function Home() {
                               <div className="font-semibold text-sm mb-1 line-clamp-2 flex-1">{item.name}</div>
                               {item.description && (
                                 <div
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    setExpandedDescription(expandedDescription === item.name ? null : item.name);
-                                  }}
-                                  className="md:hidden flex-shrink-0 text-muted-foreground hover:text-foreground p-1 cursor-pointer"
-                                  title="Show description"
+                                  onMouseEnter={() => handleInfoHoverStart(item.name)}
+                                  onMouseLeave={handleInfoHoverEnd}
+                                  className="flex-shrink-0 text-muted-foreground hover:text-foreground p-1 relative"
+                                  title="Hold to lock description"
                                 >
                                   <Info className="h-4 w-4" />
+                                  {hoveredItem === item.name && hoverProgress > 0 && (
+                                    <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 24 24">
+                                      <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="10"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeDasharray={`${2 * Math.PI * 10}`}
+                                        strokeDashoffset={`${2 * Math.PI * 10 * (1 - hoverProgress / 100)}`}
+                                        className="text-primary transition-all"
+                                      />
+                                    </svg>
+                                  )}
                                 </div>
                               )}
                             </div>
@@ -291,10 +366,10 @@ export default function Home() {
                             </div>
                           </button>
                         </Tooltip>
-                        {expandedDescription === item.name && item.description && (
-                          <div className="md:hidden absolute z-10 mt-1 p-3 bg-popover border border-border rounded-lg shadow-lg text-sm w-full">
+                        {(lockedTooltip === item.name || (hoveredItem === item.name && hoverProgress >= 100)) && item.description && (
+                          <div className="absolute z-50 mt-1 p-3 bg-popover border border-border rounded-lg shadow-lg text-sm w-64 left-0">
                             <button
-                              onClick={() => setExpandedDescription(null)}
+                              onClick={closeLockedTooltip}
                               className="absolute top-2 right-2 text-muted-foreground hover:text-foreground"
                             >
                               <X className="h-4 w-4" />
