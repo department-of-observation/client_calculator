@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Upload, Plus, Download, FileText, Settings, Printer } from 'lucide-react';
-import * as XLSX from 'xlsx';
+import readXlsxFile from 'read-excel-file';
 import type { PricingItem, CalculatorRow as CalculatorRowType } from '../../../shared/types';
 import type { InvoiceConfig } from '../../../shared/invoice-types';
 import { DEFAULT_INVOICE_CONFIG } from '../../../shared/invoice-types';
@@ -43,27 +43,26 @@ export default function Home() {
   const loadSampleData = async () => {
     try {
       const response = await fetch('/pricing.xlsx');
-      const arrayBuffer = await response.arrayBuffer();
-      parseXlsxData(arrayBuffer);
+      const blob = await response.blob();
+      await parseXlsxData(blob);
     } catch (error) {
       toast.error('Failed to load sample data');
       console.error(error);
     }
   };
 
-  const parseXlsxData = (arrayBuffer: ArrayBuffer) => {
+  const parseXlsxData = async (file: File | Blob) => {
     try {
-      const workbook = XLSX.read(arrayBuffer, { type: 'array' });
-      const sheetName = workbook.SheetNames[0];
-      const worksheet = workbook.Sheets[sheetName];
-      const jsonData = XLSX.utils.sheet_to_json<PricingItem>(worksheet);
+      const rows = await readXlsxFile(file);
       
-      const items = jsonData.map((item) => ({
-        name: item.name,
-        price: parseFloat(String(item.price)) || 0,
-        category: (item.category === 'subscription' ? 'subscription' : 'oneshot') as 'subscription' | 'oneshot',
-        Description: item.Description || ''
+      // Skip header row and map data
+      const items = rows.slice(1).map((row) => ({
+        name: String(row[0] || ''),
+        price: parseFloat(String(row[1])) || 0,
+        category: (row[2] === 'subscription' ? 'subscription' : 'oneshot') as 'subscription' | 'oneshot',
+        Description: String(row[3] || '')
       }));
+      
       setPricingItems(items);
       toast.success(`Loaded ${items.length} pricing items`);
     } catch (error) {
@@ -75,13 +74,7 @@ export default function Home() {
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const arrayBuffer = e.target?.result as ArrayBuffer;
-      parseXlsxData(arrayBuffer);
-    };
-    reader.readAsArrayBuffer(file);
+    parseXlsxData(file);
   };
 
   const addRow = (item: PricingItem) => {
