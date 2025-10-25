@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { Upload, Plus, Download, FileText, Settings, Printer, X } from 'lucide-react';
+import { Upload, Plus, Download, FileText, Settings, Printer, X, Info } from 'lucide-react';
 import readXlsxFile from 'read-excel-file';
 import type { PricingItem, CalculatorRow as CalculatorRowType } from '../../../shared/types';
 import type { InvoiceConfig } from '../../../shared/invoice-types';
@@ -21,6 +21,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tooltip } from '@/components/ui/tooltip';
 
 export default function Home() {
   const [pricingItems, setPricingItems] = useState<PricingItem[]>([]);
@@ -28,6 +29,7 @@ export default function Home() {
   const [invoiceConfig, setInvoiceConfig] = useState<InvoiceConfig>(DEFAULT_INVOICE_CONFIG);
   const [showInvoice, setShowInvoice] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState<'all' | 'subscription' | 'oneshot'>('all');
+  const [expandedDescription, setExpandedDescription] = useState<string | null>(null);
 
   // Load sample XLSX on mount
   useEffect(() => {
@@ -260,17 +262,45 @@ export default function Home() {
                   {/* POS Grid */}
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-2 max-h-[600px] overflow-y-auto">
                     {filteredItems.map((item) => (
-                      <button
-                        key={item.name}
-                        onClick={() => addRow(item)}
-                        className="bg-background hover:bg-accent border-2 border-border hover:border-primary rounded-lg p-4 text-left transition-all active:scale-95"
-                      >
-                        <div className="font-semibold text-sm mb-1 line-clamp-2">{item.name}</div>
-                        <div className="text-lg font-bold text-primary">{formatCurrency(item.price)}</div>
-                        <div className="text-xs text-muted-foreground mt-1 capitalize">
-                          {item.category === 'subscription' ? '📅 Monthly' : '⚡ One-time'}
-                        </div>
-                      </button>
+                      <div key={item.name} className="relative group">
+                        <Tooltip content={item.Description || ''}>
+                          <button
+                            onClick={() => addRow(item)}
+                            className="w-full bg-background hover:bg-accent border-2 border-border hover:border-primary rounded-lg p-4 text-left transition-all active:scale-95"
+                          >
+                            <div className="flex justify-between items-start gap-2">
+                              <div className="font-semibold text-sm mb-1 line-clamp-2 flex-1">{item.name}</div>
+                              {item.Description && (
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setExpandedDescription(expandedDescription === item.name ? null : item.name);
+                                  }}
+                                  className="md:hidden flex-shrink-0 text-muted-foreground hover:text-foreground p-1"
+                                  title="Show description"
+                                >
+                                  <Info className="h-4 w-4" />
+                                </button>
+                              )}
+                            </div>
+                            <div className="text-lg font-bold text-primary">{formatCurrency(item.price)}</div>
+                            <div className="text-xs text-muted-foreground mt-1 capitalize">
+                              {item.category === 'subscription' ? '📅 Monthly' : '⚡ One-time'}
+                            </div>
+                          </button>
+                        </Tooltip>
+                        {expandedDescription === item.name && item.Description && (
+                          <div className="md:hidden absolute z-10 mt-1 p-3 bg-popover border border-border rounded-lg shadow-lg text-sm w-full">
+                            <button
+                              onClick={() => setExpandedDescription(null)}
+                              className="absolute top-2 right-2 text-muted-foreground hover:text-foreground"
+                            >
+                              <X className="h-4 w-4" />
+                            </button>
+                            <div className="pr-6">{item.Description}</div>
+                          </div>
+                        )}
+                      </div>
                     ))}
                   </div>
 
