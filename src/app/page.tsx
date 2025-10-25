@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Upload, Plus, Download, FileText, Settings, Printer } from 'lucide-react';
@@ -35,7 +37,6 @@ export default function Home() {
   const [invoiceConfig, setInvoiceConfig] = useState<InvoiceConfig>(DEFAULT_INVOICE_CONFIG);
   const [showInvoice, setShowInvoice] = useState(false);
 
-  // Load sample XLSX on mount
   useEffect(() => {
     loadSampleData();
   }, []);
@@ -54,15 +55,12 @@ export default function Home() {
   const parseXlsxData = async (file: File | Blob) => {
     try {
       const rows = await readXlsxFile(file);
-      
-      // Skip header row and map data
       const items = rows.slice(1).map((row) => ({
         name: String(row[0] || ''),
         price: parseFloat(String(row[1])) || 0,
         category: (row[2] === 'subscription' ? 'subscription' : 'oneshot') as 'subscription' | 'oneshot',
         Description: String(row[3] || '')
       }));
-      
       setPricingItems(items);
       toast.success(`Loaded ${items.length} pricing items`);
     } catch (error) {
@@ -100,11 +98,7 @@ export default function Home() {
 
   const exportData = () => {
     const totals = calculateTotals(rows);
-    const exportData = {
-      items: rows,
-      totals,
-      invoiceConfig
-    };
+    const exportData = { items: rows, totals, invoiceConfig };
     const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -120,10 +114,8 @@ export default function Home() {
       toast.error('Please add items before generating invoice');
       return;
     }
-
     try {
       toast.info('Generating PDF...');
-      
       const blob = await pdf(
         <InvoicePDF
           config={invoiceConfig}
@@ -134,14 +126,12 @@ export default function Home() {
           grandTotal={totals.grandTotal}
         />
       ).toBlob();
-      
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
       a.download = `invoice-${invoiceConfig.invoiceNumber}-${Date.now()}.pdf`;
       a.click();
       URL.revokeObjectURL(url);
-      
       toast.success('PDF downloaded successfully');
     } catch (error) {
       console.error('PDF generation error:', error);
@@ -155,14 +145,12 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b border-border bg-card sticky top-0 z-10 print:hidden">
+      <header className="border-b border-border bg-card sticky top-0 z-10">
         <div className="container py-6">
           <div className="flex justify-between items-start">
             <div>
               <h1 className="text-3xl font-bold">Client Pricing Calculator</h1>
-              <p className="text-muted-foreground mt-2">
-                Import pricing data and generate custom quotes
-              </p>
+              <p className="text-muted-foreground mt-2">Import pricing data and generate custom quotes</p>
             </div>
             {rows.length > 0 && (
               <div className="flex gap-2">
@@ -176,22 +164,15 @@ export default function Home() {
                   <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
                     <DialogHeader>
                       <DialogTitle>Invoice Configuration</DialogTitle>
-                      <DialogDescription>
-                        Configure company details, client information, and invoice settings
-                      </DialogDescription>
+                      <DialogDescription>Configure company details and invoice settings</DialogDescription>
                     </DialogHeader>
                     <InvoiceConfigForm config={invoiceConfig} onChange={setInvoiceConfig} />
                   </DialogContent>
                 </Dialog>
-
-                <Button 
-                  variant={showInvoice ? "default" : "outline"}
-                  onClick={() => setShowInvoice(!showInvoice)}
-                >
+                <Button variant={showInvoice ? "default" : "outline"} onClick={() => setShowInvoice(!showInvoice)}>
                   <FileText className="mr-2 h-4 w-4" />
                   {showInvoice ? 'Hide Invoice' : 'Preview Invoice'}
                 </Button>
-
                 {showInvoice && (
                   <Button onClick={printInvoice}>
                     <Printer className="mr-2 h-4 w-4" />
@@ -220,15 +201,8 @@ export default function Home() {
                     Import XLSX
                   </span>
                 </Button>
-                <input
-                  id="xlsx-upload"
-                  type="file"
-                  accept=".xlsx"
-                  onChange={handleFileUpload}
-                  className="hidden"
-                />
+                <input id="xlsx-upload" type="file" accept=".xlsx" onChange={handleFileUpload} className="hidden" />
               </label>
-
               <Select onValueChange={(value) => {
                 const item = pricingItems.find(i => i.name === value);
                 if (item) addRow(item);
@@ -244,7 +218,6 @@ export default function Home() {
                   ))}
                 </SelectContent>
               </Select>
-
               {rows.length > 0 && (
                 <Button variant="outline" onClick={exportData} className="ml-auto">
                   <Download className="mr-2 h-4 w-4" />
@@ -269,7 +242,6 @@ export default function Home() {
                   onUpdate={updateRow}
                   onDelete={deleteRow}
                 />
-
                 <CategorySection
                   title="One-Shot Packages"
                   subtitle="One-time services - 50% deposit"
@@ -279,19 +251,14 @@ export default function Home() {
                   onUpdate={updateRow}
                   onDelete={deleteRow}
                 />
-
                 <div className="bg-primary text-primary-foreground rounded-lg p-6 mt-8">
                   <div className="flex justify-between items-center">
                     <div>
                       <h3 className="text-2xl font-bold">Grand Total</h3>
-                      <p className="text-sm opacity-90 mt-1">
-                        Total due upfront
-                      </p>
+                      <p className="text-sm opacity-90 mt-1">Total due upfront</p>
                     </div>
                     <div className="text-right">
-                      <div className="text-4xl font-bold">
-                        {formatCurrency(totals.grandTotal)}
-                      </div>
+                      <div className="text-4xl font-bold">{formatCurrency(totals.grandTotal)}</div>
                       {totals.oneshotOriginalTotal > totals.oneshotDepositTotal && (
                         <div className="text-sm opacity-90 mt-1">
                           Balance: {formatCurrency(totals.oneshotOriginalTotal - totals.oneshotDepositTotal)}
