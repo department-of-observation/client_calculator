@@ -8,6 +8,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, path.resolve(import.meta.dirname), '');
   
   return {
+    base: '/client_calculator/',
     plugins: [
       react(), 
       tailwindcss(),
