@@ -9,6 +9,16 @@
     <link rel="icon" type="image/png" href="<%- VITE_APP_LOGO %>" />
     <link rel="apple-touch-icon" href="<%- VITE_APP_LOGO %>" />
     <title><%- VITE_APP_TITLE %></title>
+    <!-- GitHub Pages SPA redirect handling -->
+    <script>
+      (function(){
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect != location.href) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
     <!-- Add Google Fonts here, example:
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

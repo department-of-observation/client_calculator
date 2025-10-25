@@ -1,7 +1,10 @@
 import { Toaster } from "@/components/ui/sonner";
 import NotFound from "@/pages/NotFound";
-import { Route, Switch } from "wouter";
+import { Route, Switch, Router as WouterRouter } from "wouter";
 import Home from "./pages/Home";
+
+// Configure base path for GitHub Pages
+const base = "/client_calculator";
 
 function Router() {
   return (
@@ -15,10 +18,10 @@ function Router() {
 
 function App() {
   return (
-    <>
+    <WouterRouter base={base}>
       <Toaster />
       <Router />
-    </>
+    </WouterRouter>
   );
 }
 
