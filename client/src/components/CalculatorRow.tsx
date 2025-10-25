@@ -12,7 +12,12 @@ interface CalculatorRowProps {
 
 export default function CalculatorRow({ row, onUpdate, onDelete }: CalculatorRowProps) {
   const { displayAmount, originalAmount } = calculateLineTotal(row);
-  const showOriginal = row.paymentType === 'deposit';
+  const showOriginal = row.paymentType === 'deposit' && !row.convertToSubscription;
+  const showToggle = row.paymentType === 'deposit';
+
+  const handleToggle = () => {
+    onUpdate(row.id, { convertToSubscription: !row.convertToSubscription });
+  };
 
   return (
     <div className="grid grid-cols-12 gap-3 items-center py-3 border-b border-border">
@@ -43,11 +48,22 @@ export default function CalculatorRow({ row, onUpdate, onDelete }: CalculatorRow
         </div>
       </div>
       <div className="col-span-1 flex justify-center">
-        <span className="text-sm text-muted-foreground" title={row.paymentType}>
-          {row.paymentType === 'subscription' && '🔄'}
-          {row.paymentType === 'deposit' && '🏦'}
-          {row.paymentType === 'full' && '💵'}
-        </span>
+        {showToggle ? (
+          <Button
+            variant={row.convertToSubscription ? "default" : "outline"}
+            size="sm"
+            onClick={handleToggle}
+            className="h-8 px-3 text-xs"
+            title={row.convertToSubscription ? "Convert to subscription" : "50% deposit"}
+          >
+            {row.convertToSubscription ? "🔄" : "🏦"}
+          </Button>
+        ) : (
+          <span className="text-sm text-muted-foreground" title={row.paymentType}>
+            {row.paymentType === 'subscription' && '🔄'}
+            {row.paymentType === 'full' && '💵'}
+          </span>
+        )}
       </div>
       <div className="col-span-1 text-sm font-semibold text-right">
         {showOriginal ? (

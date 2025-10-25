@@ -14,5 +14,6 @@ export interface CalculatorRow extends PricingItem {
   id: string;
   quantity: number;
   discount: number; // percentage (0-100)
+  convertToSubscription?: boolean; // For deposit items: true = convert to subscription, false/undefined = keep as deposit
 }
 

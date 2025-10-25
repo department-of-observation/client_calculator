@@ -262,11 +262,11 @@ export default function Home() {
                   {/* POS Grid */}
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-2 max-h-[600px] overflow-y-auto">
                     {filteredItems.map((item) => (
-                      <div key={item.name} className="relative group">
+                      <div key={item.name} className="relative group flex">
                         <Tooltip content={item.shortDescription || ''}>
                           <button
                             onClick={() => addRow(item)}
-                            className="w-full bg-background hover:bg-accent border-2 border-border hover:border-primary rounded-lg p-4 text-left transition-all active:scale-95"
+                            className="w-full h-full bg-background hover:bg-accent border-2 border-border hover:border-primary rounded-lg p-4 text-left transition-all active:scale-95 flex flex-col"
                           >
                             <div className="flex justify-between items-start gap-2">
                               <div className="font-semibold text-sm mb-1 line-clamp-2 flex-1">{item.name}</div>
@@ -284,7 +284,7 @@ export default function Home() {
                               )}
                             </div>
                             <div className="text-lg font-bold text-primary">{formatCurrency(item.price)}</div>
-                            <div className="text-xs text-muted-foreground mt-1 capitalize flex items-center gap-1">
+                            <div className="text-xs text-muted-foreground mt-auto pt-2 capitalize flex items-center gap-1">
                               {item.paymentType === 'subscription' && '🔄 Recurring'}
                               {item.paymentType === 'deposit' && '🏦 Deposit'}
                               {item.paymentType === 'full' && '💵 Full Payment'}
@@ -381,7 +381,18 @@ export default function Home() {
                                   />
                                 </div>
                               </div>
-
+                              {row.paymentType === 'deposit' && (
+                                <div className="mt-2">
+                                  <Button
+                                    variant={row.convertToSubscription ? "default" : "outline"}
+                                    size="sm"
+                                    onClick={() => updateRow(row.id, { convertToSubscription: !row.convertToSubscription })}
+                                    className="w-full h-7 text-xs"
+                                  >
+                                    {row.convertToSubscription ? "🔄 Subscription" : "🏦 50% Deposit"}
+                                  </Button>
+                                </div>
+                              )}
                               <div className="text-right font-bold text-primary mt-2">
                                 {formatCurrency(displayAmount)}
                               </div>

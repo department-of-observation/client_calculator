@@ -5,7 +5,7 @@ export const DEPOSIT_MULTIPLIER = 0.5;
 /**
  * Calculate the line total for a row based on payment type
  * - subscription: shows full amount (recurring)
- * - deposit: applies 50% deposit multiplier
+ * - deposit: applies 50% deposit multiplier (unless converted to subscription)
  * - full: shows full amount (one-time payment)
  */
 export function calculateLineTotal(row: CalculatorRow): {
@@ -15,7 +15,8 @@ export function calculateLineTotal(row: CalculatorRow): {
   const baseAmount = row.price * row.quantity;
   const discountedAmount = baseAmount * (1 - row.discount / 100);
   
-  if (row.paymentType === 'deposit') {
+  // If it's a deposit item but converted to subscription, show full amount
+  if (row.paymentType === 'deposit' && !row.convertToSubscription) {
     return {
       displayAmount: discountedAmount * DEPOSIT_MULTIPLIER,
       originalAmount: discountedAmount
