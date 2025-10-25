@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Upload, Plus, Download, FileText, Settings, Printer, X, Info } from 'lucide-react';
+import { Upload, Plus, Download, FileText, Settings, Printer } from 'lucide-react';
 import readXlsxFile from 'read-excel-file';
 import type { PricingItem, CalculatorRow as CalculatorRowType } from '../../../shared/types';
 import type { InvoiceConfig } from '../../../shared/invoice-types';
@@ -21,7 +21,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Tooltip } from '@/components/ui/tooltip';
+import { TooltipLockable } from '@/components/ui/tooltip-lockable';
 
 export default function Home() {
   const [pricingItems, setPricingItems] = useState<PricingItem[]>([]);
@@ -29,10 +29,6 @@ export default function Home() {
   const [invoiceConfig, setInvoiceConfig] = useState<InvoiceConfig>(DEFAULT_INVOICE_CONFIG);
   const [showInvoice, setShowInvoice] = useState(false);
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
-  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
-  const [hoverProgress, setHoverProgress] = useState(0);
-  const [lockedTooltip, setLockedTooltip] = useState<string | null>(null);
-  const hoverTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Load sample XLSX on mount
   useEffect(() => {
@@ -98,65 +94,6 @@ export default function Home() {
     setRows(rows.filter(row => row.id !== id));
     toast.success('Item removed');
   };
-
-  const handleInfoHoverStart = (itemName: string) => {
-    if (lockedTooltip) return; // Don't start if already locked
-    
-    setHoveredItem(itemName);
-    setHoverProgress(0);
-    
-    // Clear any existing timer
-    if (hoverTimerRef.current) {
-      clearInterval(hoverTimerRef.current);
-    }
-    
-    // Start progress timer
-    const startTime = Date.now();
-    const duration = 3000; // 3 seconds
-    
-    hoverTimerRef.current = setInterval(() => {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min((elapsed / duration) * 100, 100);
-      setHoverProgress(progress);
-      
-      if (progress >= 100) {
-        setLockedTooltip(itemName);
-        if (hoverTimerRef.current) {
-          clearInterval(hoverTimerRef.current);
-        }
-      }
-    }, 16); // ~60fps
-  };
-
-  const handleInfoHoverEnd = () => {
-    if (lockedTooltip) return; // Don't clear if locked
-    
-    if (hoverTimerRef.current) {
-      clearInterval(hoverTimerRef.current);
-      hoverTimerRef.current = null;
-    }
-    setHoveredItem(null);
-    setHoverProgress(0);
-  };
-
-  const closeLockedTooltip = () => {
-    setLockedTooltip(null);
-    setHoveredItem(null);
-    setHoverProgress(0);
-    if (hoverTimerRef.current) {
-      clearInterval(hoverTimerRef.current);
-      hoverTimerRef.current = null;
-    }
-  };
-
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      if (hoverTimerRef.current) {
-        clearInterval(hoverTimerRef.current);
-      }
-    };
-  }, []);
 
   const exportData = () => {
     const totals = calculateTotals(rows);
@@ -324,60 +261,20 @@ export default function Home() {
                   {/* POS Grid */}
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-2 max-h-[600px] overflow-y-auto">
                     {filteredItems.map((item) => (
-                      <div key={item.name} className="relative group">
-                        <Tooltip content={item.shortDescription || ''}>
-                          <button
-                            onClick={() => addRow(item)}
-                            className="w-full bg-background hover:bg-accent border-2 border-border hover:border-primary rounded-lg p-4 text-left transition-all active:scale-95"
-                          >
-                            <div className="flex justify-between items-start gap-2">
-                              <div className="font-semibold text-sm mb-1 line-clamp-2 flex-1">{item.name}</div>
-                              {item.description && (
-                                <div
-                                  onMouseEnter={() => handleInfoHoverStart(item.name)}
-                                  onMouseLeave={handleInfoHoverEnd}
-                                  className="flex-shrink-0 text-muted-foreground hover:text-foreground p-1 relative"
-                                  title="Hold to lock description"
-                                >
-                                  <Info className="h-4 w-4" />
-                                  {hoveredItem === item.name && hoverProgress > 0 && (
-                                    <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 24 24">
-                                      <circle
-                                        cx="12"
-                                        cy="12"
-                                        r="10"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeDasharray={`${2 * Math.PI * 10}`}
-                                        strokeDashoffset={`${2 * Math.PI * 10 * (1 - hoverProgress / 100)}`}
-                                        className="text-primary transition-all"
-                                      />
-                                    </svg>
-                                  )}
-                                </div>
-                              )}
-                            </div>
-                            <div className="text-lg font-bold text-primary">{formatCurrency(item.price)}</div>
-                            <div className="text-xs text-muted-foreground mt-auto pt-2 capitalize flex items-center gap-1">
-                              {item.paymentType === 'subscription' && '🔄 Recurring'}
-                              {item.paymentType === 'deposit' && '🏦 Deposit'}
-                              {item.paymentType === 'full' && '💵 Full Payment'}
-                            </div>
-                          </button>
-                        </Tooltip>
-                        {(lockedTooltip === item.name || (hoveredItem === item.name && hoverProgress >= 100)) && item.description && (
-                          <div className="absolute z-50 mt-1 p-3 bg-popover border border-border rounded-lg shadow-lg text-sm w-64 left-0">
-                            <button
-                              onClick={closeLockedTooltip}
-                              className="absolute top-2 right-2 text-muted-foreground hover:text-foreground"
-                            >
-                              <X className="h-4 w-4" />
-                            </button>
-                            <div className="pr-6">{item.description}</div>
+                      <TooltipLockable key={item.name} content={item.description || item.shortDescription || ''}>
+                        <button
+                          onClick={() => addRow(item)}
+                          className="w-full bg-background hover:bg-accent border-2 border-border hover:border-primary rounded-lg p-4 text-left transition-all active:scale-95"
+                        >
+                          <div className="font-semibold text-sm mb-1 line-clamp-2">{item.name}</div>
+                          <div className="text-lg font-bold text-primary">{formatCurrency(item.price)}</div>
+                          <div className="text-xs text-muted-foreground mt-1 capitalize">
+                            {item.paymentType === 'subscription' && '🔄 Recurring'}
+                            {item.paymentType === 'deposit' && '🏦 Deposit'}
+                            {item.paymentType === 'full' && '💵 Full Payment'}
                           </div>
-                        )}
-                      </div>
+                        </button>
+                      </TooltipLockable>
                     ))}
                   </div>
 
