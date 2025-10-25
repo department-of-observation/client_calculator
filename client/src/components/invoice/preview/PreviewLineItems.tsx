@@ -26,6 +26,9 @@ export function PreviewLineItems({ rows }: InvoiceLineItemsProps) {
             <div className="col-span-1">{index + 1}</div>
             <div className="col-span-6">
               <div className="font-semibold">{row.name}</div>
+              {row.Description && (
+                <div className="text-xs mt-1" style={{ color: '#6b7280', lineHeight: '1.4' }}>{row.Description}</div>
+              )}
               {row.discount > 0 && (
                 <div className="text-xs mt-1" style={{ color: '#4b5563' }}>Discount: {row.discount}%</div>
               )}

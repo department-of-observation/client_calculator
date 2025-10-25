@@ -27,6 +27,9 @@ export function PDFLineItems({ rows }: InvoiceLineItemsProps) {
             <Text style={styles.col1}>{index + 1}</Text>
             <View style={styles.col6}>
               <Text style={styles.itemName}>{row.name}</Text>
+              {row.Description && (
+                <Text style={styles.itemDescription}>{row.Description}</Text>
+              )}
               {row.discount > 0 && (
                 <Text style={styles.discount}>Discount: {row.discount}%</Text>
               )}

@@ -59,7 +59,8 @@ export default function Home() {
         const items = results.data.map((item) => ({
           name: item.name,
           price: parseFloat(String(item.price)) || 0,
-          category: (item.category === 'subscription' ? 'subscription' : 'oneshot') as 'subscription' | 'oneshot'
+          category: (item.category === 'subscription' ? 'subscription' : 'oneshot') as 'subscription' | 'oneshot',
+          Description: item.Description || ''
         }));
         setPricingItems(items);
         toast.success(`Loaded ${items.length} pricing items`);

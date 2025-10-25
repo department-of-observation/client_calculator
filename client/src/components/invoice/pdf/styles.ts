@@ -121,6 +121,12 @@ export const styles = StyleSheet.create({
     fontSize: 8,
     color: '#4b5563',
   },
+  itemDescription: {
+    fontSize: 8,
+    color: '#6b7280',
+    marginTop: 4,
+    lineHeight: 1.4,
+  },
   totalsSection: {
     flexDirection: 'row',
     borderTop: '2px solid #000000',

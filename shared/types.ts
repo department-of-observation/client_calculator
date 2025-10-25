@@ -2,6 +2,7 @@ export interface PricingItem {
   name: string;
   price: number;
   category: 'subscription' | 'oneshot';
+  Description?: string;
 }
 
 export interface CalculatorRow extends PricingItem {
