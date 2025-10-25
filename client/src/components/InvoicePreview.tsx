@@ -40,7 +40,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
               </div>
             </div>
             <div className="text-right">
-              <h2 className="text-5xl font-bold">QUOTE</h2>
+              <h2 className="text-5xl font-bold">TAX INVOICE</h2>
             </div>
           </div>
 
@@ -51,21 +51,24 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                 <span className="ml-2">: {config.invoiceNumber}</span>
               </div>
               <div className="mb-2">
-                <span className="font-bold">Expiry Date</span>
-                <span className="ml-2">: {formatDate(config.expiryDate)}</span>
+                <span className="font-bold">Invoice Date</span>
+                <span className="ml-2">: {formatDate(config.invoiceDate)}</span>
+              </div>
+              <div className="mb-2">
+                <span className="font-bold">Terms</span>
+                <span className="ml-2">: {config.terms}</span>
+              </div>
+              <div className="mb-2">
+                <span className="font-bold">Due Date</span>
+                <span className="ml-2">: {formatDate(config.dueDate)}</span>
               </div>
               <div>
-                <span className="font-bold">Reference#</span>
-                <span className="ml-2">: {config.referenceNumber}</span>
+                <span className="font-bold">P.O.#</span>
+                <span className="ml-2">: {config.poNumber || config.invoiceNumber}</span>
               </div>
             </div>
             <div className="p-4">
-              <div className="mb-2">
-                <span className="font-bold">: {config.invoiceNumber}</span>
-              </div>
-              <div>
-                <span className="font-bold">: {formatDate(config.invoiceDate)}</span>
-              </div>
+              {/* Empty right column as per original design */}
             </div>
           </div>
 
@@ -85,7 +88,7 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
 
           {/* Items Table */}
           <div>
-              <div className="grid grid-cols-12 gap-2 p-4 border-b font-bold text-sm" style={{ backgroundColor: '#f3f4f6', borderColor: '#000000' }}>
+            <div className="grid grid-cols-12 gap-2 p-4 border-b font-bold text-sm" style={{ backgroundColor: '#f3f4f6', borderColor: '#000000' }}>
               <div className="col-span-1">#</div>
               <div className="col-span-6">Item & Description</div>
               <div className="col-span-2 text-right">Qty</div>
@@ -128,8 +131,12 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
                 <span className="font-bold">Sub Total</span>
                 <span>{formatCurrency(subscriptionTotal + oneshotDepositTotal)}</span>
               </div>
+              <div className="flex justify-between p-4 border-b" style={{ borderColor: '#d1d5db' }}>
+                <span className="font-bold">Total</span>
+                <span className="font-bold">SGD{formatCurrency(grandTotal)}</span>
+              </div>
               <div className="flex justify-between p-4" style={{ backgroundColor: '#f3f4f6' }}>
-                <span className="font-bold text-lg">Total</span>
+                <span className="font-bold text-lg">Balance Due</span>
                 <span className="font-bold text-lg">SGD{formatCurrency(grandTotal)}</span>
               </div>
             </div>
@@ -146,7 +153,6 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
           {/* Terms & Conditions */}
           {config.termsAndConditions && (
             <div className="p-4 border-t-2 border-black">
-              <div className="font-bold mb-2">Terms & Conditions</div>
               <div className="whitespace-pre-wrap text-sm">{config.termsAndConditions}</div>
             </div>
           )}

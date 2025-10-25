@@ -24,7 +24,8 @@ export default defineConfig({
     hmr: {
       clientPort: 443,
       protocol: 'wss'
-    }
+    },
+    allowedHosts: [".manus-asia.computer"]
   },
 });
 

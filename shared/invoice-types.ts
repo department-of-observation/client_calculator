@@ -9,8 +9,9 @@ export interface InvoiceConfig {
   // Invoice Details
   invoiceNumber: string;
   invoiceDate: string;
-  expiryDate: string;
-  referenceNumber: string;
+  terms: string;
+  dueDate: string;
+  poNumber: string;
   
   // Client Info
   clientName: string;
@@ -26,13 +27,24 @@ export const DEFAULT_INVOICE_CONFIG: InvoiceConfig = {
   companyAddress: 'Punggol',
   companyCity: 'Singapore',
   companyEmail: 'chewjiefeng@gmail.com',
-  invoiceNumber: 'QT-000001',
+  invoiceNumber: 'INV-000001',
   invoiceDate: new Date().toISOString().split('T')[0],
-  expiryDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-  referenceNumber: 'QT-000001',
+  terms: 'Custom',
+  dueDate: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+  poNumber: '',
   clientName: '',
   subject: '',
-  notes: 'Looking forward for your business.',
-  termsAndConditions: 'Anything not explicitly mentioned above (e.g., extra revisions, shoot time, music, voiceovers, B-roll, social media formatting, additional graphics, or extended video length) is not included and will be billed separately if requested.'
+  notes: 'Thanks for your business.',
+  termsAndConditions: `Terms & Conditions
+Payment Instructions:
+PayNow to +65 9423 6920 Or bank transfer to 0122792416
+
+Terms & Conditions:
+1. A 50% non-refundable deposit is required upfront before any work commences.
+2. The balance payment is due upon completion and prior to delivery of the final materials.
+3. For support/retainer packages, full payment must be made upfront before any work commences.
+4. If the client cancels the project midway, all deposits and payments made remain non-refundable.
+5. All other terms and conditions apply as stated in our Service Agreement (if applicable) and this Invoice.
+6. Any terms, conditions, or obligations not expressly stated in this Invoice shall not apply.`
 };
 

@@ -169,3 +169,26 @@
     }
   }
 }
+
+/* Print styles for invoice */
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    background: white;
+  }
+  
+  .print\:hidden {
+    display: none !important;
+  }
+  
+  .print\:block {
+    display: block !important;
+  }
+}
+

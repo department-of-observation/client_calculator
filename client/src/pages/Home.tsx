@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { Upload, Plus, Download, FileText, Settings } from 'lucide-react';
+import { Upload, Plus, Download, FileText, Settings, Printer } from 'lucide-react';
 import Papa from 'papaparse';
 import type { PricingItem, CalculatorRow as CalculatorRowType } from '../../../shared/types';
 import type { InvoiceConfig } from '../../../shared/invoice-types';
@@ -26,15 +26,12 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import jsPDF from 'jspdf';
-import { snapdom } from '@zumer/snapdom';
 
 export default function Home() {
   const [pricingItems, setPricingItems] = useState<PricingItem[]>([]);
   const [rows, setRows] = useState<CalculatorRowType[]>([]);
   const [invoiceConfig, setInvoiceConfig] = useState<InvoiceConfig>(DEFAULT_INVOICE_CONFIG);
   const [showInvoice, setShowInvoice] = useState(false);
-  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const invoiceRef = useRef<HTMLDivElement>(null);
 
   // Load sample CSV on mount
@@ -122,66 +119,16 @@ export default function Home() {
     toast.success('Quote exported');
   };
 
-  const generatePDF = async () => {
+  const printInvoice = () => {
     if (!invoiceRef.current || rows.length === 0) {
       toast.error('Please add items before generating invoice');
       return;
     }
 
-    setIsGeneratingPDF(true);
-    toast.info('Generating PDF...');
-
-    try {
-      const element = invoiceRef.current;
-      
-      // Use snapdom to capture the element
-      const result = await snapdom(element, {
-        scale: 2,
-        embedFonts: true,
-        backgroundColor: '#ffffff',
-        compress: true
-      });
-
-      // Convert to PNG - snapdom returns an object with src property
-      console.log('Calling toPng...');
-      const pngResult = await result.toPng();
-      console.log('toPng result:', pngResult);
-      console.log('toPng result type:', typeof pngResult);
-      console.log('toPng result.src:', pngResult?.src);
-      
-      const imgData = pngResult.src;
-      
-      if (!imgData) {
-        throw new Error('Failed to generate PNG: no src property');
-      }
-      
-      // Create a temporary image to get dimensions
-      const img = new Image();
-      await new Promise((resolve, reject) => {
-        img.onload = resolve;
-        img.onerror = reject;
-        img.src = imgData;
-      });
-
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'mm',
-        format: 'a4'
-      });
-
-      const imgWidth = 210; // A4 width in mm
-      const imgHeight = (img.height * imgWidth) / img.width;
-
-      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-      pdf.save(`${invoiceConfig.invoiceNumber}.pdf`);
-      
-      toast.success('PDF generated successfully!');
-    } catch (error) {
-      console.error('PDF generation error:', error);
-      toast.error('Failed to generate PDF');
-    } finally {
-      setIsGeneratingPDF(false);
-    }
+    toast.info('Opening print dialog...');
+    
+    // Use browser's native print functionality
+    window.print();
   };
 
   const subscriptionRows = rows.filter(r => r.category === 'subscription');
@@ -190,7 +137,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="border-b border-border bg-card sticky top-0 z-10">
+      <header className="border-b border-border bg-card sticky top-0 z-10 print:hidden">
         <div className="container py-6">
           <div className="flex justify-between items-start">
             <div>
@@ -228,9 +175,9 @@ export default function Home() {
                 </Button>
 
                 {showInvoice && (
-                  <Button onClick={generatePDF} disabled={isGeneratingPDF}>
-                    <Download className="mr-2 h-4 w-4" />
-                    {isGeneratingPDF ? 'Generating...' : 'Download PDF'}
+                  <Button onClick={printInvoice}>
+                    <Printer className="mr-2 h-4 w-4" />
+                    Print / Save as PDF
                   </Button>
                 )}
               </div>
@@ -240,7 +187,7 @@ export default function Home() {
       </header>
 
       <main className="container py-8">
-        <Tabs value={showInvoice ? "invoice" : "calculator"} onValueChange={(v) => setShowInvoice(v === "invoice")}>
+        <Tabs value={showInvoice ? "invoice" : "calculator"} onValueChange={(v) => setShowInvoice(v === "invoice")} className="print:hidden">
           <TabsList className="mb-6">
             <TabsTrigger value="calculator">Calculator</TabsTrigger>
             <TabsTrigger value="invoice" disabled={rows.length === 0}>Invoice Preview</TabsTrigger>
@@ -358,6 +305,19 @@ export default function Home() {
             </div>
           </TabsContent>
         </Tabs>
+
+        {/* Print-only view */}
+        <div className="hidden print:block">
+          <InvoicePreview
+            ref={invoiceRef}
+            config={invoiceConfig}
+            rows={rows}
+            subscriptionTotal={totals.subscriptionTotal}
+            oneshotDepositTotal={totals.oneshotDepositTotal}
+            oneshotOriginalTotal={totals.oneshotOriginalTotal}
+            grandTotal={totals.grandTotal}
+          />
+        </div>
       </main>
     </div>
   );

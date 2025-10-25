@@ -3,6 +3,8 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import type { InvoiceConfig } from '../../../shared/invoice-types';
+import { Upload } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface InvoiceConfigFormProps {
   config: InvoiceConfig;
@@ -14,6 +16,18 @@ export default function InvoiceConfigForm({ config, onChange }: InvoiceConfigFor
     onChange({ ...config, [field]: value });
   };
 
+  const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const result = e.target?.result as string;
+      updateField('companyLogo', result);
+    };
+    reader.readAsDataURL(file);
+  };
+
   return (
     <div className="space-y-6">
       <Card>
@@ -21,6 +35,29 @@ export default function InvoiceConfigForm({ config, onChange }: InvoiceConfigFor
           <CardTitle>Company Information</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
+          <div>
+            <Label htmlFor="companyLogo">Company Logo</Label>
+            <div className="flex items-center gap-4 mt-2">
+              {config.companyLogo && (
+                <img src={config.companyLogo} alt="Company Logo" className="w-16 h-16 object-contain border rounded" />
+              )}
+              <label htmlFor="logo-upload">
+                <Button variant="outline" asChild>
+                  <span className="cursor-pointer">
+                    <Upload className="mr-2 h-4 w-4" />
+                    Upload Logo
+                  </span>
+                </Button>
+                <input
+                  id="logo-upload"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleLogoUpload}
+                  className="hidden"
+                />
+              </label>
+            </div>
+          </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label htmlFor="companyName">Company Name</Label>
@@ -76,15 +113,16 @@ export default function InvoiceConfigForm({ config, onChange }: InvoiceConfigFor
               />
             </div>
             <div>
-              <Label htmlFor="referenceNumber">Reference Number</Label>
+              <Label htmlFor="poNumber">P.O. Number</Label>
               <Input
-                id="referenceNumber"
-                value={config.referenceNumber}
-                onChange={(e) => updateField('referenceNumber', e.target.value)}
+                id="poNumber"
+                value={config.poNumber}
+                onChange={(e) => updateField('poNumber', e.target.value)}
+                placeholder="Purchase Order Number"
               />
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-3 gap-4">
             <div>
               <Label htmlFor="invoiceDate">Invoice Date</Label>
               <Input
@@ -95,12 +133,21 @@ export default function InvoiceConfigForm({ config, onChange }: InvoiceConfigFor
               />
             </div>
             <div>
-              <Label htmlFor="expiryDate">Expiry Date</Label>
+              <Label htmlFor="terms">Terms</Label>
               <Input
-                id="expiryDate"
+                id="terms"
+                value={config.terms}
+                onChange={(e) => updateField('terms', e.target.value)}
+                placeholder="e.g., Custom, Net 30"
+              />
+            </div>
+            <div>
+              <Label htmlFor="dueDate">Due Date</Label>
+              <Input
+                id="dueDate"
                 type="date"
-                value={config.expiryDate}
-                onChange={(e) => updateField('expiryDate', e.target.value)}
+                value={config.dueDate}
+                onChange={(e) => updateField('dueDate', e.target.value)}
               />
             </div>
           </div>
@@ -135,7 +182,7 @@ export default function InvoiceConfigForm({ config, onChange }: InvoiceConfigFor
               id="subject"
               value={config.subject}
               onChange={(e) => updateField('subject', e.target.value)}
-              placeholder="e.g., Website monthly support packages"
+              placeholder="e.g., Payments to be made for work to start"
             />
           </div>
           <div>
@@ -154,7 +201,7 @@ export default function InvoiceConfigForm({ config, onChange }: InvoiceConfigFor
               id="termsAndConditions"
               value={config.termsAndConditions}
               onChange={(e) => updateField('termsAndConditions', e.target.value)}
-              rows={4}
+              rows={8}
               placeholder="Terms and conditions..."
             />
           </div>
