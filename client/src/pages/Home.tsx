@@ -262,11 +262,11 @@ export default function Home() {
                   {/* POS Grid */}
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-2 max-h-[600px] overflow-y-auto">
                     {filteredItems.map((item) => (
-                      <div key={item.name} className="relative group flex">
+                      <div key={item.name} className="relative group">
                         <Tooltip content={item.shortDescription || ''}>
                           <button
                             onClick={() => addRow(item)}
-                            className="w-full min-w-[140px] bg-background hover:bg-accent border-2 border-border hover:border-primary rounded-lg p-4 text-left transition-all active:scale-95 flex flex-col"
+                            className="w-full bg-background hover:bg-accent border-2 border-border hover:border-primary rounded-lg p-4 text-left transition-all active:scale-95"
                           >
                             <div className="flex justify-between items-start gap-2">
                               <div className="font-semibold text-sm mb-1 line-clamp-2 flex-1">{item.name}</div>
