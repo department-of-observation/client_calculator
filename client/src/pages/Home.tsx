@@ -266,10 +266,10 @@ export default function Home() {
                         <Tooltip content={item.shortDescription || ''}>
                           <button
                             onClick={() => addRow(item)}
-                            className="w-full h-32 bg-background hover:bg-accent border-2 border-border hover:border-primary rounded-lg p-4 text-left transition-all active:scale-95 flex flex-col justify-between"
+                            className="w-full min-w-[140px] bg-background hover:bg-accent border-2 border-border hover:border-primary rounded-lg p-4 text-left transition-all active:scale-95 flex flex-col"
                           >
                             <div className="flex justify-between items-start gap-2">
-                              <div className="font-semibold text-sm mb-1 line-clamp-2 flex-1 min-h-[2.5rem]">{item.name}</div>
+                              <div className="font-semibold text-sm mb-1 line-clamp-2 flex-1">{item.name}</div>
                               {item.description && (
                                 <button
                                   onClick={(e) => {
