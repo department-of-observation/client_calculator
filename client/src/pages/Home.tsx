@@ -42,7 +42,7 @@ export default function Home() {
 
   const loadSampleData = async () => {
     try {
-      const response = await fetch('/pricing.xlsx');
+      const response = await fetch('/client_calculator/pricing.xlsx');
       const blob = await response.blob();
       await parseXlsxData(blob);
     } catch (error) {
