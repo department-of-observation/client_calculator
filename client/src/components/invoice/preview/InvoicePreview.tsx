@@ -37,6 +37,11 @@ export default function InvoicePreview({
           terms={config.terms}
           dueDate={config.dueDate}
           poNumber={config.poNumber}
+          clientName={config.clientName}
+          clientEmail={config.clientEmail}
+          clientWebsite={config.clientWebsite}
+          clientPhone={config.clientPhone}
+          clientBillingAddress={config.clientBillingAddress}
         />
         <PreviewBillTo clientName={config.clientName} />
         {config.subject && <PreviewSubject subject={config.subject} />}

@@ -15,6 +15,10 @@ export interface InvoiceConfig {
   
   // Client Info
   clientName: string;
+  clientEmail: string;
+  clientWebsite: string;
+  clientPhone: string;
+  clientBillingAddress: string;
   
   // Content
   subject: string;
@@ -34,6 +38,10 @@ export const DEFAULT_INVOICE_CONFIG: InvoiceConfig = {
   dueDate: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
   poNumber: '',
   clientName: '',
+  clientEmail: '',
+  clientWebsite: '',
+  clientPhone: '',
+  clientBillingAddress: '',
   subject: '',
   notes: 'Thanks for your business.',
   termsAndConditions: `Payment Instructions:

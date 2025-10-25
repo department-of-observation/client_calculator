@@ -7,6 +7,11 @@ export function PreviewInfo({
   terms,
   dueDate,
   poNumber,
+  clientName,
+  clientEmail,
+  clientWebsite,
+  clientPhone,
+  clientBillingAddress,
 }: InvoiceInfoProps) {
   return (
     <div className="grid grid-cols-2 border-b-2 border-black">
@@ -33,7 +38,37 @@ export function PreviewInfo({
         </div>
       </div>
       <div className="p-4">
-        {/* Empty right column as per original design */}
+        {clientName && (
+          <div className="mb-2">
+            <span className="font-bold">Client Name</span>
+            <span className="ml-2">: {clientName}</span>
+          </div>
+        )}
+        {clientEmail && (
+          <div className="mb-2">
+            <span className="font-bold">Email</span>
+            <span className="ml-2">: {clientEmail}</span>
+          </div>
+        )}
+        {clientWebsite && (
+          <div className="mb-2">
+            <span className="font-bold">Website</span>
+            <span className="ml-2">: {clientWebsite}</span>
+          </div>
+        )}
+        {clientPhone && (
+          <div className="mb-2">
+            <span className="font-bold">Phone</span>
+            <span className="ml-2">: {clientPhone}</span>
+          </div>
+        )}
+        {clientBillingAddress && (
+          <div>
+            <span className="font-bold">Billing Address</span>
+            <span className="ml-2">: </span>
+            <span className="whitespace-pre-wrap">{clientBillingAddress}</span>
+          </div>
+        )}
       </div>
     </div>
   );

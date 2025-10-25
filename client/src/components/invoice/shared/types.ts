@@ -15,6 +15,11 @@ export interface InvoiceInfoProps {
   terms: string;
   dueDate: string;
   poNumber: string;
+  clientName: string;
+  clientEmail: string;
+  clientWebsite: string;
+  clientPhone: string;
+  clientBillingAddress: string;
 }
 
 export interface InvoiceBillToProps {

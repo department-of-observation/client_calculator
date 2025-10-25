@@ -40,6 +40,11 @@ export default function InvoicePDF({
             terms={config.terms}
             dueDate={config.dueDate}
             poNumber={config.poNumber}
+            clientName={config.clientName}
+            clientEmail={config.clientEmail}
+            clientWebsite={config.clientWebsite}
+            clientPhone={config.clientPhone}
+            clientBillingAddress={config.clientBillingAddress}
           />
           <PDFBillTo clientName={config.clientName} />
           {config.subject && <PDFSubject subject={config.subject} />}

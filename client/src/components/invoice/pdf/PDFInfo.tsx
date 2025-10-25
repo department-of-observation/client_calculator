@@ -9,6 +9,11 @@ export function PDFInfo({
   terms,
   dueDate,
   poNumber,
+  clientName,
+  clientEmail,
+  clientWebsite,
+  clientPhone,
+  clientBillingAddress,
 }: InvoiceInfoProps) {
   return (
     <View style={styles.infoSection}>
@@ -35,7 +40,36 @@ export function PDFInfo({
         </View>
       </View>
       <View style={styles.infoRight}>
-        {/* Empty right column */}
+        {clientName && (
+          <View style={styles.infoRow}>
+            <Text style={styles.infoLabel}>Client Name</Text>
+            <Text>: {clientName}</Text>
+          </View>
+        )}
+        {clientEmail && (
+          <View style={styles.infoRow}>
+            <Text style={styles.infoLabel}>Email</Text>
+            <Text>: {clientEmail}</Text>
+          </View>
+        )}
+        {clientWebsite && (
+          <View style={styles.infoRow}>
+            <Text style={styles.infoLabel}>Website</Text>
+            <Text>: {clientWebsite}</Text>
+          </View>
+        )}
+        {clientPhone && (
+          <View style={styles.infoRow}>
+            <Text style={styles.infoLabel}>Phone</Text>
+            <Text>: {clientPhone}</Text>
+          </View>
+        )}
+        {clientBillingAddress && (
+          <View style={styles.infoRow}>
+            <Text style={styles.infoLabel}>Billing Address</Text>
+            <Text>: {clientBillingAddress}</Text>
+          </View>
+        )}
       </View>
     </View>
   );

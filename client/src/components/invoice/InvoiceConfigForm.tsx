@@ -2,7 +2,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import type { InvoiceConfig } from '../../../shared/invoice-types';
+import type { InvoiceConfig } from '../../../../shared/invoice-types';
 import { Upload } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -158,7 +158,7 @@ export default function InvoiceConfigForm({ config, onChange }: InvoiceConfigFor
         <CardHeader>
           <CardTitle>Client Information</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-4">
           <div>
             <Label htmlFor="clientName">Client Name</Label>
             <Input
@@ -166,6 +166,46 @@ export default function InvoiceConfigForm({ config, onChange }: InvoiceConfigFor
               value={config.clientName}
               onChange={(e) => updateField('clientName', e.target.value)}
               placeholder="e.g., Ruhan College Pte. Ltd"
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="clientEmail">Email</Label>
+              <Input
+                id="clientEmail"
+                type="email"
+                value={config.clientEmail}
+                onChange={(e) => updateField('clientEmail', e.target.value)}
+                placeholder="client@example.com"
+              />
+            </div>
+            <div>
+              <Label htmlFor="clientPhone">Phone</Label>
+              <Input
+                id="clientPhone"
+                value={config.clientPhone}
+                onChange={(e) => updateField('clientPhone', e.target.value)}
+                placeholder="+65 1234 5678"
+              />
+            </div>
+          </div>
+          <div>
+            <Label htmlFor="clientWebsite">Website</Label>
+            <Input
+              id="clientWebsite"
+              value={config.clientWebsite}
+              onChange={(e) => updateField('clientWebsite', e.target.value)}
+              placeholder="https://example.com"
+            />
+          </div>
+          <div>
+            <Label htmlFor="clientBillingAddress">Billing Address</Label>
+            <Textarea
+              id="clientBillingAddress"
+              value={config.clientBillingAddress}
+              onChange={(e) => updateField('clientBillingAddress', e.target.value)}
+              rows={3}
+              placeholder="Street address, city, postal code, country"
             />
           </div>
         </CardContent>
