@@ -403,18 +403,6 @@ export default function Home() {
                           </div>
                         )}
                       </div>
-
-                      <div className="mt-4 pt-4 border-t border-border">
-                        <Button 
-                          variant="outline" 
-                          onClick={exportData} 
-                          className="w-full"
-                          size="sm"
-                        >
-                          <Download className="mr-2 h-4 w-4" />
-                          Export JSON
-                        </Button>
-                      </div>
                     </>
                   )}
                 </div>
