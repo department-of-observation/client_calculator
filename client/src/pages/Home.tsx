@@ -271,16 +271,16 @@ export default function Home() {
                             <div className="flex justify-between items-start gap-2">
                               <div className="font-semibold text-sm mb-1 line-clamp-2 flex-1">{item.name}</div>
                               {item.description && (
-                                <button
+                                <div
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     setExpandedDescription(expandedDescription === item.name ? null : item.name);
                                   }}
-                                  className="md:hidden flex-shrink-0 text-muted-foreground hover:text-foreground p-1"
+                                  className="md:hidden flex-shrink-0 text-muted-foreground hover:text-foreground p-1 cursor-pointer"
                                   title="Show description"
                                 >
                                   <Info className="h-4 w-4" />
-                                </button>
+                                </div>
                               )}
                             </div>
                             <div className="text-lg font-bold text-primary">{formatCurrency(item.price)}</div>
