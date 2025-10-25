@@ -1,7 +1,7 @@
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
-import type { CalculatorRow as CalculatorRowType } from '../../../shared/types';
+import type { CalculatorRow as CalculatorRowType } from '@shared/types';
 import { calculateLineTotal, formatCurrency } from '@/lib/calculator';
 
 interface CalculatorRowProps {

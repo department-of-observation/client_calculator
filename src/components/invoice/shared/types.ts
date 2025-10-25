@@ -1,5 +1,5 @@
-import type { InvoiceConfig } from '../../../../../shared/invoice-types';
-import type { CalculatorRow } from '../../../../../shared/types';
+import type { InvoiceConfig } from '@shared/invoice-types';
+import type { CalculatorRow } from '@shared/types';
 
 export interface InvoiceHeaderProps {
   companyName: string;

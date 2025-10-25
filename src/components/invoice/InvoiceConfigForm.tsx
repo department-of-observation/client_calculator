@@ -2,7 +2,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import type { InvoiceConfig } from '../../../shared/invoice-types';
+import type { InvoiceConfig } from '@shared/invoice-types';
 import { Upload } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 

@@ -1,4 +1,4 @@
-import type { CalculatorRow } from '../../../shared/types';
+import type { CalculatorRow } from '@shared/types';
 
 export const ONESHOT_DEPOSIT_MULTIPLIER = 0.5;
 

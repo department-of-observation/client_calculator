@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Upload, Plus, Download, FileText, Settings, Printer } from 'lucide-react';
 import readXlsxFile from 'read-excel-file';
-import type { PricingItem, CalculatorRow as CalculatorRowType } from '../../../shared/types';
-import type { InvoiceConfig } from '../../../shared/invoice-types';
-import { DEFAULT_INVOICE_CONFIG } from '../../../shared/invoice-types';
+import type { PricingItem, CalculatorRow as CalculatorRowType } from '@shared/types';
+import type { InvoiceConfig } from '@shared/invoice-types';
+import { DEFAULT_INVOICE_CONFIG } from '@shared/invoice-types';
 import CategorySection from '@/components/CategorySection';
 import InvoiceConfigForm from '@/components/invoice/InvoiceConfigForm';
 import InvoicePreview from '@/components/invoice/preview/InvoicePreview';
@@ -83,7 +83,7 @@ export default function Home() {
       id: `${Date.now()}-${Math.random()}`,
       quantity: 1,
       discount: 0,
-      isFullPayment: false // Default to deposit mode for oneshot items
+      isFullPayment: false
     };
     setRows([...rows, newRow]);
     toast.success(`Added ${item.name}`);
@@ -161,7 +161,7 @@ export default function Home() {
             <div>
               <h1 className="text-3xl font-bold">Client Pricing Calculator</h1>
               <p className="text-muted-foreground mt-2">
-                Import pricing data and generate custom quotes with quantity and discount controls
+                Import pricing data and generate custom quotes
               </p>
             </div>
             {rows.length > 0 && (
@@ -205,14 +205,13 @@ export default function Home() {
       </header>
 
       <main className="container py-8">
-        <Tabs value={showInvoice ? "invoice" : "calculator"} onValueChange={(v) => setShowInvoice(v === "invoice")} className="print:hidden">
+        <Tabs value={showInvoice ? "invoice" : "calculator"} onValueChange={(v) => setShowInvoice(v === "invoice")}>
           <TabsList className="mb-6">
             <TabsTrigger value="calculator">Calculator</TabsTrigger>
             <TabsTrigger value="invoice" disabled={rows.length === 0}>Invoice Preview</TabsTrigger>
           </TabsList>
 
           <TabsContent value="calculator">
-            {/* Controls */}
             <div className="flex gap-3 mb-8">
               <label htmlFor="xlsx-upload">
                 <Button variant="outline" asChild>
@@ -254,18 +253,17 @@ export default function Home() {
               )}
             </div>
 
-            {/* Calculator Sections */}
             {rows.length === 0 ? (
               <div className="text-center py-16 text-muted-foreground">
                 <Plus className="h-12 w-12 mx-auto mb-4 opacity-50" />
                 <p className="text-lg">No items added yet</p>
-                <p className="text-sm mt-2">Select items from the dropdown above to start building a quote</p>
+                <p className="text-sm mt-2">Select items from the dropdown above</p>
               </div>
             ) : (
               <>
                 <CategorySection
                   title="Subscription Packages"
-                  subtitle="Monthly recurring services - paid in full at start of month"
+                  subtitle="Monthly recurring services"
                   rows={subscriptionRows}
                   total={totals.subscriptionTotal}
                   onUpdate={updateRow}
@@ -274,7 +272,7 @@ export default function Home() {
 
                 <CategorySection
                   title="One-Shot Packages"
-                  subtitle="One-time services - 50% deposit upfront, balance on delivery"
+                  subtitle="One-time services - 50% deposit"
                   rows={oneshotRows}
                   total={totals.oneshotDepositTotal}
                   originalTotal={totals.oneshotOriginalTotal}
@@ -282,13 +280,12 @@ export default function Home() {
                   onDelete={deleteRow}
                 />
 
-                {/* Grand Total */}
                 <div className="bg-primary text-primary-foreground rounded-lg p-6 mt-8">
                   <div className="flex justify-between items-center">
                     <div>
                       <h3 className="text-2xl font-bold">Grand Total</h3>
                       <p className="text-sm opacity-90 mt-1">
-                        Total due upfront (subscriptions + deposits)
+                        Total due upfront
                       </p>
                     </div>
                     <div className="text-right">
@@ -297,7 +294,7 @@ export default function Home() {
                       </div>
                       {totals.oneshotOriginalTotal > totals.oneshotDepositTotal && (
                         <div className="text-sm opacity-90 mt-1">
-                          Balance due on delivery: {formatCurrency(totals.oneshotOriginalTotal - totals.oneshotDepositTotal)}
+                          Balance: {formatCurrency(totals.oneshotOriginalTotal - totals.oneshotDepositTotal)}
                         </div>
                       )}
                     </div>
