@@ -6,9 +6,9 @@ import type { PricingItem, CalculatorRow as CalculatorRowType } from '../../../s
 import type { InvoiceConfig } from '../../../shared/invoice-types';
 import { DEFAULT_INVOICE_CONFIG } from '../../../shared/invoice-types';
 import CategorySection from '@/components/CategorySection';
-import InvoiceConfigForm from '@/components/InvoiceConfigForm';
-import InvoicePreview from '@/components/InvoicePreview';
-import InvoicePDF from '@/components/InvoicePDF';
+import InvoiceConfigForm from '@/components/invoice/InvoiceConfigForm';
+import InvoicePreview from '@/components/invoice/preview/InvoicePreview';
+import InvoicePDF from '@/components/invoice/pdf/InvoicePDF';
 import { pdf } from '@react-pdf/renderer';
 import { calculateTotals, formatCurrency } from '@/lib/calculator';
 import { toast } from 'sonner';
