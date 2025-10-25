@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Upload, Plus, Download, FileText, Settings, Printer } from 'lucide-react';
+import { Upload, Plus, Download, FileText, Settings, Printer, X } from 'lucide-react';
 import readXlsxFile from 'read-excel-file';
 import type { PricingItem, CalculatorRow as CalculatorRowType } from '../../../shared/types';
 import type { InvoiceConfig } from '../../../shared/invoice-types';
@@ -10,15 +10,8 @@ import InvoiceConfigForm from '@/components/invoice/InvoiceConfigForm';
 import InvoicePreview from '@/components/invoice/preview/InvoicePreview';
 import InvoicePDF from '@/components/invoice/pdf/InvoicePDF';
 import { pdf } from '@react-pdf/renderer';
-import { calculateTotals, formatCurrency } from '@/lib/calculator';
+import { calculateTotals, formatCurrency, calculateLineTotal } from '@/lib/calculator';
 import { toast } from 'sonner';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import {
   Dialog,
   DialogContent,
@@ -34,6 +27,7 @@ export default function Home() {
   const [rows, setRows] = useState<CalculatorRowType[]>([]);
   const [invoiceConfig, setInvoiceConfig] = useState<InvoiceConfig>(DEFAULT_INVOICE_CONFIG);
   const [showInvoice, setShowInvoice] = useState(false);
+  const [categoryFilter, setCategoryFilter] = useState<'all' | 'subscription' | 'oneshot'>('all');
 
   // Load sample XLSX on mount
   useEffect(() => {
@@ -153,22 +147,26 @@ export default function Home() {
   const oneshotRows = rows.filter(r => r.category === 'oneshot');
   const totals = calculateTotals(rows);
 
+  const filteredItems = pricingItems.filter(item => 
+    categoryFilter === 'all' || item.category === categoryFilter
+  );
+
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-border bg-card sticky top-0 z-10 print:hidden">
-        <div className="container py-6">
+        <div className="container py-4">
           <div className="flex justify-between items-start">
             <div>
-              <h1 className="text-3xl font-bold">Client Pricing Calculator</h1>
-              <p className="text-muted-foreground mt-2">
-                Import pricing data and generate custom quotes with quantity and discount controls
+              <h1 className="text-2xl font-bold">Client Pricing Calculator</h1>
+              <p className="text-muted-foreground text-sm mt-1">
+                Point of Sale System
               </p>
             </div>
             {rows.length > 0 && (
               <div className="flex gap-2">
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button variant="outline">
+                    <Button variant="outline" size="sm">
                       <Settings className="mr-2 h-4 w-4" />
                       Invoice Settings
                     </Button>
@@ -187,13 +185,14 @@ export default function Home() {
                 <Button 
                   variant={showInvoice ? "default" : "outline"}
                   onClick={() => setShowInvoice(!showInvoice)}
+                  size="sm"
                 >
                   <FileText className="mr-2 h-4 w-4" />
                   {showInvoice ? 'Hide Invoice' : 'Preview Invoice'}
                 </Button>
 
                 {showInvoice && (
-                  <Button onClick={printInvoice}>
+                  <Button onClick={printInvoice} size="sm">
                     <Printer className="mr-2 h-4 w-4" />
                     Download PDF
                   </Button>
@@ -204,65 +203,218 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="container py-8">
+      <main className="container py-4">
         <Tabs value={showInvoice ? "invoice" : "calculator"} onValueChange={(v) => setShowInvoice(v === "invoice")} className="print:hidden">
-          <TabsList className="mb-6">
+          <TabsList className="mb-4">
             <TabsTrigger value="calculator">Calculator</TabsTrigger>
             <TabsTrigger value="invoice" disabled={rows.length === 0}>Invoice Preview</TabsTrigger>
           </TabsList>
 
           <TabsContent value="calculator">
-            {/* Controls */}
-            <div className="flex gap-3 mb-8">
-              <label htmlFor="xlsx-upload">
-                <Button variant="outline" asChild>
-                  <span className="cursor-pointer">
-                    <Upload className="mr-2 h-4 w-4" />
-                    Import XLSX
-                  </span>
-                </Button>
-                <input
-                  id="xlsx-upload"
-                  type="file"
-                  accept=".xlsx"
-                  onChange={handleFileUpload}
-                  className="hidden"
-                />
-              </label>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              {/* Left side: POS Item Grid */}
+              <div className="lg:col-span-2">
+                <div className="bg-card rounded-lg border border-border p-4 mb-4">
+                  <div className="flex gap-2 mb-4">
+                    <label htmlFor="xlsx-upload">
+                      <Button variant="outline" size="sm" asChild>
+                        <span className="cursor-pointer">
+                          <Upload className="mr-2 h-4 w-4" />
+                          Import XLSX
+                        </span>
+                      </Button>
+                      <input
+                        id="xlsx-upload"
+                        type="file"
+                        accept=".xlsx"
+                        onChange={handleFileUpload}
+                        className="hidden"
+                      />
+                    </label>
 
-              <Select onValueChange={(value) => {
-                const item = pricingItems.find(i => i.name === value);
-                if (item) addRow(item);
-              }}>
-                <SelectTrigger className="w-[300px]">
-                  <SelectValue placeholder="Add item to quote..." />
-                </SelectTrigger>
-                <SelectContent>
-                  {pricingItems.map((item) => (
-                    <SelectItem key={item.name} value={item.name}>
-                      {item.name} - {formatCurrency(item.price)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                    <div className="flex gap-1 ml-auto">
+                      <Button 
+                        variant={categoryFilter === 'all' ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => setCategoryFilter('all')}
+                      >
+                        All
+                      </Button>
+                      <Button 
+                        variant={categoryFilter === 'subscription' ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => setCategoryFilter('subscription')}
+                      >
+                        Subscription
+                      </Button>
+                      <Button 
+                        variant={categoryFilter === 'oneshot' ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => setCategoryFilter('oneshot')}
+                      >
+                        One-Shot
+                      </Button>
+                    </div>
+                  </div>
 
-              {rows.length > 0 && (
-                <Button variant="outline" onClick={exportData} className="ml-auto">
-                  <Download className="mr-2 h-4 w-4" />
-                  Export JSON
-                </Button>
-              )}
+                  {/* POS Grid */}
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2 max-h-[600px] overflow-y-auto">
+                    {filteredItems.map((item) => (
+                      <button
+                        key={item.name}
+                        onClick={() => addRow(item)}
+                        className="bg-background hover:bg-accent border-2 border-border hover:border-primary rounded-lg p-4 text-left transition-all active:scale-95"
+                      >
+                        <div className="font-semibold text-sm mb-1 line-clamp-2">{item.name}</div>
+                        <div className="text-lg font-bold text-primary">{formatCurrency(item.price)}</div>
+                        <div className="text-xs text-muted-foreground mt-1 capitalize">
+                          {item.category === 'subscription' ? '📅 Monthly' : '⚡ One-time'}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+
+                  {filteredItems.length === 0 && (
+                    <div className="text-center py-12 text-muted-foreground">
+                      <Plus className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                      <p className="text-lg">No items available</p>
+                      <p className="text-sm mt-2">Import an XLSX file to load pricing items</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Right side: Current Order */}
+              <div className="lg:col-span-1">
+                <div className="bg-card rounded-lg border border-border p-4 sticky top-24">
+                  <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-lg font-bold">Current Order</h2>
+                    {rows.length > 0 && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => setRows([])}
+                        className="text-destructive hover:text-destructive"
+                      >
+                        <X className="h-4 w-4 mr-1" />
+                        Clear
+                      </Button>
+                    )}
+                  </div>
+
+                  {rows.length === 0 ? (
+                    <div className="text-center py-12 text-muted-foreground">
+                      <FileText className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                      <p className="text-sm">No items added</p>
+                      <p className="text-xs mt-2">Click items on the left to add</p>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="space-y-2 max-h-[400px] overflow-y-auto mb-4">
+                        {rows.map((row) => {
+                          const { displayAmount } = calculateLineTotal(row);
+                          return (
+                            <div key={row.id} className="bg-background rounded p-3 border border-border">
+                              <div className="flex justify-between items-start mb-2">
+                                <div className="font-medium text-sm flex-1">{row.name}</div>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  onClick={() => deleteRow(row.id)}
+                                  className="h-6 w-6 -mt-1 -mr-1 text-destructive hover:text-destructive"
+                                >
+                                  <X className="h-3 w-3" />
+                                </Button>
+                              </div>
+                              <div className="grid grid-cols-2 gap-2 text-xs">
+                                <div>
+                                  <label className="text-muted-foreground">Qty</label>
+                                  <input
+                                    type="number"
+                                    min="0"
+                                    value={row.quantity}
+                                    onChange={(e) => updateRow(row.id, { quantity: parseInt(e.target.value) || 0 })}
+                                    className="w-full px-2 py-1 border rounded mt-1"
+                                  />
+                                </div>
+                                <div>
+                                  <label className="text-muted-foreground">Disc %</label>
+                                  <input
+                                    type="number"
+                                    min="0"
+                                    max="100"
+                                    value={row.discount}
+                                    onChange={(e) => updateRow(row.id, { discount: parseFloat(e.target.value) || 0 })}
+                                    className="w-full px-2 py-1 border rounded mt-1"
+                                  />
+                                </div>
+                              </div>
+                              {row.category === 'oneshot' && (
+                                <div className="mt-2">
+                                  <Button
+                                    variant={row.isFullPayment ? "default" : "outline"}
+                                    size="sm"
+                                    onClick={() => updateRow(row.id, { isFullPayment: !row.isFullPayment })}
+                                    className="w-full h-7 text-xs"
+                                  >
+                                    {row.isFullPayment ? "Full Payment" : "50% Deposit"}
+                                  </Button>
+                                </div>
+                              )}
+                              <div className="text-right font-bold text-primary mt-2">
+                                {formatCurrency(displayAmount)}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Totals */}
+                      <div className="border-t border-border pt-4 space-y-2">
+                        {subscriptionRows.length > 0 && (
+                          <div className="flex justify-between text-sm">
+                            <span className="text-muted-foreground">Subscription Total</span>
+                            <span className="font-semibold">{formatCurrency(totals.subscriptionTotal)}</span>
+                          </div>
+                        )}
+                        {oneshotRows.length > 0 && (
+                          <div className="flex justify-between text-sm">
+                            <span className="text-muted-foreground">One-Shot Deposit</span>
+                            <span className="font-semibold">{formatCurrency(totals.oneshotDepositTotal)}</span>
+                          </div>
+                        )}
+                        <div className="flex justify-between text-lg font-bold pt-2 border-t border-border">
+                          <span>Grand Total</span>
+                          <span className="text-primary">{formatCurrency(totals.grandTotal)}</span>
+                        </div>
+                        {totals.oneshotOriginalTotal > totals.oneshotDepositTotal && (
+                          <div className="text-xs text-muted-foreground text-right">
+                            Balance due: {formatCurrency(totals.oneshotOriginalTotal - totals.oneshotDepositTotal)}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="mt-4 pt-4 border-t border-border">
+                        <Button 
+                          variant="outline" 
+                          onClick={exportData} 
+                          className="w-full"
+                          size="sm"
+                        >
+                          <Download className="mr-2 h-4 w-4" />
+                          Export JSON
+                        </Button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
             </div>
 
-            {/* Calculator Sections */}
-            {rows.length === 0 ? (
-              <div className="text-center py-16 text-muted-foreground">
-                <Plus className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <p className="text-lg">No items added yet</p>
-                <p className="text-sm mt-2">Select items from the dropdown above to start building a quote</p>
-              </div>
-            ) : (
-              <>
+            {/* Detailed view below for reference */}
+            {rows.length > 0 && (
+              <div className="mt-8">
+                <h3 className="text-lg font-bold mb-4">Detailed Breakdown</h3>
                 <CategorySection
                   title="Subscription Packages"
                   subtitle="Monthly recurring services - paid in full at start of month"
@@ -281,29 +433,7 @@ export default function Home() {
                   onUpdate={updateRow}
                   onDelete={deleteRow}
                 />
-
-                {/* Grand Total */}
-                <div className="bg-primary text-primary-foreground rounded-lg p-6 mt-8">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <h3 className="text-2xl font-bold">Grand Total</h3>
-                      <p className="text-sm opacity-90 mt-1">
-                        Total due upfront (subscriptions + deposits)
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-4xl font-bold">
-                        {formatCurrency(totals.grandTotal)}
-                      </div>
-                      {totals.oneshotOriginalTotal > totals.oneshotDepositTotal && (
-                        <div className="text-sm opacity-90 mt-1">
-                          Balance due on delivery: {formatCurrency(totals.oneshotOriginalTotal - totals.oneshotDepositTotal)}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </>
+              </div>
             )}
           </TabsContent>
 
