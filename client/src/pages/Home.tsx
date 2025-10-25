@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Upload, Plus, Download, FileText, Settings, Printer } from 'lucide-react';
 import Papa from 'papaparse';
@@ -8,6 +8,8 @@ import { DEFAULT_INVOICE_CONFIG } from '../../../shared/invoice-types';
 import CategorySection from '@/components/CategorySection';
 import InvoiceConfigForm from '@/components/InvoiceConfigForm';
 import InvoicePreview from '@/components/InvoicePreview';
+import InvoicePDF from '@/components/InvoicePDF';
+import { pdf } from '@react-pdf/renderer';
 import { calculateTotals, formatCurrency } from '@/lib/calculator';
 import { toast } from 'sonner';
 import {
@@ -32,7 +34,6 @@ export default function Home() {
   const [rows, setRows] = useState<CalculatorRowType[]>([]);
   const [invoiceConfig, setInvoiceConfig] = useState<InvoiceConfig>(DEFAULT_INVOICE_CONFIG);
   const [showInvoice, setShowInvoice] = useState(false);
-  const invoiceRef = useRef<HTMLDivElement>(null);
 
   // Load sample CSV on mount
   useEffect(() => {
@@ -119,16 +120,38 @@ export default function Home() {
     toast.success('Quote exported');
   };
 
-  const printInvoice = () => {
-    if (!invoiceRef.current || rows.length === 0) {
+  const printInvoice = async () => {
+    if (rows.length === 0) {
       toast.error('Please add items before generating invoice');
       return;
     }
 
-    toast.info('Opening print dialog...');
-    
-    // Use browser's native print functionality
-    window.print();
+    try {
+      toast.info('Generating PDF...');
+      
+      const blob = await pdf(
+        <InvoicePDF
+          config={invoiceConfig}
+          rows={rows}
+          subscriptionTotal={totals.subscriptionTotal}
+          oneshotDepositTotal={totals.oneshotDepositTotal}
+          oneshotOriginalTotal={totals.oneshotOriginalTotal}
+          grandTotal={totals.grandTotal}
+        />
+      ).toBlob();
+      
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `invoice-${invoiceConfig.invoiceNumber}-${Date.now()}.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+      
+      toast.success('PDF downloaded successfully');
+    } catch (error) {
+      console.error('PDF generation error:', error);
+      toast.error('Failed to generate PDF');
+    }
   };
 
   const subscriptionRows = rows.filter(r => r.category === 'subscription');
@@ -177,7 +200,7 @@ export default function Home() {
                 {showInvoice && (
                   <Button onClick={printInvoice}>
                     <Printer className="mr-2 h-4 w-4" />
-                    Print / Save as PDF
+                    Download PDF
                   </Button>
                 )}
               </div>
@@ -293,7 +316,6 @@ export default function Home() {
             <div className="flex justify-center">
               <div className="shadow-2xl">
                 <InvoicePreview
-                  ref={invoiceRef}
                   config={invoiceConfig}
                   rows={rows}
                   subscriptionTotal={totals.subscriptionTotal}
@@ -305,19 +327,6 @@ export default function Home() {
             </div>
           </TabsContent>
         </Tabs>
-
-        {/* Print-only view */}
-        <div className="hidden print:block">
-          <InvoicePreview
-            ref={invoiceRef}
-            config={invoiceConfig}
-            rows={rows}
-            subscriptionTotal={totals.subscriptionTotal}
-            oneshotDepositTotal={totals.oneshotDepositTotal}
-            oneshotOriginalTotal={totals.oneshotOriginalTotal}
-            grandTotal={totals.grandTotal}
-          />
-        </div>
       </main>
     </div>
   );

@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+
 import type { InvoiceConfig } from '../../../shared/invoice-types';
 import type { CalculatorRow } from '../../../shared/types';
 import { formatCurrency } from '@/lib/calculator';
@@ -12,8 +12,7 @@ interface InvoicePreviewProps {
   grandTotal: number;
 }
 
-const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
-  ({ config, rows, subscriptionTotal, oneshotDepositTotal, oneshotOriginalTotal, grandTotal }, ref) => {
+export default function InvoicePreview({ config, rows, subscriptionTotal, oneshotDepositTotal, oneshotOriginalTotal, grandTotal }: InvoicePreviewProps) {
     const formatDate = (dateStr: string) => {
       const date = new Date(dateStr);
       return date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
@@ -23,8 +22,8 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
     const oneshotRows = rows.filter(r => r.category === 'oneshot');
     const allRows = [...subscriptionRows, ...oneshotRows];
 
-    return (
-      <div ref={ref} className="p-12 min-h-[297mm]" style={{ width: '210mm', backgroundColor: '#ffffff', color: '#000000' }}>
+  return (
+    <div className="p-12 min-h-[297mm]" style={{ width: '210mm', backgroundColor: '#ffffff', color: '#000000' }}>
         {/* Header */}
         <div className="border-2 border-black mb-6">
           <div className="flex justify-between items-start p-6 border-b-2 border-black">
@@ -162,14 +161,9 @@ const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
         <div className="text-center text-sm mt-8" style={{ color: '#4b5563' }}>
           <div>POWERED BY</div>
         </div>
-      </div>
-    );
-  }
-);
-
-InvoicePreview.displayName = 'InvoicePreview';
-
-export default InvoicePreview;
+    </div>
+  );
+}
 
 // Helper function to convert number to words (simplified)
 function numberToWords(num: number): string {
