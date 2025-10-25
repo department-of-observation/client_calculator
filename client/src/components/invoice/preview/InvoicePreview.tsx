@@ -13,13 +13,15 @@ export default function InvoicePreview({
   config,
   rows,
   subscriptionTotal,
-  oneshotDepositTotal,
-  oneshotOriginalTotal,
+  depositTotal,
+  depositOriginalTotal,
+  fullTotal,
   grandTotal,
 }: InvoiceComponentProps) {
-  const subscriptionRows = rows.filter(r => r.category === 'subscription');
-  const oneshotRows = rows.filter(r => r.category === 'oneshot');
-  const allRows = [...subscriptionRows, ...oneshotRows];
+  const subscriptionRows = rows.filter(r => r.paymentType === 'subscription');
+  const depositRows = rows.filter(r => r.paymentType === 'deposit');
+  const fullRows = rows.filter(r => r.paymentType === 'full');
+  const allRows = [...subscriptionRows, ...depositRows, ...fullRows];
 
   return (
     <div className="p-12 min-h-[297mm]" style={{ width: '210mm', backgroundColor: '#ffffff', color: '#000000' }}>
@@ -48,7 +50,8 @@ export default function InvoicePreview({
         <PreviewLineItems rows={allRows} />
         <PreviewTotals
           subscriptionTotal={subscriptionTotal}
-          oneshotDepositTotal={oneshotDepositTotal}
+          depositTotal={depositTotal}
+          fullTotal={fullTotal}
           grandTotal={grandTotal}
         />
         {config.notes && <PreviewNotes notes={config.notes} />}

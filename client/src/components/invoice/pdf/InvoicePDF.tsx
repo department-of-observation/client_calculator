@@ -15,13 +15,15 @@ export default function InvoicePDF({
   config,
   rows,
   subscriptionTotal,
-  oneshotDepositTotal,
-  oneshotOriginalTotal,
+  depositTotal,
+  depositOriginalTotal,
+  fullTotal,
   grandTotal,
 }: InvoiceComponentProps) {
-  const subscriptionRows = rows.filter(r => r.category === 'subscription');
-  const oneshotRows = rows.filter(r => r.category === 'oneshot');
-  const allRows = [...subscriptionRows, ...oneshotRows];
+  const subscriptionRows = rows.filter(r => r.paymentType === 'subscription');
+  const depositRows = rows.filter(r => r.paymentType === 'deposit');
+  const fullRows = rows.filter(r => r.paymentType === 'full');
+  const allRows = [...subscriptionRows, ...depositRows, ...fullRows];
 
   return (
     <Document>
@@ -51,7 +53,8 @@ export default function InvoicePDF({
           <PDFLineItems rows={allRows} />
           <PDFTotals
             subscriptionTotal={subscriptionTotal}
-            oneshotDepositTotal={oneshotDepositTotal}
+            depositTotal={depositTotal}
+            fullTotal={fullTotal}
             grandTotal={grandTotal}
           />
           {config.notes && <PDFNotes notes={config.notes} />}

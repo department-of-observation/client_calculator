@@ -1,13 +1,12 @@
 import type { CalculatorRow } from '../../../shared/types';
 
-export const ONESHOT_DEPOSIT_MULTIPLIER = 0.5;
+export const DEPOSIT_MULTIPLIER = 0.5;
 
 /**
- * Calculate the line total for a row
- * For oneshot items: 
- *   - If isFullPayment is true: shows full amount
- *   - If isFullPayment is false/undefined: applies deposit multiplier (shows deposit amount)
- * For subscription items: shows full amount
+ * Calculate the line total for a row based on payment type
+ * - subscription: shows full amount (recurring)
+ * - deposit: applies 50% deposit multiplier
+ * - full: shows full amount (one-time payment)
  */
 export function calculateLineTotal(row: CalculatorRow): {
   displayAmount: number;
@@ -16,9 +15,9 @@ export function calculateLineTotal(row: CalculatorRow): {
   const baseAmount = row.price * row.quantity;
   const discountedAmount = baseAmount * (1 - row.discount / 100);
   
-  if (row.category === 'oneshot' && !row.isFullPayment) {
+  if (row.paymentType === 'deposit') {
     return {
-      displayAmount: discountedAmount * ONESHOT_DEPOSIT_MULTIPLIER,
+      displayAmount: discountedAmount * DEPOSIT_MULTIPLIER,
       originalAmount: discountedAmount
     };
   }
@@ -30,29 +29,35 @@ export function calculateLineTotal(row: CalculatorRow): {
 }
 
 /**
- * Calculate totals for all rows grouped by category
+ * Calculate totals for all rows grouped by payment type
  */
 export function calculateTotals(rows: CalculatorRow[]) {
-  const subscriptionRows = rows.filter(r => r.category === 'subscription');
-  const oneshotRows = rows.filter(r => r.category === 'oneshot');
+  const subscriptionRows = rows.filter(r => r.paymentType === 'subscription');
+  const depositRows = rows.filter(r => r.paymentType === 'deposit');
+  const fullRows = rows.filter(r => r.paymentType === 'full');
   
   const subscriptionTotal = subscriptionRows.reduce((sum, row) => {
     return sum + calculateLineTotal(row).displayAmount;
   }, 0);
   
-  const oneshotDepositTotal = oneshotRows.reduce((sum, row) => {
+  const depositTotal = depositRows.reduce((sum, row) => {
     return sum + calculateLineTotal(row).displayAmount;
   }, 0);
   
-  const oneshotOriginalTotal = oneshotRows.reduce((sum, row) => {
+  const depositOriginalTotal = depositRows.reduce((sum, row) => {
     return sum + calculateLineTotal(row).originalAmount;
+  }, 0);
+  
+  const fullTotal = fullRows.reduce((sum, row) => {
+    return sum + calculateLineTotal(row).displayAmount;
   }, 0);
   
   return {
     subscriptionTotal,
-    oneshotDepositTotal,
-    oneshotOriginalTotal,
-    grandTotal: subscriptionTotal + oneshotDepositTotal
+    depositTotal,
+    depositOriginalTotal,
+    fullTotal,
+    grandTotal: subscriptionTotal + depositTotal + fullTotal
   };
 }
 

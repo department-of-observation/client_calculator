@@ -36,7 +36,8 @@ export interface InvoiceLineItemsProps {
 
 export interface InvoiceTotalsProps {
   subscriptionTotal: number;
-  oneshotDepositTotal: number;
+  depositTotal: number;
+  fullTotal: number;
   grandTotal: number;
 }
 
@@ -52,8 +53,9 @@ export interface InvoiceComponentProps {
   config: InvoiceConfig;
   rows: CalculatorRow[];
   subscriptionTotal: number;
-  oneshotDepositTotal: number;
-  oneshotOriginalTotal: number;
+  depositTotal: number;
+  depositOriginalTotal: number;
+  fullTotal: number;
   grandTotal: number;
 }
 

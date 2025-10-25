@@ -28,7 +28,7 @@ export default function Home() {
   const [rows, setRows] = useState<CalculatorRowType[]>([]);
   const [invoiceConfig, setInvoiceConfig] = useState<InvoiceConfig>(DEFAULT_INVOICE_CONFIG);
   const [showInvoice, setShowInvoice] = useState(false);
-  const [categoryFilter, setCategoryFilter] = useState<'all' | 'subscription' | 'oneshot'>('all');
+  const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [expandedDescription, setExpandedDescription] = useState<string | null>(null);
 
   // Load sample XLSX on mount
@@ -52,11 +52,14 @@ export default function Home() {
       const rows = await readXlsxFile(file);
       
       // Skip header row and map data
+      // Expected columns: name, price, category, description, shortdescription, payment type
       const items = rows.slice(1).map((row) => ({
         name: String(row[0] || ''),
         price: parseFloat(String(row[1])) || 0,
-        category: (row[2] === 'subscription' ? 'subscription' : 'oneshot') as 'subscription' | 'oneshot',
-        Description: String(row[3] || '')
+        category: String(row[2] || ''),
+        description: String(row[3] || ''),
+        shortDescription: String(row[4] || ''),
+        paymentType: (String(row[5] || 'deposit').toLowerCase() as 'subscription' | 'deposit' | 'full')
       }));
       
       setPricingItems(items);
@@ -78,8 +81,7 @@ export default function Home() {
       ...item,
       id: `${Date.now()}-${Math.random()}`,
       quantity: 1,
-      discount: 0,
-      isFullPayment: false // Default to deposit mode for oneshot items
+      discount: 0
     };
     setRows([...rows, newRow]);
     toast.success(`Added ${item.name}`);
@@ -125,8 +127,9 @@ export default function Home() {
           config={invoiceConfig}
           rows={rows}
           subscriptionTotal={totals.subscriptionTotal}
-          oneshotDepositTotal={totals.oneshotDepositTotal}
-          oneshotOriginalTotal={totals.oneshotOriginalTotal}
+          depositTotal={totals.depositTotal}
+          depositOriginalTotal={totals.depositOriginalTotal}
+          fullTotal={totals.fullTotal}
           grandTotal={totals.grandTotal}
         />
       ).toBlob();
@@ -145,9 +148,10 @@ export default function Home() {
     }
   };
 
-  const subscriptionRows = rows.filter(r => r.category === 'subscription');
-  const oneshotRows = rows.filter(r => r.category === 'oneshot');
   const totals = calculateTotals(rows);
+
+  // Get unique categories from pricing items
+  const uniqueCategories = Array.from(new Set(pricingItems.map(item => item.category)));
 
   const filteredItems = pricingItems.filter(item => 
     categoryFilter === 'all' || item.category === categoryFilter
@@ -234,7 +238,7 @@ export default function Home() {
                       />
                     </label>
 
-                    <div className="flex gap-1 ml-auto">
+                    <div className="flex gap-1 ml-auto flex-wrap">
                       <Button 
                         variant={categoryFilter === 'all' ? 'default' : 'outline'}
                         size="sm"
@@ -242,20 +246,16 @@ export default function Home() {
                       >
                         All
                       </Button>
-                      <Button 
-                        variant={categoryFilter === 'subscription' ? 'default' : 'outline'}
-                        size="sm"
-                        onClick={() => setCategoryFilter('subscription')}
-                      >
-                        Subscription
-                      </Button>
-                      <Button 
-                        variant={categoryFilter === 'oneshot' ? 'default' : 'outline'}
-                        size="sm"
-                        onClick={() => setCategoryFilter('oneshot')}
-                      >
-                        One-Shot
-                      </Button>
+                      {uniqueCategories.map(cat => (
+                        <Button 
+                          key={cat}
+                          variant={categoryFilter === cat ? 'default' : 'outline'}
+                          size="sm"
+                          onClick={() => setCategoryFilter(cat)}
+                        >
+                          {cat}
+                        </Button>
+                      ))}
                     </div>
                   </div>
 
@@ -263,14 +263,14 @@ export default function Home() {
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-2 max-h-[600px] overflow-y-auto">
                     {filteredItems.map((item) => (
                       <div key={item.name} className="relative group">
-                        <Tooltip content={item.Description || ''}>
+                        <Tooltip content={item.shortDescription || ''}>
                           <button
                             onClick={() => addRow(item)}
                             className="w-full bg-background hover:bg-accent border-2 border-border hover:border-primary rounded-lg p-4 text-left transition-all active:scale-95"
                           >
                             <div className="flex justify-between items-start gap-2">
                               <div className="font-semibold text-sm mb-1 line-clamp-2 flex-1">{item.name}</div>
-                              {item.Description && (
+                              {item.description && (
                                 <button
                                   onClick={(e) => {
                                     e.stopPropagation();
@@ -284,12 +284,14 @@ export default function Home() {
                               )}
                             </div>
                             <div className="text-lg font-bold text-primary">{formatCurrency(item.price)}</div>
-                            <div className="text-xs text-muted-foreground mt-1 capitalize">
-                              {item.category === 'subscription' ? '📅 Monthly' : '⚡ One-time'}
+                            <div className="text-xs text-muted-foreground mt-1 capitalize flex items-center gap-1">
+                              {item.paymentType === 'subscription' && '🔄 Recurring'}
+                              {item.paymentType === 'deposit' && '🏦 Deposit'}
+                              {item.paymentType === 'full' && '💵 Full Payment'}
                             </div>
                           </button>
                         </Tooltip>
-                        {expandedDescription === item.name && item.Description && (
+                        {expandedDescription === item.name && item.description && (
                           <div className="md:hidden absolute z-10 mt-1 p-3 bg-popover border border-border rounded-lg shadow-lg text-sm w-full">
                             <button
                               onClick={() => setExpandedDescription(null)}
@@ -297,7 +299,7 @@ export default function Home() {
                             >
                               <X className="h-4 w-4" />
                             </button>
-                            <div className="pr-6">{item.Description}</div>
+                            <div className="pr-6">{item.description}</div>
                           </div>
                         )}
                       </div>
@@ -379,18 +381,7 @@ export default function Home() {
                                   />
                                 </div>
                               </div>
-                              {row.category === 'oneshot' && (
-                                <div className="mt-2">
-                                  <Button
-                                    variant={row.isFullPayment ? "default" : "outline"}
-                                    size="sm"
-                                    onClick={() => updateRow(row.id, { isFullPayment: !row.isFullPayment })}
-                                    className="w-full h-7 text-xs"
-                                  >
-                                    {row.isFullPayment ? "Full Payment" : "50% Deposit"}
-                                  </Button>
-                                </div>
-                              )}
+
                               <div className="text-right font-bold text-primary mt-2">
                                 {formatCurrency(displayAmount)}
                               </div>
@@ -401,25 +392,31 @@ export default function Home() {
 
                       {/* Totals */}
                       <div className="border-t border-border pt-4 space-y-2">
-                        {subscriptionRows.length > 0 && (
+                        {totals.subscriptionTotal > 0 && (
                           <div className="flex justify-between text-sm">
-                            <span className="text-muted-foreground">Subscription Total</span>
+                            <span className="text-muted-foreground">🔄 Subscription Total</span>
                             <span className="font-semibold">{formatCurrency(totals.subscriptionTotal)}</span>
                           </div>
                         )}
-                        {oneshotRows.length > 0 && (
+                        {totals.depositTotal > 0 && (
                           <div className="flex justify-between text-sm">
-                            <span className="text-muted-foreground">One-Shot Deposit</span>
-                            <span className="font-semibold">{formatCurrency(totals.oneshotDepositTotal)}</span>
+                            <span className="text-muted-foreground">🏦 Deposit Total</span>
+                            <span className="font-semibold">{formatCurrency(totals.depositTotal)}</span>
+                          </div>
+                        )}
+                        {totals.fullTotal > 0 && (
+                          <div className="flex justify-between text-sm">
+                            <span className="text-muted-foreground">💵 Full Payment Total</span>
+                            <span className="font-semibold">{formatCurrency(totals.fullTotal)}</span>
                           </div>
                         )}
                         <div className="flex justify-between text-lg font-bold pt-2 border-t border-border">
                           <span>Grand Total</span>
                           <span className="text-primary">{formatCurrency(totals.grandTotal)}</span>
                         </div>
-                        {totals.oneshotOriginalTotal > totals.oneshotDepositTotal && (
+                        {totals.depositOriginalTotal > totals.depositTotal && (
                           <div className="text-xs text-muted-foreground text-right">
-                            Balance due: {formatCurrency(totals.oneshotOriginalTotal - totals.oneshotDepositTotal)}
+                            Balance due: {formatCurrency(totals.depositOriginalTotal - totals.depositTotal)}
                           </div>
                         )}
                       </div>
@@ -446,20 +443,29 @@ export default function Home() {
               <div className="mt-8">
                 <h3 className="text-lg font-bold mb-4">Detailed Breakdown</h3>
                 <CategorySection
-                  title="Subscription Packages"
+                  title="🔄 Subscription Packages"
                   subtitle="Monthly recurring services - paid in full at start of month"
-                  rows={subscriptionRows}
+                  rows={rows.filter(r => r.paymentType === 'subscription')}
                   total={totals.subscriptionTotal}
                   onUpdate={updateRow}
                   onDelete={deleteRow}
                 />
 
                 <CategorySection
-                  title="One-Shot Packages"
-                  subtitle="One-time services - 50% deposit upfront, balance on delivery"
-                  rows={oneshotRows}
-                  total={totals.oneshotDepositTotal}
-                  originalTotal={totals.oneshotOriginalTotal}
+                  title="🏦 Deposit Packages"
+                  subtitle="Services requiring 50% deposit upfront, balance on delivery"
+                  rows={rows.filter(r => r.paymentType === 'deposit')}
+                  total={totals.depositTotal}
+                  originalTotal={totals.depositOriginalTotal}
+                  onUpdate={updateRow}
+                  onDelete={deleteRow}
+                />
+
+                <CategorySection
+                  title="💵 Full Payment Packages"
+                  subtitle="One-time services paid in full"
+                  rows={rows.filter(r => r.paymentType === 'full')}
+                  total={totals.fullTotal}
                   onUpdate={updateRow}
                   onDelete={deleteRow}
                 />
@@ -474,8 +480,9 @@ export default function Home() {
                   config={invoiceConfig}
                   rows={rows}
                   subscriptionTotal={totals.subscriptionTotal}
-                  oneshotDepositTotal={totals.oneshotDepositTotal}
-                  oneshotOriginalTotal={totals.oneshotOriginalTotal}
+                  depositTotal={totals.depositTotal}
+                  depositOriginalTotal={totals.depositOriginalTotal}
+                  fullTotal={totals.fullTotal}
                   grandTotal={totals.grandTotal}
                 />
               </div>

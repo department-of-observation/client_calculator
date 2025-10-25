@@ -4,7 +4,8 @@ import { formatCurrency } from '@/lib/calculator';
 
 export function PreviewTotals({
   subscriptionTotal,
-  oneshotDepositTotal,
+  depositTotal,
+  fullTotal,
   grandTotal,
 }: InvoiceTotalsProps) {
   return (
@@ -16,7 +17,7 @@ export function PreviewTotals({
       <div className="border-l-2 border-black">
         <div className="flex justify-between p-4 border-b" style={{ borderColor: '#d1d5db' }}>
           <span className="font-bold">Sub Total</span>
-          <span>{formatCurrency(subscriptionTotal + oneshotDepositTotal)}</span>
+          <span>{formatCurrency(subscriptionTotal + depositTotal + fullTotal)}</span>
         </div>
         <div className="flex justify-between p-4 border-b" style={{ borderColor: '#d1d5db' }}>
           <span className="font-bold">Total</span>

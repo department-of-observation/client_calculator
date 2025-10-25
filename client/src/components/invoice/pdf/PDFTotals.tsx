@@ -6,7 +6,8 @@ import { styles } from './styles';
 
 export function PDFTotals({
   subscriptionTotal,
-  oneshotDepositTotal,
+  depositTotal,
+  fullTotal,
   grandTotal,
 }: InvoiceTotalsProps) {
   return (
@@ -18,7 +19,7 @@ export function PDFTotals({
       <View style={styles.totalsRight}>
         <View style={styles.totalRow}>
           <Text style={styles.totalLabel}>Sub Total</Text>
-          <Text>{formatCurrency(subscriptionTotal + oneshotDepositTotal)}</Text>
+          <Text>{formatCurrency(subscriptionTotal + depositTotal + fullTotal)}</Text>
         </View>
         <View style={styles.totalRow}>
           <Text style={styles.totalLabel}>Total</Text>
