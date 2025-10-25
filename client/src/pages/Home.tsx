@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Upload, Plus, Download, FileText, Settings, Printer } from 'lucide-react';
-import Papa from 'papaparse';
+import * as XLSX from 'xlsx';
 import type { PricingItem, CalculatorRow as CalculatorRowType } from '../../../shared/types';
 import type { InvoiceConfig } from '../../../shared/invoice-types';
 import { DEFAULT_INVOICE_CONFIG } from '../../../shared/invoice-types';
@@ -35,41 +35,41 @@ export default function Home() {
   const [invoiceConfig, setInvoiceConfig] = useState<InvoiceConfig>(DEFAULT_INVOICE_CONFIG);
   const [showInvoice, setShowInvoice] = useState(false);
 
-  // Load sample CSV on mount
+  // Load sample XLSX on mount
   useEffect(() => {
     loadSampleData();
   }, []);
 
   const loadSampleData = async () => {
     try {
-      const response = await fetch('/sample-pricing.csv');
-      const csvText = await response.text();
-      parseCsvData(csvText);
+      const response = await fetch('/pricing.xlsx');
+      const arrayBuffer = await response.arrayBuffer();
+      parseXlsxData(arrayBuffer);
     } catch (error) {
       toast.error('Failed to load sample data');
       console.error(error);
     }
   };
 
-  const parseCsvData = (csvText: string) => {
-    Papa.parse<PricingItem>(csvText, {
-      header: true,
-      skipEmptyLines: true,
-      complete: (results) => {
-        const items = results.data.map((item) => ({
-          name: item.name,
-          price: parseFloat(String(item.price)) || 0,
-          category: (item.category === 'subscription' ? 'subscription' : 'oneshot') as 'subscription' | 'oneshot',
-          Description: item.Description || ''
-        }));
-        setPricingItems(items);
-        toast.success(`Loaded ${items.length} pricing items`);
-      },
-      error: (error: Error) => {
-        toast.error('Failed to parse CSV');
-        console.error(error);
-      }
-    });
+  const parseXlsxData = (arrayBuffer: ArrayBuffer) => {
+    try {
+      const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+      const jsonData = XLSX.utils.sheet_to_json<PricingItem>(worksheet);
+      
+      const items = jsonData.map((item) => ({
+        name: item.name,
+        price: parseFloat(String(item.price)) || 0,
+        category: (item.category === 'subscription' ? 'subscription' : 'oneshot') as 'subscription' | 'oneshot',
+        Description: item.Description || ''
+      }));
+      setPricingItems(items);
+      toast.success(`Loaded ${items.length} pricing items`);
+    } catch (error) {
+      toast.error('Failed to parse XLSX');
+      console.error(error);
+    }
   };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,10 +78,10 @@ export default function Home() {
 
     const reader = new FileReader();
     reader.onload = (e) => {
-      const text = e.target?.result as string;
-      parseCsvData(text);
+      const arrayBuffer = e.target?.result as ArrayBuffer;
+      parseXlsxData(arrayBuffer);
     };
-    reader.readAsText(file);
+    reader.readAsArrayBuffer(file);
   };
 
   const addRow = (item: PricingItem) => {
@@ -220,17 +220,17 @@ export default function Home() {
           <TabsContent value="calculator">
             {/* Controls */}
             <div className="flex gap-3 mb-8">
-              <label htmlFor="csv-upload">
+              <label htmlFor="xlsx-upload">
                 <Button variant="outline" asChild>
                   <span className="cursor-pointer">
                     <Upload className="mr-2 h-4 w-4" />
-                    Import CSV
+                    Import XLSX
                   </span>
                 </Button>
                 <input
-                  id="csv-upload"
+                  id="xlsx-upload"
                   type="file"
-                  accept=".csv"
+                  accept=".xlsx"
                   onChange={handleFileUpload}
                   className="hidden"
                 />
