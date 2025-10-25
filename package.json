@@ -9,7 +9,7 @@
     "buildstatic": "vite build",
     "preview": "vite preview --host",
     "check": "tsc --noEmit",
-    "ghpages": "gh-pages -d dist"
+    "ghpages": "vite build && gh-pages -d dist"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
