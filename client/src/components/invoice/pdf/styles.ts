@@ -22,8 +22,8 @@ export const styles = StyleSheet.create({
     gap: 16,
   },
   logo: {
-    width: 64,
-    height: 64,
+    width: 160,
+    height: 40,
   },
   companyInfo: {
     gap: 4,
