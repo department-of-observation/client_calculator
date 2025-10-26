@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite --host",
+    "prebuild": "node scripts/build-pricing-data.js",
     "build": "vite build",
     "buildstatic": "vite build",
     "preview": "vite preview --host",
@@ -43,6 +44,7 @@
     "tailwindcss": "^4.1.16",
     "typescript": "5.9.3",
     "vite": "^7.1.12",
-    "vite-plugin-html": "^3.2.2"
+    "vite-plugin-html": "^3.2.2",
+    "xlsx": "^0.18.5"
   }
 }
