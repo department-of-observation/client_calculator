@@ -158,10 +158,7 @@ export default function Home() {
   const filteredItems = pricingItems.filter(item => {
     const matchesCategory = categoryFilter === 'all' || item.category === categoryFilter;
     const matchesSearch = searchQuery === '' || 
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (item.shortDescription && item.shortDescription.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      (item.description && item.description.toLowerCase().includes(searchQuery.toLowerCase()));
+      item.name.toLowerCase().includes(searchQuery.toLowerCase());
     
     return matchesCategory && matchesSearch;
   });
