@@ -9,7 +9,7 @@ import type { InvoiceConfig } from '../../../shared/invoice-types';
 import { DEFAULT_INVOICE_CONFIG } from '../../../shared/invoice-types';
 import CategorySection from '@/components/CategorySection';
 import InvoiceConfigForm from '@/components/invoice/InvoiceConfigForm';
-import InvoicePreview from '@/components/invoice/preview/InvoicePreview';
+import InvoiceTemplate from '@/components/invoice/InvoiceTemplate';
 import InvoicePDF from '@/components/invoice/pdf/InvoicePDF';
 import { pdf } from '@react-pdf/renderer';
 import { calculateTotals, formatCurrency, calculateLineTotal } from '@/lib/calculator';
@@ -471,7 +471,7 @@ export default function Home() {
           <TabsContent value="invoice">
             <div className="flex justify-center">
               <div className="shadow-2xl">
-                <InvoicePreview
+                <InvoiceTemplate
                   config={invoiceConfig}
                   rows={rows}
                   subscriptionTotal={totals.subscriptionTotal}
