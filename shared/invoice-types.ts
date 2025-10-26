@@ -1,3 +1,5 @@
+import { format, addDays } from 'date-fns';
+
 export interface InvoiceConfig {
   // Company Info
   companyName: string;
@@ -33,9 +35,9 @@ export const DEFAULT_INVOICE_CONFIG: InvoiceConfig = {
   companyEmail: 'chewjiefeng@gmail.com',
   companyLogo: '/client_calculator/logo.png',
   invoiceNumber: 'INV-000001',
-  invoiceDate: new Date().toISOString().split('T')[0],
+  invoiceDate: format(new Date(), 'yyyy-MM-dd'),
   terms: 'Custom',
-  dueDate: new Date(Date.now() + 8 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+  dueDate: format(addDays(new Date(), 8), 'yyyy-MM-dd'),
   poNumber: '',
   clientName: '',
   clientEmail: '',

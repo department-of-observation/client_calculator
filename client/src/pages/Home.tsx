@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useCalculatorStore } from '@/store/calculator';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Upload, Plus, Download, FileText, Settings, Printer, X, Search } from 'lucide-react';
@@ -26,12 +27,25 @@ import { TooltipLockable } from '@/components/ui/tooltip-lockable';
 import pricingData from '@/data/pricing-data.json';
 
 export default function Home() {
-  const [pricingItems, setPricingItems] = useState<PricingItem[]>([]);
-  const [rows, setRows] = useState<CalculatorRowType[]>([]);
-  const [invoiceConfig, setInvoiceConfig] = useState<InvoiceConfig>(DEFAULT_INVOICE_CONFIG);
+  // Use Zustand store for state management
+  const {
+    pricingItems,
+    rows,
+    invoiceConfig,
+    categoryFilter,
+    searchQuery,
+    setPricingItems,
+    addRow: addRowToStore,
+    updateRow,
+    deleteRow: deleteRowFromStore,
+    setInvoiceConfig,
+    setCategoryFilter,
+    setSearchQuery,
+    reset,
+  } = useCalculatorStore();
+  
+  // Local UI state (not persisted)
   const [showInvoice, setShowInvoice] = useState(false);
-  const [categoryFilter, setCategoryFilter] = useState<string>('all');
-  const [searchQuery, setSearchQuery] = useState<string>('');
 
   // Load pricing data from pre-built JSON on mount
   useEffect(() => {
@@ -78,22 +92,12 @@ export default function Home() {
   };
 
   const addRow = (item: PricingItem) => {
-    const newRow: CalculatorRowType = {
-      ...item,
-      id: `${Date.now()}-${Math.random()}`,
-      quantity: 1,
-      discount: 0
-    };
-    setRows([...rows, newRow]);
+    addRowToStore(item);
     toast.success(`Added ${item.name}`);
   };
 
-  const updateRow = (id: string, updates: Partial<CalculatorRowType>) => {
-    setRows(rows.map(row => row.id === id ? { ...row, ...updates } : row));
-  };
-
   const deleteRow = (id: string) => {
-    setRows(rows.filter(row => row.id !== id));
+    deleteRowFromStore(id);
     toast.success('Item removed');
   };
 
@@ -317,7 +321,7 @@ export default function Home() {
                       <Button 
                         variant="ghost" 
                         size="sm"
-                        onClick={() => setRows([])}
+                        onClick={() => reset()}
                         className="text-destructive hover:text-destructive"
                       >
                         <X className="h-4 w-4 mr-1" />

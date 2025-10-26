@@ -19,12 +19,12 @@ export function PDFLineItems({ rows }: InvoiceLineItemsProps) {
           row.price,
           row.quantity,
           row.discount,
-          row.category,
-          row.isFullPayment
+          row.paymentType,
+          row.convertToSubscription
         );
 
-        // Add "50% Deposit - " prefix for oneshot items in deposit mode
-        const displayName = row.category === 'oneshot' && !row.isFullPayment 
+        // Add "50% Deposit - " prefix for deposit items not converted to subscription
+        const displayName = row.paymentType === 'deposit' && !row.convertToSubscription
           ? `50% Deposit - ${row.name}` 
           : row.name;
 
@@ -33,8 +33,8 @@ export function PDFLineItems({ rows }: InvoiceLineItemsProps) {
             <Text style={styles.col1}>{index + 1}</Text>
             <View style={styles.col6}>
               <Text style={styles.itemName}>{displayName}</Text>
-              {row.Description && (
-                <Text style={styles.itemDescription}>{row.Description}</Text>
+              {row.description && (
+                <Text style={styles.itemDescription}>{row.description}</Text>
               )}
               {row.discount > 0 && (
                 <Text style={styles.discount}>Discount: {row.discount}%</Text>

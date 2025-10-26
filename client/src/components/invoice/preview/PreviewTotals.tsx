@@ -1,5 +1,5 @@
 import type { InvoiceTotalsProps } from '../shared/types';
-import { numberToWords } from '../utils/numberToWords';
+import { toWords } from 'number-to-words';
 import { formatCurrency } from '@/lib/calculator';
 
 export function PreviewTotals({
@@ -12,7 +12,7 @@ export function PreviewTotals({
     <div className="grid grid-cols-2 border-t-2 border-black">
       <div className="p-4">
         <div className="font-bold mb-2">Total In Words</div>
-        <div className="italic">{numberToWords(grandTotal)}</div>
+        <div className="italic">{toWords(grandTotal)}</div>
       </div>
       <div className="border-l-2 border-black">
         <div className="flex justify-between p-4 border-b" style={{ borderColor: '#d1d5db' }}>

@@ -1,5 +1,4 @@
 import { useDialogComposition } from "@/components/ui/dialog";
-import { useComposition } from "@/hooks/useComposition";
 import { cn } from "@/lib/utils";
 import * as React from "react";
 
@@ -14,40 +13,33 @@ function Input({
   // Get dialog composition context if available (will be no-op if not inside Dialog)
   const dialogComposition = useDialogComposition();
 
-  // Add composition event handlers to support input method editor (IME) for CJK languages.
-  const {
-    onCompositionStart: handleCompositionStart,
-    onCompositionEnd: handleCompositionEnd,
-    onKeyDown: handleKeyDown,
-  } = useComposition<HTMLInputElement>({
-    onKeyDown: (e) => {
-      // Check if this is an Enter key that should be blocked
-      const isComposing = (e.nativeEvent as any).isComposing || dialogComposition.justEndedComposing();
+  // Handle composition events for IME (Input Method Editor) support
+  const handleCompositionStart = (e: React.CompositionEvent<HTMLInputElement>) => {
+    dialogComposition.setComposing(true);
+    onCompositionStart?.(e);
+  };
 
-      // If Enter key is pressed while composing or just after composition ended,
-      // don't call the user's onKeyDown (this blocks the business logic)
-      if (e.key === "Enter" && isComposing) {
-        return;
-      }
+  const handleCompositionEnd = (e: React.CompositionEvent<HTMLInputElement>) => {
+    dialogComposition.markCompositionEnd();
+    // Delay setting composing to false to handle Safari's event order
+    setTimeout(() => {
+      dialogComposition.setComposing(false);
+    }, 100);
+    onCompositionEnd?.(e);
+  };
 
-      // Otherwise, call the user's onKeyDown
-      onKeyDown?.(e);
-    },
-    onCompositionStart: e => {
-      dialogComposition.setComposing(true);
-      onCompositionStart?.(e);
-    },
-    onCompositionEnd: e => {
-      // Mark that composition just ended - this helps handle the Enter key that confirms input
-      dialogComposition.markCompositionEnd();
-      // Delay setting composing to false to handle Safari's event order
-      // In Safari, compositionEnd fires before the ESC keydown event
-      setTimeout(() => {
-        dialogComposition.setComposing(false);
-      }, 100);
-      onCompositionEnd?.(e);
-    },
-  });
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // Check if composition is active using native event property
+    const isComposing = (e.nativeEvent as any).isComposing || dialogComposition.justEndedComposing();
+
+    // Block Enter key during composition to prevent premature form submission
+    if (e.key === "Enter" && isComposing) {
+      return;
+    }
+
+    // Call user's onKeyDown handler
+    onKeyDown?.(e);
+  };
 
   return (
     <input
@@ -68,3 +60,4 @@ function Input({
 }
 
 export { Input };
+

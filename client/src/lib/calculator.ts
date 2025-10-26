@@ -63,9 +63,17 @@ export function calculateTotals(rows: CalculatorRow[]) {
 }
 
 /**
- * Format currency for display
+ * Format currency for display using Intl.NumberFormat
+ * Provides proper thousand separators and locale-aware formatting
  */
+const currencyFormatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
+
 export function formatCurrency(amount: number): string {
-  return `$${amount.toFixed(2)}`;
+  return currencyFormatter.format(amount);
 }
 

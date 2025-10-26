@@ -18,12 +18,12 @@ export function PreviewLineItems({ rows }: InvoiceLineItemsProps) {
           row.price,
           row.quantity,
           row.discount,
-          row.category,
-          row.isFullPayment
+          row.paymentType,
+          row.convertToSubscription
         );
 
-        // Add "50% Deposit - " prefix for oneshot items in deposit mode
-        const displayName = row.category === 'oneshot' && !row.isFullPayment 
+        // Add "50% Deposit - " prefix for deposit items not converted to subscription
+        const displayName = row.paymentType === 'deposit' && !row.convertToSubscription
           ? `50% Deposit - ${row.name}` 
           : row.name;
 
@@ -32,8 +32,8 @@ export function PreviewLineItems({ rows }: InvoiceLineItemsProps) {
             <div className="col-span-1">{index + 1}</div>
             <div className="col-span-6">
               <div className="font-semibold">{displayName}</div>
-              {row.Description && (
-                <div className="text-xs mt-1" style={{ color: '#6b7280', lineHeight: '1.4' }}>{row.Description}</div>
+              {row.description && (
+                <div className="text-xs mt-1" style={{ color: '#6b7280', lineHeight: '1.4' }}>{row.description}</div>
               )}
               {row.discount > 0 && (
                 <div className="text-xs mt-1" style={{ color: '#4b5563' }}>Discount: {row.discount}%</div>

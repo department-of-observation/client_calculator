@@ -19,8 +19,8 @@ export function TooltipLockable({
   const [isLocked, setIsLocked] = React.useState(false);
   const [progress, setProgress] = React.useState(0);
   const [position, setPosition] = React.useState({ x: 0, y: 0 });
-  const timeoutRef = React.useRef<NodeJS.Timeout>();
-  const progressIntervalRef = React.useRef<NodeJS.Timeout>();
+  const timeoutRef = React.useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const progressIntervalRef = React.useRef<ReturnType<typeof setInterval> | undefined>(undefined);
   const triggerRef = React.useRef<HTMLDivElement>(null);
 
   const handleMouseEnter = (e: React.MouseEvent) => {
