@@ -289,7 +289,9 @@ export default function Home() {
                           <div className="font-semibold text-sm mb-1 line-clamp-2">{item.name}</div>
                           <div className="text-lg font-bold text-primary">{formatCurrency(item.price)}</div>
                           <div className="text-xs text-muted-foreground mt-1 capitalize">
-                            {item.paymentType}
+                            {item.paymentType === 'subscription' && '🔄 Recurring'}
+                            {item.paymentType === 'deposit' && '🏦 Deposit'}
+                            {item.paymentType === 'full' && '💵 Full Payment'}
                           </div>
                         </button>
                       </TooltipLockable>
@@ -297,8 +299,10 @@ export default function Home() {
                   </div>
 
                   {filteredItems.length === 0 && (
-                    <div className="text-center py-8 text-muted-foreground">
-                      No items found matching your search
+                    <div className="text-center py-12 text-muted-foreground">
+                      <Plus className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                      <p className="text-lg">No items found matching your search</p>
+                      <p className="text-sm mt-2">Try adjusting your search or category filter</p>
                     </div>
                   )}
                 </div>
