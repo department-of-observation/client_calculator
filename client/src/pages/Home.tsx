@@ -308,90 +308,176 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Right side: Selected Items */}
+              {/* Right side: Current Order */}
               <div className="lg:col-span-1">
-                <div className="bg-card rounded-lg border border-border p-4 sticky top-20">
+                <div className="bg-card rounded-lg border border-border p-4 sticky top-24">
                   <div className="flex justify-between items-center mb-4">
-                    <h2 className="font-semibold">Selected Items</h2>
+                    <h2 className="text-lg font-bold">Current Order</h2>
                     {rows.length > 0 && (
-                      <Button variant="ghost" size="sm" onClick={exportData}>
-                        <Download className="mr-2 h-4 w-4" />
-                        Export
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => setRows([])}
+                        className="text-destructive hover:text-destructive"
+                      >
+                        <X className="h-4 w-4 mr-1" />
+                        Clear
                       </Button>
                     )}
                   </div>
 
                   {rows.length === 0 ? (
-                    <div className="text-center py-8 text-muted-foreground text-sm">
-                      Click items to add them to your quote
+                    <div className="text-center py-12 text-muted-foreground">
+                      <FileText className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                      <p className="text-sm">No items added</p>
+                      <p className="text-xs mt-2">Click items on the left to add</p>
                     </div>
                   ) : (
                     <>
                       <div className="space-y-2 max-h-[400px] overflow-y-auto mb-4">
-                        {rows.map((row) => (
-                          <CategorySection
-                            key={row.id}
-                            row={row}
-                            onUpdate={updateRow}
-                            onDelete={deleteRow}
-                          />
-                        ))}
+                        {rows.map((row) => {
+                          const { displayAmount } = calculateLineTotal(row);
+                          return (
+                            <div key={row.id} className="bg-background rounded p-3 border border-border">
+                              <div className="flex justify-between items-start mb-2">
+                                <div className="font-medium text-sm flex-1">{row.name}</div>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  onClick={() => deleteRow(row.id)}
+                                  className="h-6 w-6 -mt-1 -mr-1 text-destructive hover:text-destructive"
+                                >
+                                  <X className="h-3 w-3" />
+                                </Button>
+                              </div>
+                              <div className="grid grid-cols-2 gap-2 text-xs">
+                                <div>
+                                  <label className="text-muted-foreground">Qty</label>
+                                  <input
+                                    type="number"
+                                    min="0"
+                                    value={row.quantity}
+                                    onChange={(e) => updateRow(row.id, { quantity: parseInt(e.target.value) || 0 })}
+                                    className="w-full px-2 py-1 border rounded mt-1"
+                                  />
+                                </div>
+                                <div>
+                                  <label className="text-muted-foreground">Disc %</label>
+                                  <input
+                                    type="number"
+                                    min="0"
+                                    max="100"
+                                    value={row.discount}
+                                    onChange={(e) => updateRow(row.id, { discount: parseFloat(e.target.value) || 0 })}
+                                    className="w-full px-2 py-1 border rounded mt-1"
+                                  />
+                                </div>
+                              </div>
+                              {row.paymentType === 'deposit' && (
+                                <div className="mt-2">
+                                  <Button
+                                    variant={row.convertToSubscription ? "default" : "outline"}
+                                    size="sm"
+                                    onClick={() => updateRow(row.id, { convertToSubscription: !row.convertToSubscription })}
+                                    className="w-full h-7 text-xs"
+                                  >
+                                    {row.convertToSubscription ? "🔄 Subscription" : "🏦 50% Deposit"}
+                                  </Button>
+                                </div>
+                              )}
+                              <div className="text-right font-bold text-primary mt-2">
+                                {formatCurrency(displayAmount)}
+                              </div>
+                            </div>
+                          );
+                        })}
                       </div>
 
+                      {/* Totals */}
                       <div className="border-t border-border pt-4 space-y-2">
                         {totals.subscriptionTotal > 0 && (
                           <div className="flex justify-between text-sm">
-                            <span>Subscription Total:</span>
-                            <span className="font-semibold">{formatCurrency(totals.subscriptionTotal)}/mo</span>
+                            <span className="text-muted-foreground">🔄 Subscription Total</span>
+                            <span className="font-semibold">{formatCurrency(totals.subscriptionTotal)}</span>
                           </div>
                         )}
-                        
                         {totals.depositTotal > 0 && (
-                          <>
-                            {totals.depositOriginalTotal !== totals.depositTotal && (
-                              <div className="flex justify-between text-sm text-muted-foreground line-through">
-                                <span>Original Deposit:</span>
-                                <span>{formatCurrency(totals.depositOriginalTotal)}</span>
-                              </div>
-                            )}
-                            <div className="flex justify-between text-sm">
-                              <span>Deposit Total:</span>
-                              <span className="font-semibold">{formatCurrency(totals.depositTotal)}</span>
-                            </div>
-                          </>
+                          <div className="flex justify-between text-sm">
+                            <span className="text-muted-foreground">🏦 Deposit Total</span>
+                            <span className="font-semibold">{formatCurrency(totals.depositTotal)}</span>
+                          </div>
                         )}
-                        
                         {totals.fullTotal > 0 && (
                           <div className="flex justify-between text-sm">
-                            <span>Full Payment Total:</span>
+                            <span className="text-muted-foreground">💵 Full Payment Total</span>
                             <span className="font-semibold">{formatCurrency(totals.fullTotal)}</span>
                           </div>
                         )}
-                        
-                        <div className="flex justify-between text-lg font-bold border-t border-border pt-2">
-                          <span>Grand Total:</span>
+                        <div className="flex justify-between text-lg font-bold pt-2 border-t border-border">
+                          <span>Grand Total</span>
                           <span className="text-primary">{formatCurrency(totals.grandTotal)}</span>
                         </div>
+                        {totals.depositOriginalTotal > totals.depositTotal && (
+                          <div className="text-xs text-muted-foreground text-right">
+                            Balance due: {formatCurrency(totals.depositOriginalTotal - totals.depositTotal)}
+                          </div>
+                        )}
                       </div>
                     </>
                   )}
                 </div>
               </div>
             </div>
+
+            {/* Detailed view below for reference */}
+            {rows.length > 0 && (
+              <div className="mt-8">
+                <h3 className="text-lg font-bold mb-4">Detailed Breakdown</h3>
+                <CategorySection
+                  title="🔄 Subscription Packages"
+                  subtitle="Monthly recurring services - paid in full at start of month"
+                  rows={rows.filter(r => r.paymentType === 'subscription')}
+                  total={totals.subscriptionTotal}
+                  onUpdate={updateRow}
+                  onDelete={deleteRow}
+                />
+
+                <CategorySection
+                  title="🏦 Deposit Packages"
+                  subtitle="Services requiring 50% deposit upfront, balance on delivery"
+                  rows={rows.filter(r => r.paymentType === 'deposit')}
+                  total={totals.depositTotal}
+                  originalTotal={totals.depositOriginalTotal}
+                  onUpdate={updateRow}
+                  onDelete={deleteRow}
+                />
+
+                <CategorySection
+                  title="💵 Full Payment Packages"
+                  subtitle="One-time services paid in full"
+                  rows={rows.filter(r => r.paymentType === 'full')}
+                  total={totals.fullTotal}
+                  onUpdate={updateRow}
+                  onDelete={deleteRow}
+                />
+              </div>
+            )}
           </TabsContent>
 
           <TabsContent value="invoice">
-            {rows.length > 0 && (
-              <InvoicePreview
-                config={invoiceConfig}
-                rows={rows}
-                subscriptionTotal={totals.subscriptionTotal}
-                depositTotal={totals.depositTotal}
-                depositOriginalTotal={totals.depositOriginalTotal}
-                fullTotal={totals.fullTotal}
-                grandTotal={totals.grandTotal}
-              />
-            )}
+            <div className="flex justify-center">
+              <div className="shadow-2xl">
+                <InvoicePreview
+                  config={invoiceConfig}
+                  rows={rows}
+                  subscriptionTotal={totals.subscriptionTotal}
+                  depositTotal={totals.depositTotal}
+                  depositOriginalTotal={totals.depositOriginalTotal}
+                  fullTotal={totals.fullTotal}
+                  grandTotal={totals.grandTotal}
+                />
+              </div>
+            </div>
           </TabsContent>
         </Tabs>
       </main>
