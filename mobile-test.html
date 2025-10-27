@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <title>Mobile Test - Client Calculator</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            margin-top: 0;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .device-info {
+            background: #f3e5f5;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .feature-list li:before {
+            content: "✓ ";
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #2196f3;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .warning {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            border-left: 4px solid #ffc107;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 Mobile View Test</h1>
+        
+        <div class="device-info">
+            <strong>Current Device Info:</strong><br>
+            Screen Width: <span id="width"></span>px<br>
+            Screen Height: <span id="height"></span>px<br>
+            Mobile Detected: <span id="isMobile"></span>
+        </div>
+
+        <div class="info">
+            <strong>Mobile Features Implemented:</strong>
+            <ul class="feature-list">
+                <li>Automatic mobile detection at 768px breakpoint</li>
+                <li>Hamburger menu for category filters (80% width slide-in)</li>
+                <li>Floating cart button with item count badge</li>
+                <li>Three-tab layout: Calculator | Cart | Invoice</li>
+                <li>Single/double column grid for POS items</li>
+                <li>Touch-friendly tap targets (min 44x44px)</li>
+                <li>No horizontal scrolling (viewport locked)</li>
+                <li>Clean cart table with no element overlap</li>
+            </ul>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ Testing Instructions:</strong><br>
+            To test mobile view, resize your browser window to less than 768px width, or use browser DevTools to simulate a mobile device (iPhone, Android, etc.)
+        </div>
+
+        <a href="/client_calculator/" class="btn">Open Calculator App</a>
+    </div>
+
+    <script>
+        function updateDeviceInfo() {
+            document.getElementById('width').textContent = window.innerWidth;
+            document.getElementById('height').textContent = window.innerHeight;
+            document.getElementById('isMobile').textContent = window.innerWidth < 768 ? 'Yes ✓' : 'No (Desktop)';
+        }
+        
+        updateDeviceInfo();
+        window.addEventListener('resize', updateDeviceInfo);
+    </script>
+</body>
+</html>
+

@@ -41,9 +41,9 @@ importers:
       number-to-words:
         specifier: ^1.2.4
         version: 1.2.4
-      papaparse:
-        specifier: ^5.5.3
-        version: 5.5.3
+      pako:
+        specifier: ^2.1.0
+        version: 2.1.0
       react:
         specifier: ^19.2.0
         version: 19.2.0
@@ -1583,8 +1583,8 @@ packages:
   pako@1.0.11:
     resolution: {integrity: sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==}
 
-  papaparse@5.5.3:
-    resolution: {integrity: sha512-5QvjGxYVjxO59MGU2lHVYpRWBBtKHnlIAcSe1uNFCkkptUh63NFRj0FJQm7nR67puEruUci/ZkjmEFrjCAyP4A==}
+  pako@2.1.0:
+    resolution: {integrity: sha512-w+eufiZ1WuJYgPXbV/PO3NCMEc3xqylkKHzp8bxp1uW4qaSNQUkwmLLEc3kKsfz8lpV1F8Ht3U1Cm+9Srog2ug==}
 
   param-case@3.0.4:
     resolution: {integrity: sha512-RXlj7zCYokReqWpOPH9oYivUzLYZ5vAPIfEmCTNViosC78F8F0H9y7T7gG2M39ymgutxF5gcFEsyZQSph9Bp3A==}
@@ -3316,7 +3316,7 @@ snapshots:
 
   pako@1.0.11: {}
 
-  papaparse@5.5.3: {}
+  pako@2.1.0: {}
 
   param-case@3.0.4:
     dependencies:

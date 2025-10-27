@@ -2,17 +2,14 @@ import { useState, useEffect } from 'react';
 import { useCalculatorStore } from '@/store/calculator';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Upload, Plus, Download, FileText, Settings, Printer, X, Search } from 'lucide-react';
+import { Upload, Plus, Settings, Menu, ShoppingCart } from 'lucide-react';
 import readXlsxFile from 'read-excel-file';
-import type { PricingItem, CalculatorRow as CalculatorRowType } from '../../../shared/types';
-import type { InvoiceConfig } from '../../../shared/invoice-types';
-import { DEFAULT_INVOICE_CONFIG } from '../../../shared/invoice-types';
-import CategorySection from '@/components/CategorySection';
+import type { PricingItem } from '../../../shared/types';
 import InvoiceConfigForm from '@/components/invoice/InvoiceConfigForm';
 import InvoiceTemplate from '@/components/invoice/InvoiceTemplate';
 import InvoicePDF from '@/components/invoice/pdf/InvoicePDF';
 import { pdf } from '@react-pdf/renderer';
-import { calculateTotals, formatCurrency, calculateLineTotal } from '@/lib/calculator';
+import { calculateTotals, formatCurrency } from '@/lib/calculator';
 import { toast } from 'sonner';
 import {
   Dialog,
@@ -25,6 +22,9 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { TooltipLockable } from '@/components/ui/tooltip-lockable';
 import pricingData from '@/data/pricing-data.json';
+import { useMobileDetect } from '@/hooks/useMobileDetect';
+import MobileFilterDrawer from '@/components/MobileFilterDrawer';
+import CartTab from '@/components/CartTab';
 
 export default function Home() {
   // Use Zustand store for state management
@@ -44,8 +44,12 @@ export default function Home() {
     reset,
   } = useCalculatorStore();
   
+  // Mobile detection
+  const isMobile = useMobileDetect();
+  
   // Local UI state (not persisted)
-  const [showInvoice, setShowInvoice] = useState(false);
+  const [activeTab, setActiveTab] = useState<'calculator' | 'cart' | 'invoice'>('calculator');
+  const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
 
   // Load pricing data from pre-built JSON on mount
   useEffect(() => {
@@ -99,23 +103,6 @@ export default function Home() {
   const deleteRow = (id: string) => {
     deleteRowFromStore(id);
     toast.success('Item removed');
-  };
-
-  const exportData = () => {
-    const totals = calculateTotals(rows);
-    const exportData = {
-      items: rows,
-      totals,
-      invoiceConfig
-    };
-    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `quote-${invoiceConfig.invoiceNumber}-${Date.now()}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-    toast.success('Quote exported');
   };
 
   const printInvoice = async () => {
@@ -178,299 +165,188 @@ export default function Home() {
                 Point of Sale System
               </p>
             </div>
-            {rows.length > 0 && (
-              <div className="flex gap-2">
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button variant="outline" size="sm">
-                      <Settings className="mr-2 h-4 w-4" />
-                      Invoice Settings
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
-                    <DialogHeader>
-                      <DialogTitle>Invoice Configuration</DialogTitle>
-                      <DialogDescription>
-                        Configure company details, client information, and invoice settings
-                      </DialogDescription>
-                    </DialogHeader>
-                    <InvoiceConfigForm config={invoiceConfig} onChange={setInvoiceConfig} />
-                  </DialogContent>
-                </Dialog>
-
-                <Button 
-                  variant={showInvoice ? "default" : "outline"}
-                  onClick={() => setShowInvoice(!showInvoice)}
-                  size="sm"
-                >
-                  <FileText className="mr-2 h-4 w-4" />
-                  {showInvoice ? 'Hide Invoice' : 'Preview Invoice'}
-                </Button>
-
-                {showInvoice && (
-                  <Button onClick={printInvoice} size="sm">
-                    <Printer className="mr-2 h-4 w-4" />
-                    Download PDF
+            {rows.length > 0 && !isMobile && (
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    <Settings className="mr-2 h-4 w-4" />
+                    Invoice Settings
                   </Button>
-                )}
-              </div>
+                </DialogTrigger>
+                <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle>Invoice Configuration</DialogTitle>
+                    <DialogDescription>
+                      Configure company details, client information, and invoice settings
+                    </DialogDescription>
+                  </DialogHeader>
+                  <InvoiceConfigForm config={invoiceConfig} onChange={setInvoiceConfig} />
+                </DialogContent>
+              </Dialog>
             )}
           </div>
         </div>
       </header>
 
       <main className="container py-4">
-        <Tabs value={showInvoice ? "invoice" : "calculator"} onValueChange={(v) => setShowInvoice(v === "invoice")} className="print:hidden">
-          <TabsList className="mb-4">
+        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="print:hidden">
+          <TabsList className="mb-4 w-full grid grid-cols-3">
             <TabsTrigger value="calculator">Calculator</TabsTrigger>
-            <TabsTrigger value="invoice" disabled={rows.length === 0}>Invoice Preview</TabsTrigger>
+            <TabsTrigger value="cart">Cart {rows.length > 0 && `(${rows.length})`}</TabsTrigger>
+            <TabsTrigger value="invoice" disabled={rows.length === 0}>Invoice</TabsTrigger>
           </TabsList>
 
+          {/* Calculator Tab */}
           <TabsContent value="calculator">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-              {/* Left side: POS Item Grid */}
-              <div className="lg:col-span-2">
-                <div className="bg-card rounded-lg border border-border p-4 mb-4">
-                  <div className="flex flex-col gap-3 mb-4">
-                    <div className="flex gap-2">
-                      <label htmlFor="xlsx-upload">
-                        <Button variant="outline" size="sm" asChild>
-                          <span className="cursor-pointer">
-                            <Upload className="mr-2 h-4 w-4" />
-                            Import XLSX
-                          </span>
-                        </Button>
-                        <input
-                          id="xlsx-upload"
-                          type="file"
-                          accept=".xlsx"
-                          onChange={handleFileUpload}
-                          className="hidden"
-                        />
-                      </label>
+            <div className="bg-card rounded-lg border border-border p-4">
+              {/* Search and Filter Controls */}
+              <div className="flex flex-col gap-3 mb-4">
+                <div className="flex gap-2">
+                  {isMobile && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setIsFilterDrawerOpen(true)}
+                    >
+                      <Menu className="h-4 w-4" />
+                    </Button>
+                  )}
+                  
+                  <label htmlFor="xlsx-upload">
+                    <Button variant="outline" size="sm" asChild>
+                      <span className="cursor-pointer">
+                        <Upload className="mr-2 h-4 w-4" />
+                        {!isMobile && 'Import XLSX'}
+                      </span>
+                    </Button>
+                    <input
+                      id="xlsx-upload"
+                      type="file"
+                      accept=".xlsx"
+                      onChange={handleFileUpload}
+                      className="hidden"
+                    />
+                  </label>
 
-                      <div className="flex-1 relative">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                        <Input
-                          type="text"
-                          placeholder="Search items by name, category, or description..."
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          className="pl-9"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="flex gap-1 flex-wrap">
-                      <Button 
-                        variant={categoryFilter === 'all' ? 'default' : 'outline'}
-                        size="sm"
-                        onClick={() => setCategoryFilter('all')}
-                      >
-                        All
-                      </Button>
-                      {uniqueCategories.map(cat => (
-                        <Button 
-                          key={cat}
-                          variant={categoryFilter === cat ? 'default' : 'outline'}
-                          size="sm"
-                          onClick={() => setCategoryFilter(cat)}
-                        >
-                          {cat}
-                        </Button>
-                      ))}
-                    </div>
+                  <div className="flex-1 relative">
+                    <Input
+                      type="text"
+                      placeholder="Search items..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    />
                   </div>
+                </div>
 
-                  {/* POS Grid */}
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2 max-h-[600px] overflow-y-auto">
-                    {filteredItems.map((item) => (
-                      <TooltipLockable key={item.name} content={item.shortDescription || ''}>
-                        <button
-                          onClick={() => addRow(item)}
-                          className="w-full h-full bg-background hover:bg-accent border-2 border-border hover:border-primary rounded-lg p-4 text-left transition-all active:scale-95"
-                        >
-                          <div className="font-semibold text-sm mb-1 line-clamp-2">{item.name}</div>
-                          <div className="text-lg font-bold text-primary">{formatCurrency(item.price)}</div>
-                          <div className="text-xs text-muted-foreground mt-1 capitalize">
-                            {item.paymentType === 'subscription' && '🔄 Recurring'}
-                            {item.paymentType === 'deposit' && '🏦 Deposit'}
-                            {item.paymentType === 'full' && '💵 Full Payment'}
-                          </div>
-                        </button>
-                      </TooltipLockable>
+                {/* Desktop Category Filters */}
+                {!isMobile && (
+                  <div className="flex gap-1 flex-wrap">
+                    <Button 
+                      variant={categoryFilter === 'all' ? 'default' : 'outline'}
+                      size="sm"
+                      onClick={() => setCategoryFilter('all')}
+                    >
+                      All
+                    </Button>
+                    {uniqueCategories.map(cat => (
+                      <Button 
+                        key={cat}
+                        variant={categoryFilter === cat ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => setCategoryFilter(cat)}
+                      >
+                        {cat}
+                      </Button>
                     ))}
                   </div>
-
-                  {filteredItems.length === 0 && (
-                    <div className="text-center py-12 text-muted-foreground">
-                      <Plus className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                      <p className="text-lg">No items found matching your search</p>
-                      <p className="text-sm mt-2">Try adjusting your search or category filter</p>
-                    </div>
-                  )}
-                </div>
+                )}
               </div>
 
-              {/* Right side: Current Order */}
-              <div className="lg:col-span-1">
-                <div className="bg-card rounded-lg border border-border p-4 sticky top-24">
-                  <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-lg font-bold">Current Order</h2>
-                    {rows.length > 0 && (
-                      <Button 
-                        variant="ghost" 
-                        size="sm"
-                        onClick={() => reset()}
-                        className="text-destructive hover:text-destructive"
-                      >
-                        <X className="h-4 w-4 mr-1" />
-                        Clear
-                      </Button>
-                    )}
-                  </div>
-
-                  {rows.length === 0 ? (
-                    <div className="text-center py-12 text-muted-foreground">
-                      <FileText className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                      <p className="text-sm">No items added</p>
-                      <p className="text-xs mt-2">Click items on the left to add</p>
-                    </div>
-                  ) : (
-                    <>
-                      <div className="space-y-2 max-h-[400px] overflow-y-auto mb-4">
-                        {rows.map((row) => {
-                          const { displayAmount } = calculateLineTotal(row);
-                          return (
-                            <div key={row.id} className="bg-background rounded p-3 border border-border">
-                              <div className="flex justify-between items-start mb-2">
-                                <div className="font-medium text-sm flex-1">{row.name}</div>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  onClick={() => deleteRow(row.id)}
-                                  className="h-6 w-6 -mt-1 -mr-1 text-destructive hover:text-destructive"
-                                >
-                                  <X className="h-3 w-3" />
-                                </Button>
-                              </div>
-                              <div className="grid grid-cols-2 gap-2 text-xs">
-                                <div>
-                                  <label className="text-muted-foreground">Qty</label>
-                                  <input
-                                    type="number"
-                                    min="0"
-                                    value={row.quantity}
-                                    onChange={(e) => updateRow(row.id, { quantity: parseInt(e.target.value) || 0 })}
-                                    className="w-full px-2 py-1 border rounded mt-1"
-                                  />
-                                </div>
-                                <div>
-                                  <label className="text-muted-foreground">Disc %</label>
-                                  <input
-                                    type="number"
-                                    min="0"
-                                    max="100"
-                                    value={row.discount}
-                                    onChange={(e) => updateRow(row.id, { discount: parseFloat(e.target.value) || 0 })}
-                                    className="w-full px-2 py-1 border rounded mt-1"
-                                  />
-                                </div>
-                              </div>
-                              {row.paymentType === 'deposit' && (
-                                <div className="mt-2">
-                                  <Button
-                                    variant={row.convertToSubscription ? "default" : "outline"}
-                                    size="sm"
-                                    onClick={() => updateRow(row.id, { convertToSubscription: !row.convertToSubscription })}
-                                    className="w-full h-7 text-xs"
-                                  >
-                                    {row.convertToSubscription ? "🔄 Subscription" : "🏦 50% Deposit"}
-                                  </Button>
-                                </div>
-                              )}
-                              <div className="text-right font-bold text-primary mt-2">
-                                {formatCurrency(displayAmount)}
-                              </div>
-                            </div>
-                          );
-                        })}
+              {/* POS Grid */}
+              <div className={`grid gap-2 max-h-[600px] overflow-y-auto ${
+                isMobile ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-2 md:grid-cols-3'
+              }`}>
+                {filteredItems.map((item) => (
+                  <TooltipLockable key={item.name} content={item.shortDescription || ''}>
+                    <button
+                      onClick={() => addRow(item)}
+                      className="w-full h-full bg-background hover:bg-accent border-2 border-border hover:border-primary rounded-lg p-4 text-left transition-all active:scale-95 min-h-[100px]"
+                    >
+                      <div className="font-semibold text-sm mb-1 line-clamp-2">{item.name}</div>
+                      <div className="text-lg font-bold text-primary">{formatCurrency(item.price)}</div>
+                      <div className="text-xs text-muted-foreground mt-1 capitalize">
+                        {item.paymentType === 'subscription' && '🔄 Recurring'}
+                        {item.paymentType === 'deposit' && '🏦 Deposit'}
+                        {item.paymentType === 'full' && '💵 Full Payment'}
                       </div>
-
-                      {/* Totals */}
-                      <div className="border-t border-border pt-4 space-y-2">
-                        {totals.subscriptionTotal > 0 && (
-                          <div className="flex justify-between text-sm">
-                            <span className="text-muted-foreground">🔄 Subscription Total</span>
-                            <span className="font-semibold">{formatCurrency(totals.subscriptionTotal)}</span>
-                          </div>
-                        )}
-                        {totals.depositTotal > 0 && (
-                          <div className="flex justify-between text-sm">
-                            <span className="text-muted-foreground">🏦 Deposit Total</span>
-                            <span className="font-semibold">{formatCurrency(totals.depositTotal)}</span>
-                          </div>
-                        )}
-                        {totals.fullTotal > 0 && (
-                          <div className="flex justify-between text-sm">
-                            <span className="text-muted-foreground">💵 Full Payment Total</span>
-                            <span className="font-semibold">{formatCurrency(totals.fullTotal)}</span>
-                          </div>
-                        )}
-                        <div className="flex justify-between text-lg font-bold pt-2 border-t border-border">
-                          <span>Grand Total</span>
-                          <span className="text-primary">{formatCurrency(totals.grandTotal)}</span>
-                        </div>
-                        {totals.depositOriginalTotal > totals.depositTotal && (
-                          <div className="text-xs text-muted-foreground text-right">
-                            Balance due: {formatCurrency(totals.depositOriginalTotal - totals.depositTotal)}
-                          </div>
-                        )}
-                      </div>
-                    </>
-                  )}
-                </div>
+                    </button>
+                  </TooltipLockable>
+                ))}
               </div>
+
+              {filteredItems.length === 0 && (
+                <div className="text-center py-12 text-muted-foreground">
+                  <Plus className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                  <p className="text-lg">No items found matching your search</p>
+                  <p className="text-sm mt-2">Try adjusting your search or category filter</p>
+                </div>
+              )}
             </div>
 
-            {/* Detailed view below for reference */}
-            {rows.length > 0 && (
-              <div className="mt-8">
-                <h3 className="text-lg font-bold mb-4">Detailed Breakdown</h3>
-                <CategorySection
-                  title="🔄 Subscription Packages"
-                  subtitle="Monthly recurring services - paid in full at start of month"
-                  rows={rows.filter(r => r.paymentType === 'subscription')}
-                  total={totals.subscriptionTotal}
-                  onUpdate={updateRow}
-                  onDelete={deleteRow}
-                />
-
-                <CategorySection
-                  title="🏦 Deposit Packages"
-                  subtitle="Services requiring 50% deposit upfront, balance on delivery"
-                  rows={rows.filter(r => r.paymentType === 'deposit')}
-                  total={totals.depositTotal}
-                  originalTotal={totals.depositOriginalTotal}
-                  onUpdate={updateRow}
-                  onDelete={deleteRow}
-                />
-
-                <CategorySection
-                  title="💵 Full Payment Packages"
-                  subtitle="One-time services paid in full"
-                  rows={rows.filter(r => r.paymentType === 'full')}
-                  total={totals.fullTotal}
-                  onUpdate={updateRow}
-                  onDelete={deleteRow}
-                />
-              </div>
+            {/* Floating Cart Button (Mobile Only) */}
+            {isMobile && rows.length > 0 && (
+              <button
+                onClick={() => setActiveTab('cart')}
+                className="fixed bottom-6 right-6 bg-primary text-primary-foreground rounded-full w-14 h-14 shadow-lg flex items-center justify-center z-30 hover:scale-110 transition-transform"
+              >
+                <ShoppingCart className="h-6 w-6" />
+                <span className="absolute -top-1 -right-1 bg-destructive text-destructive-foreground text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
+                  {rows.length}
+                </span>
+              </button>
             )}
           </TabsContent>
 
+          {/* Cart Tab */}
+          <TabsContent value="cart">
+            <div className="bg-card rounded-lg border border-border p-4">
+              <CartTab
+                rows={rows}
+                onUpdateRow={updateRow}
+                onDeleteRow={deleteRow}
+                onClearAll={reset}
+                totals={totals}
+                onShowInvoice={() => setActiveTab('invoice')}
+                onPrintInvoice={printInvoice}
+                isMobile={isMobile}
+              />
+            </div>
+          </TabsContent>
+
+          {/* Invoice Tab */}
           <TabsContent value="invoice">
+            <div className="mb-4 flex justify-between items-center">
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    <Settings className="mr-2 h-4 w-4" />
+                    Invoice Settings
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle>Invoice Configuration</DialogTitle>
+                    <DialogDescription>
+                      Configure company details, client information, and invoice settings
+                    </DialogDescription>
+                  </DialogHeader>
+                  <InvoiceConfigForm config={invoiceConfig} onChange={setInvoiceConfig} />
+                </DialogContent>
+              </Dialog>
+            </div>
+            
             <div className="flex justify-center">
-              <div className="shadow-2xl">
+              <div className="shadow-2xl w-full max-w-4xl">
                 <InvoiceTemplate
                   config={invoiceConfig}
                   rows={rows}
@@ -485,6 +361,17 @@ export default function Home() {
           </TabsContent>
         </Tabs>
       </main>
+
+      {/* Mobile Filter Drawer */}
+      {isMobile && (
+        <MobileFilterDrawer
+          isOpen={isFilterDrawerOpen}
+          onClose={() => setIsFilterDrawerOpen(false)}
+          categories={uniqueCategories}
+          activeCategory={categoryFilter}
+          onCategorySelect={setCategoryFilter}
+        />
+      )}
     </div>
   );
 }
