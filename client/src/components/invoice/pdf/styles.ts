@@ -1,21 +1,58 @@
 import { StyleSheet } from '@react-pdf/renderer';
 
+// Colors
+const COLOR_BLACK = '#000000';
+const COLOR_WHITE = '#ffffff';
+const COLOR_GRAY_50 = '#f3f4f6';   // Light gray background
+const COLOR_GRAY_200 = '#e5e7eb';  // Light gray border
+const COLOR_GRAY_300 = '#d1d5db';  // Medium gray border
+const COLOR_GRAY_500 = '#6b7280';  // Medium gray text
+const COLOR_GRAY_600 = '#4b5563';  // Dark gray text
+
+// Borders
+const BORDER_THICK = `2px solid ${COLOR_BLACK}`;
+const BORDER_MEDIUM = `1px solid ${COLOR_BLACK}`;
+const BORDER_LIGHT = `1px solid ${COLOR_GRAY_300}`;
+const BORDER_COLUMN = `1px solid ${COLOR_GRAY_200}`;
+
+// Typography
+const FONT_REGULAR = 'Helvetica';
+const FONT_BOLD = 'Helvetica-Bold';
+const FONT_SIZE_XLARGE = 36;
+const FONT_SIZE_LARGE = 16;
+const FONT_SIZE_MEDIUM = 14;
+const FONT_SIZE_BASE = 10;
+const FONT_SIZE_SMALL = 9;
+const FONT_SIZE_TINY = 8;
+
+// Spacing
+const PADDING_XLARGE = 48;
+const PADDING_MEDIUM = 12;
+const PADDING_SMALL = 8;
+const PADDING_XSMALL = 6;
+
+// Layout
+const WIDTH_HALF = '50%';
+const WIDTH_COL_NARROW = '8.33%';
+const WIDTH_COL_MEDIUM = '16.66%';
+const WIDTH_COL_WIDE = '50%';
+
 export const styles = StyleSheet.create({
   page: {
-    padding: 48,
-    backgroundColor: '#ffffff',
-    fontFamily: 'Helvetica',
-    fontSize: 10,
+    padding: PADDING_XLARGE,
+    backgroundColor: COLOR_WHITE,
+    fontFamily: FONT_REGULAR,
+    fontSize: FONT_SIZE_BASE,
   },
   container: {
-    border: '2px solid #000000',
+    border: BORDER_THICK,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    padding: 12,
-    borderBottom: '2px solid #000000',
+    padding: PADDING_MEDIUM,
+    borderBottom: BORDER_THICK,
   },
   headerLeft: {
     flexDirection: 'row',
@@ -30,162 +67,162 @@ export const styles = StyleSheet.create({
     gap: 4,
   },
   companyName: {
-    fontSize: 16,
-    fontFamily: 'Helvetica-Bold',
+    fontSize: FONT_SIZE_LARGE,
+    fontFamily: FONT_BOLD,
   },
   headerRight: {
     alignItems: 'flex-end',
   },
   invoiceTitle: {
-    fontSize: 36,
-    fontFamily: 'Helvetica-Bold',
+    fontSize: FONT_SIZE_XLARGE,
+    fontFamily: FONT_BOLD,
   },
   infoSection: {
     flexDirection: 'row',
-    borderBottom: '2px solid #000000',
+    borderBottom: BORDER_THICK,
   },
   infoLeft: {
-    width: '50%',
-    padding: 8,
-    borderRight: '2px solid #000000',
+    width: WIDTH_HALF,
+    padding: PADDING_SMALL,
+    borderRight: BORDER_THICK,
   },
   infoRight: {
-    width: '50%',
-    padding: 8,
+    width: WIDTH_HALF,
+    padding: PADDING_SMALL,
   },
   infoRow: {
     flexDirection: 'row',
   },
   infoLabel: {
-    fontFamily: 'Helvetica-Bold',
+    fontFamily: FONT_BOLD,
     width: 100,
   },
   billToSection: {
-    padding: 8,
-    borderBottom: '2px solid #000000',
+    padding: PADDING_SMALL,
+    borderBottom: BORDER_THICK,
   },
   billToLabel: {
-    fontFamily: 'Helvetica-Bold',
+    fontFamily: FONT_BOLD,
   },
   clientName: {
-    fontSize: 14,
-    fontFamily: 'Helvetica-Bold',
+    fontSize: FONT_SIZE_MEDIUM,
+    fontFamily: FONT_BOLD,
   },
   subjectSection: {
-    padding: 8,
-    borderBottom: '2px solid #000000',
+    padding: PADDING_SMALL,
+    borderBottom: BORDER_THICK,
   },
   subjectLabel: {
-    fontFamily: 'Helvetica-Bold',
+    fontFamily: FONT_BOLD,
   },
   tableHeader: {
     flexDirection: 'row',
-    padding: 8,
-    backgroundColor: '#f3f4f6',
-    borderBottom: '1px solid #000000',
-    fontFamily: 'Helvetica-Bold',
-    fontSize: 9,
+    padding: PADDING_SMALL,
+    backgroundColor: COLOR_GRAY_50,
+    borderBottom: BORDER_MEDIUM,
+    fontFamily: FONT_BOLD,
+    fontSize: FONT_SIZE_SMALL,
   },
   tableRow: {
     flexDirection: 'row',
-    padding: 8,
-    borderBottom: '1px solid #d1d5db',
-    fontSize: 9,
+    padding: PADDING_SMALL,
+    borderBottom: BORDER_LIGHT,
+    fontSize: FONT_SIZE_SMALL,
   },
   tableColumnNumber: {
-    width: '8.33%',
-    borderRight: '1px solid #e5e7eb',
-    paddingRight: 6,
+    width: WIDTH_COL_NARROW,
+    borderRight: BORDER_COLUMN,
+    paddingRight: PADDING_XSMALL,
   },
   tableColumnItemDescription: {
-    width: '50%',
-    borderRight: '1px solid #e5e7eb',
-    paddingRight: 6,
-    paddingLeft: 6,
+    width: WIDTH_COL_WIDE,
+    borderRight: BORDER_COLUMN,
+    paddingRight: PADDING_XSMALL,
+    paddingLeft: PADDING_XSMALL,
   },
   tableColumnQuantity: {
-    width: '16.66%',
+    width: WIDTH_COL_MEDIUM,
     textAlign: 'right',
-    borderRight: '1px solid #e5e7eb',
-    paddingRight: 6,
-    paddingLeft: 6,
+    borderRight: BORDER_COLUMN,
+    paddingRight: PADDING_XSMALL,
+    paddingLeft: PADDING_XSMALL,
   },
   tableColumnRate: {
-    width: '8.33%',
+    width: WIDTH_COL_NARROW,
     textAlign: 'right',
-    borderRight: '1px solid #e5e7eb',
-    paddingRight: 6,
-    paddingLeft: 6,
+    borderRight: BORDER_COLUMN,
+    paddingRight: PADDING_XSMALL,
+    paddingLeft: PADDING_XSMALL,
   },
   tableColumnAmount: {
-    width: '16.66%',
+    width: WIDTH_COL_MEDIUM,
     textAlign: 'right',
-    paddingLeft: 6,
+    paddingLeft: PADDING_XSMALL,
   },
   itemName: {
-    fontFamily: 'Helvetica-Bold',
+    fontFamily: FONT_BOLD,
   },
   discount: {
-    fontSize: 8,
-    color: '#4b5563',
+    fontSize: FONT_SIZE_TINY,
+    color: COLOR_GRAY_600,
   },
   itemDescription: {
-    fontSize: 8,
-    color: '#6b7280',
+    fontSize: FONT_SIZE_TINY,
+    color: COLOR_GRAY_500,
     lineHeight: 1.4,
   },
   totalsSection: {
     flexDirection: 'row',
-    borderTop: '2px solid #000000',
+    borderTop: BORDER_THICK,
   },
   totalsLeft: {
-    width: '50%',
-    padding: 8,
+    width: WIDTH_HALF,
+    padding: PADDING_SMALL,
   },
   totalsRight: {
-    width: '50%',
-    borderLeft: '2px solid #000000',
+    width: WIDTH_HALF,
+    borderLeft: BORDER_THICK,
   },
   totalRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 8,
-    borderBottom: '1px solid #d1d5db',
+    padding: PADDING_SMALL,
+    borderBottom: BORDER_LIGHT,
   },
   totalRowLast: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 8,
-    backgroundColor: '#f3f4f6',
+    padding: PADDING_SMALL,
+    backgroundColor: COLOR_GRAY_50,
   },
   totalLabel: {
-    fontFamily: 'Helvetica-Bold',
+    fontFamily: FONT_BOLD,
   },
   totalValue: {
-    fontFamily: 'Helvetica-Bold',
+    fontFamily: FONT_BOLD,
   },
   totalInWordsLabel: {
-    fontFamily: 'Helvetica-Bold',
+    fontFamily: FONT_BOLD,
   },
   totalInWordsValue: {
     fontStyle: 'italic',
   },
   notesSection: {
-    padding: 8,
-    borderTop: '2px solid #000000',
+    padding: PADDING_SMALL,
+    borderTop: BORDER_THICK,
   },
   notesLabel: {
-    fontFamily: 'Helvetica-Bold',
+    fontFamily: FONT_BOLD,
   },
   termsSection: {
-    padding: 8,
-    borderTop: '2px solid #000000',
-    fontSize: 9,
+    padding: PADDING_SMALL,
+    borderTop: BORDER_THICK,
+    fontSize: FONT_SIZE_SMALL,
   },
   footer: {
     textAlign: 'center',
-    fontSize: 9,
-    color: '#4b5563',
+    fontSize: FONT_SIZE_SMALL,
+    color: COLOR_GRAY_600,
   },
 });
 
