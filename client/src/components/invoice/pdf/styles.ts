@@ -32,7 +32,6 @@ export const styles = StyleSheet.create({
   companyName: {
     fontSize: 16,
     fontFamily: 'Helvetica-Bold',
-    marginBottom: 8,
   },
   headerRight: {
     alignItems: 'flex-end',
@@ -56,7 +55,6 @@ export const styles = StyleSheet.create({
   },
   infoRow: {
     flexDirection: 'row',
-    marginBottom: 6,
   },
   infoLabel: {
     fontFamily: 'Helvetica-Bold',
@@ -68,7 +66,6 @@ export const styles = StyleSheet.create({
   },
   billToLabel: {
     fontFamily: 'Helvetica-Bold',
-    marginBottom: 4,
   },
   clientName: {
     fontSize: 14,
@@ -80,7 +77,6 @@ export const styles = StyleSheet.create({
   },
   subjectLabel: {
     fontFamily: 'Helvetica-Bold',
-    marginBottom: 4,
   },
   tableHeader: {
     flexDirection: 'row',
@@ -128,7 +124,6 @@ export const styles = StyleSheet.create({
   },
   itemName: {
     fontFamily: 'Helvetica-Bold',
-    marginBottom: 4,
   },
   discount: {
     fontSize: 8,
@@ -137,7 +132,6 @@ export const styles = StyleSheet.create({
   itemDescription: {
     fontSize: 8,
     color: '#6b7280',
-    marginTop: 4,
     lineHeight: 1.4,
   },
   totalsSection: {
@@ -172,7 +166,6 @@ export const styles = StyleSheet.create({
   },
   totalInWordsLabel: {
     fontFamily: 'Helvetica-Bold',
-    marginBottom: 8,
   },
   totalInWordsValue: {
     fontStyle: 'italic',
@@ -183,7 +176,6 @@ export const styles = StyleSheet.create({
   },
   notesLabel: {
     fontFamily: 'Helvetica-Bold',
-    marginBottom: 8,
   },
   termsSection: {
     padding: 8,
@@ -192,7 +184,6 @@ export const styles = StyleSheet.create({
   },
   footer: {
     textAlign: 'center',
-    marginTop: 32,
     fontSize: 9,
     color: '#4b5563',
   },
