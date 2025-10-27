@@ -6,7 +6,7 @@ import { Upload, Plus, Settings, Menu, ShoppingCart } from 'lucide-react';
 import readXlsxFile from 'read-excel-file';
 import type { PricingItem } from '../../../shared/types';
 import InvoiceConfigForm from '@/components/invoice/InvoiceConfigForm';
-import InvoiceTemplate from '@/components/invoice/InvoiceTemplate';
+import InvoicePreview from '@/components/invoice/InvoicePreview';
 import InvoicePDF from '@/components/invoice/pdf/InvoicePDF';
 import { pdf } from '@react-pdf/renderer';
 import { calculateTotals, formatCurrency } from '@/lib/calculator';
@@ -346,8 +346,8 @@ export default function Home() {
             </div>
             
             <div className="flex justify-center">
-              <div className="shadow-2xl w-full max-w-4xl">
-                <InvoiceTemplate
+              <div className="w-full max-w-4xl">
+                <InvoicePreview
                   config={invoiceConfig}
                   rows={rows}
                   subscriptionTotal={totals.subscriptionTotal}

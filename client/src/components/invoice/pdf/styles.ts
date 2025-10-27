@@ -48,7 +48,7 @@ export const styles = StyleSheet.create({
   infoLeft: {
     width: '50%',
     padding: 8,
-    borderRight: '1px solid #d1d5db',
+    borderRight: '2px solid #000000',
   },
   infoRight: {
     width: '50%',

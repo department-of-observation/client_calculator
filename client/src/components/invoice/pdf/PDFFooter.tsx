@@ -4,7 +4,7 @@ import { styles } from './styles';
 export function PDFFooter() {
   return (
     <View style={styles.footer}>
-      <Text>POWERED BY</Text>
+      <Text>Thank you for your business!</Text>
     </View>
   );
 }
