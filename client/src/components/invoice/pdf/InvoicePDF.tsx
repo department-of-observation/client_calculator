@@ -8,7 +8,7 @@ import { PDFLineItems } from './PDFLineItems';
 import { PDFTotals } from './PDFTotals';
 import { PDFNotes } from './PDFNotes';
 import { PDFTerms } from './PDFTerms';
-import { PDFFooter } from './PDFFooter';
+
 import { styles } from './styles';
 
 export default function InvoicePDF({
@@ -60,7 +60,6 @@ export default function InvoicePDF({
           {config.notes && <PDFNotes notes={config.notes} />}
           {config.termsAndConditions && <PDFTerms termsAndConditions={config.termsAndConditions} />}
         </View>
-        <PDFFooter />
       </Page>
     </Document>
   );
