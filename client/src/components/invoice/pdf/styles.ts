@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    padding: 24,
+    padding: 12,
     borderBottom: '2px solid #000000',
   },
   headerLeft: {
@@ -47,23 +47,23 @@ export const styles = StyleSheet.create({
   },
   infoLeft: {
     width: '50%',
-    padding: 16,
-    borderRight: '2px solid #000000',
+    padding: 8,
+    borderRight: '1px solid #d1d5db',
   },
   infoRight: {
     width: '50%',
-    padding: 16,
+    padding: 8,
   },
   infoRow: {
     flexDirection: 'row',
-    marginBottom: 8,
+    marginBottom: 6,
   },
   infoLabel: {
     fontFamily: 'Helvetica-Bold',
     width: 100,
   },
   billToSection: {
-    padding: 16,
+    padding: 8,
     borderBottom: '2px solid #000000',
   },
   billToLabel: {
@@ -75,7 +75,7 @@ export const styles = StyleSheet.create({
     fontFamily: 'Helvetica-Bold',
   },
   subjectSection: {
-    padding: 16,
+    padding: 8,
     borderBottom: '2px solid #000000',
   },
   subjectLabel: {
@@ -84,7 +84,7 @@ export const styles = StyleSheet.create({
   },
   tableHeader: {
     flexDirection: 'row',
-    padding: 16,
+    padding: 8,
     backgroundColor: '#f3f4f6',
     borderBottom: '1px solid #000000',
     fontFamily: 'Helvetica-Bold',
@@ -92,27 +92,39 @@ export const styles = StyleSheet.create({
   },
   tableRow: {
     flexDirection: 'row',
-    padding: 16,
+    padding: 8,
     borderBottom: '1px solid #d1d5db',
     fontSize: 9,
   },
   col1: {
     width: '8.33%',
+    borderRight: '1px solid #e5e7eb',
+    paddingRight: 6,
   },
   col6: {
     width: '50%',
+    borderRight: '1px solid #e5e7eb',
+    paddingRight: 6,
+    paddingLeft: 6,
   },
   col2: {
     width: '16.66%',
     textAlign: 'right',
+    borderRight: '1px solid #e5e7eb',
+    paddingRight: 6,
+    paddingLeft: 6,
   },
   col1Right: {
     width: '8.33%',
     textAlign: 'right',
+    borderRight: '1px solid #e5e7eb',
+    paddingRight: 6,
+    paddingLeft: 6,
   },
   col2Right: {
     width: '16.66%',
     textAlign: 'right',
+    paddingLeft: 6,
   },
   itemName: {
     fontFamily: 'Helvetica-Bold',
@@ -134,7 +146,7 @@ export const styles = StyleSheet.create({
   },
   totalsLeft: {
     width: '50%',
-    padding: 16,
+    padding: 8,
   },
   totalsRight: {
     width: '50%',
@@ -143,13 +155,13 @@ export const styles = StyleSheet.create({
   totalRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 16,
+    padding: 8,
     borderBottom: '1px solid #d1d5db',
   },
   totalRowLast: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 16,
+    padding: 8,
     backgroundColor: '#f3f4f6',
   },
   totalLabel: {
@@ -166,7 +178,7 @@ export const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   notesSection: {
-    padding: 16,
+    padding: 8,
     borderTop: '2px solid #000000',
   },
   notesLabel: {
@@ -174,7 +186,7 @@ export const styles = StyleSheet.create({
     marginBottom: 8,
   },
   termsSection: {
-    padding: 16,
+    padding: 8,
     borderTop: '2px solid #000000',
     fontSize: 9,
   },
