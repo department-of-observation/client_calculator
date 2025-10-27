@@ -8,11 +8,11 @@ export function PDFLineItems({ rows }: InvoiceLineItemsProps) {
   return (
     <>
       <View style={styles.tableHeader}>
-        <Text style={styles.col1}>#</Text>
-        <Text style={styles.col6}>Item & Description</Text>
-        <Text style={styles.col2}>Qty</Text>
-        <Text style={styles.col1Right}>Rate</Text>
-        <Text style={styles.col2Right}>Amount</Text>
+        <Text style={styles.tableColumnNumber}>#</Text>
+        <Text style={styles.tableColumnItemDescription}>Item & Description</Text>
+        <Text style={styles.tableColumnQuantity}>Qty</Text>
+        <Text style={styles.tableColumnRate}>Rate</Text>
+        <Text style={styles.tableColumnAmount}>Amount</Text>
       </View>
       {rows.map((row, index) => {
         const displayAmount = calculateLineItemAmount(
@@ -30,8 +30,8 @@ export function PDFLineItems({ rows }: InvoiceLineItemsProps) {
 
         return (
           <View key={row.id} style={styles.tableRow}>
-            <Text style={styles.col1}>{index + 1}</Text>
-            <View style={styles.col6}>
+            <Text style={styles.tableColumnNumber}>{index + 1}</Text>
+            <View style={styles.tableColumnItemDescription}>
               <Text style={styles.itemName}>{displayName}</Text>
               {row.description && (
                 <Text style={styles.itemDescription}>{row.description}</Text>
@@ -40,9 +40,9 @@ export function PDFLineItems({ rows }: InvoiceLineItemsProps) {
                 <Text style={styles.discount}>Discount: {row.discount}%</Text>
               )}
             </View>
-            <Text style={styles.col2}>{row.quantity.toFixed(2)}</Text>
-            <Text style={styles.col1Right}>{formatCurrency(row.price)}</Text>
-            <Text style={styles.col2Right}>{formatCurrency(displayAmount)}</Text>
+            <Text style={styles.tableColumnQuantity}>{row.quantity.toFixed(2)}</Text>
+            <Text style={styles.tableColumnRate}>{formatCurrency(row.price)}</Text>
+            <Text style={styles.tableColumnAmount}>{formatCurrency(displayAmount)}</Text>
           </View>
         );
       })}

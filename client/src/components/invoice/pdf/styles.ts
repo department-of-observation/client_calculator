@@ -92,32 +92,32 @@ export const styles = StyleSheet.create({
     borderBottom: '1px solid #d1d5db',
     fontSize: 9,
   },
-  col1: {
+  tableColumnNumber: {
     width: '8.33%',
     borderRight: '1px solid #e5e7eb',
     paddingRight: 6,
   },
-  col6: {
+  tableColumnItemDescription: {
     width: '50%',
     borderRight: '1px solid #e5e7eb',
     paddingRight: 6,
     paddingLeft: 6,
   },
-  col2: {
+  tableColumnQuantity: {
     width: '16.66%',
     textAlign: 'right',
     borderRight: '1px solid #e5e7eb',
     paddingRight: 6,
     paddingLeft: 6,
   },
-  col1Right: {
+  tableColumnRate: {
     width: '8.33%',
     textAlign: 'right',
     borderRight: '1px solid #e5e7eb',
     paddingRight: 6,
     paddingLeft: 6,
   },
-  col2Right: {
+  tableColumnAmount: {
     width: '16.66%',
     textAlign: 'right',
     paddingLeft: 6,
