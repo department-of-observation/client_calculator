@@ -4,6 +4,7 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
+    "predev": "node scripts/build-pricing-data.js",
     "dev": "vite --host",
     "prebuild": "node scripts/build-pricing-data.js",
     "build": "vite build",
@@ -38,7 +39,6 @@
     "@tailwindcss/vite": "^4.1.16",
     "@types/node": "^24.9.1",
     "@types/number-to-words": "^1.2.3",
-    "@types/papaparse": "^5.3.16",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react": "^5.1.0",

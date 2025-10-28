@@ -13,7 +13,7 @@ const COLOR_GRAY_600 = '#4b5563';  // Dark gray text
 const BORDER_THICK = `2px solid ${COLOR_BLACK}`;
 const BORDER_MEDIUM = `1px solid ${COLOR_BLACK}`;
 const BORDER_LIGHT = `1px solid ${COLOR_GRAY_300}`;
-const BORDER_COLUMN = `1px solid ${COLOR_GRAY_200}`;
+const BORDER_COLUMN = `1px solid ${COLOR_BLACK}`;
 
 // Typography
 const FONT_REGULAR = 'Helvetica';
@@ -117,47 +117,65 @@ export const styles = StyleSheet.create({
   },
   tableHeader: {
     flexDirection: 'row',
-    padding: PADDING_SMALL,
+    paddingLeft: PADDING_SMALL,
+    paddingRight: PADDING_SMALL,
+    paddingTop: 0,
+    paddingBottom: 0,
     backgroundColor: COLOR_GRAY_50,
-    borderBottom: BORDER_MEDIUM,
     fontFamily: FONT_BOLD,
     fontSize: FONT_SIZE_SMALL,
+    alignItems: 'stretch',
   },
   tableRow: {
     flexDirection: 'row',
-    padding: PADDING_SMALL,
+    paddingTop: PADDING_SMALL,
+    paddingBottom: PADDING_SMALL,
+    paddingLeft: PADDING_SMALL,
+    paddingRight: PADDING_SMALL,
     borderBottom: BORDER_LIGHT,
     fontSize: FONT_SIZE_SMALL,
   },
   tableColumnNumber: {
     width: WIDTH_COL_NARROW,
     borderRight: BORDER_COLUMN,
+    paddingLeft: PADDING_XSMALL,
     paddingRight: PADDING_XSMALL,
+    paddingTop: PADDING_SMALL,
+    paddingBottom: PADDING_SMALL,
   },
   tableColumnItemDescription: {
     width: WIDTH_COL_WIDE,
     borderRight: BORDER_COLUMN,
-    paddingRight: PADDING_XSMALL,
     paddingLeft: PADDING_XSMALL,
+    paddingRight: PADDING_XSMALL,
+    paddingTop: PADDING_SMALL,
+    paddingBottom: PADDING_SMALL,
   },
   tableColumnQuantity: {
     width: WIDTH_COL_MEDIUM,
     textAlign: 'right',
     borderRight: BORDER_COLUMN,
-    paddingRight: PADDING_XSMALL,
     paddingLeft: PADDING_XSMALL,
+    paddingRight: PADDING_XSMALL,
+    paddingTop: PADDING_SMALL,
+    paddingBottom: PADDING_SMALL,
   },
   tableColumnRate: {
     width: WIDTH_COL_NARROW,
     textAlign: 'right',
     borderRight: BORDER_COLUMN,
-    paddingRight: PADDING_XSMALL,
     paddingLeft: PADDING_XSMALL,
+    paddingRight: PADDING_XSMALL,
+    paddingTop: PADDING_SMALL,
+    paddingBottom: PADDING_SMALL,
   },
   tableColumnAmount: {
     width: WIDTH_COL_MEDIUM,
     textAlign: 'right',
     paddingLeft: PADDING_XSMALL,
+    paddingRight: PADDING_XSMALL,
+    paddingTop: PADDING_SMALL,
+    paddingBottom: PADDING_SMALL,
   },
   itemName: {
     fontFamily: FONT_BOLD,

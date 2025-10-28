@@ -46,19 +46,19 @@ export const DEFAULT_INVOICE_CONFIG: InvoiceConfig = {
   clientBillingAddress: '',
   subject: '',
   notes: 'Thanks for your business.',
-  termsAndConditions: `Payment Instructions:
-1. PayNow to ‪+65 9423 6920‬ Or bank transfer to 0122792416.
-2. Once payment is sent through, please send a screenshot to ‪+65 9423 6920‬ via WhatsApp for verification.
-3. If client is paying via GIRO, please send a screenshot of the payment release date to ‪+65 9423 6920‬ via WhatsApp for verification.
+termsAndConditions: `Payment Instructions:
+1. PayNow to +65 9423 6920 or bank transfer to 0122792416.
+2. Once payment is sent through, please send a screenshot to +65 9423 6920 via WhatsApp for verification.
+3. If the client is paying via GIRO, please send a screenshot of the payment release date to +65 9423 6920 via WhatsApp for verification.
 
 Terms & Conditions:
 1. A 50% non-refundable deposit is required upfront before any work commences.
 2. The balance payment is due upon completion and prior to delivery of the final materials.
-3. For support/retainer packages, full payment must be made upfront before any work commences.
+3. For support or retainer packages, full payment must be made upfront before any work commences.
 4. If the client cancels the project midway, all deposits and payments made remain non-refundable.
-5. All other terms and conditions apply as stated in our Service Agreement (if applicable) and this Invoice.
-6. Any terms, conditions, or obligations not expressly stated in this Invoice shall not apply.
-7. All bank charges, currency conversion fees, and international transfer fees are to be borne by the Client. Net amount payable must match the invoiced amount.
+5. All other terms and conditions apply as stated in our Service Agreement (if applicable) and this invoice.
+6. Any terms, conditions, or obligations not expressly stated in this invoice shall not apply.
+7. All bank charges, currency conversion fees, and international transfer fees are to be borne by the client. Net amount payable must match the invoiced amount.
 `
 };
 
