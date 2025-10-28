@@ -2,6 +2,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Label as SwitchLabel } from '@/components/ui/label';
 import type { InvoiceConfig } from '../../../../shared/invoice-types';
 import { Upload } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -12,7 +13,7 @@ interface InvoiceConfigFormProps {
 }
 
 export default function InvoiceConfigForm({ config, onChange }: InvoiceConfigFormProps) {
-  const updateField = (field: keyof InvoiceConfig, value: string) => {
+  const updateField = (field: keyof InvoiceConfig, value: string | boolean) => {
     onChange({ ...config, [field]: value });
   };
 
@@ -207,6 +208,32 @@ export default function InvoiceConfigForm({ config, onChange }: InvoiceConfigFor
               rows={3}
               placeholder="Street address, city, postal code, country"
             />
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Email Settings</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="space-y-0.5">
+              <SwitchLabel htmlFor="autoSendInvoice">Auto-send Invoice to Client</SwitchLabel>
+              <p className="text-sm text-muted-foreground">
+                Automatically send invoice via email when using the "Send Invoice" button
+              </p>
+            </div>
+            <label className="relative inline-flex items-center cursor-pointer">
+              <input
+                id="autoSendInvoice"
+                type="checkbox"
+                checked={config.autoSendInvoice}
+                onChange={(e) => updateField('autoSendInvoice', e.target.checked)}
+                className="sr-only peer"
+              />
+              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+            </label>
           </div>
         </CardContent>
       </Card>

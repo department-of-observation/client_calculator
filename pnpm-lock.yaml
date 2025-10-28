@@ -78,9 +78,6 @@ importers:
       '@types/number-to-words':
         specifier: ^1.2.3
         version: 1.2.3
-      '@types/papaparse':
-        specifier: ^5.3.16
-        version: 5.3.16
       '@types/react':
         specifier: ^19.2.2
         version: 19.2.2
@@ -993,9 +990,6 @@ packages:
 
   '@types/number-to-words@1.2.3':
     resolution: {integrity: sha512-ruSA/QZ6JQofoEEN2zKmN9oihZmrCBgcw0zEzN0UA9Mw0pU5remTddZmrbHjsa99qz12Uxl82x+XkVpHu87oXw==}
-
-  '@types/papaparse@5.3.16':
-    resolution: {integrity: sha512-T3VuKMC2H0lgsjI9buTB3uuKj3EMD2eap1MOuEQuBQ44EnDx/IkGhU6EwiTf9zG3za4SKlmwKAImdDKdNnCsXg==}
 
   '@types/react-dom@19.2.2':
     resolution: {integrity: sha512-9KQPoO6mZCi7jcIStSnlOWn2nEF3mNmyr3rIAsGnAbQKYbRLyqmeSc39EVgtxXVia+LMT8j3knZLAZAh+xLmrw==}
@@ -2756,10 +2750,6 @@ snapshots:
       undici-types: 7.16.0
 
   '@types/number-to-words@1.2.3': {}
-
-  '@types/papaparse@5.3.16':
-    dependencies:
-      '@types/node': 24.9.1
 
   '@types/react-dom@19.2.2(@types/react@19.2.2)':
     dependencies:

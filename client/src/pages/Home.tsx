@@ -6,6 +6,7 @@ import { Upload, Plus, Settings, Menu, ShoppingCart } from 'lucide-react';
 import readXlsxFile from 'read-excel-file';
 import type { PricingItem } from '../../../shared/types';
 import InvoiceConfigForm from '@/components/invoice/InvoiceConfigForm';
+import SendInvoiceDialog from '@/components/invoice/SendInvoiceDialog';
 import InvoicePreview from '@/components/invoice/InvoicePreview';
 import InvoicePDF from '@/components/invoice/pdf/InvoicePDF';
 import { pdf } from '@react-pdf/renderer';
@@ -50,6 +51,7 @@ export default function Home() {
   // Local UI state (not persisted)
   const [activeTab, setActiveTab] = useState<'calculator' | 'cart' | 'invoice'>('calculator');
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
+  const [isSendDialogOpen, setIsSendDialogOpen] = useState(false);
 
   // Load pricing data from pre-built JSON on mount
   useEffect(() => {
@@ -138,6 +140,79 @@ export default function Home() {
       console.error('PDF generation error:', error);
       toast.error('Failed to generate PDF');
     }
+  };
+
+  const sendInvoice = async (to: string, cc: string, message: string) => {
+    if (rows.length === 0) {
+      toast.error('Please add items before sending invoice');
+      return;
+    }
+
+    if (!to) {
+      toast.error('Please provide a recipient email address');
+      return;
+    }
+
+    try {
+      toast.info('Generating PDF...');
+      
+      // Generate PDF blob
+      const blob = await pdf(
+        <InvoicePDF
+          config={invoiceConfig}
+          rows={rows}
+          subscriptionTotal={totals.subscriptionTotal}
+          depositTotal={totals.depositTotal}
+          depositOriginalTotal={totals.depositOriginalTotal}
+          fullTotal={totals.fullTotal}
+          grandTotal={totals.grandTotal}
+        />
+      ).toBlob();
+
+      // Convert blob to base64 for email attachment
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      
+      await new Promise((resolve, reject) => {
+        reader.onloadend = () => {
+          const base64data = reader.result as string;
+          
+          // Create mailto link with attachment simulation
+          // Note: mailto doesn't support attachments directly
+          // In a real app, this would call a backend API to send the email
+          const subject = encodeURIComponent(`Invoice ${invoiceConfig.invoiceNumber} from ${invoiceConfig.companyName}`);
+          const body = encodeURIComponent(message);
+          const mailtoLink = `mailto:${to}${cc ? `?cc=${cc}` : '?'}${cc ? '&' : ''}subject=${subject}&body=${body}`;
+          
+          // For now, open mailto and download the PDF
+          window.open(mailtoLink, '_blank');
+          
+          // Also download the PDF for manual attachment
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `invoice-${invoiceConfig.invoiceNumber}-${Date.now()}.pdf`;
+          a.click();
+          URL.revokeObjectURL(url);
+          
+          toast.success('Email client opened. Please attach the downloaded PDF manually.');
+          resolve(true);
+        };
+        reader.onerror = reject;
+      });
+    } catch (error) {
+      console.error('Send invoice error:', error);
+      toast.error('Failed to prepare invoice for sending');
+      throw error;
+    }
+  };
+
+  const handleSendInvoice = () => {
+    if (!invoiceConfig.clientEmail) {
+      toast.error('Please set client email in Invoice Settings first');
+      return;
+    }
+    setIsSendDialogOpen(true);
   };
 
   const totals = calculateTotals(rows);
@@ -318,6 +393,7 @@ export default function Home() {
                 totals={totals}
                 onShowInvoice={() => setActiveTab('invoice')}
                 onPrintInvoice={printInvoice}
+                onSendInvoice={handleSendInvoice}
                 isMobile={isMobile}
               />
             </div>
@@ -372,6 +448,14 @@ export default function Home() {
           onCategorySelect={setCategoryFilter}
         />
       )}
+
+      {/* Send Invoice Dialog */}
+      <SendInvoiceDialog
+        isOpen={isSendDialogOpen}
+        onClose={() => setIsSendDialogOpen(false)}
+        config={invoiceConfig}
+        onSend={sendInvoice}
+      />
     </div>
   );
 }

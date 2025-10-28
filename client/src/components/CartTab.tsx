@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { X, Trash2, FileText, Printer } from 'lucide-react';
+import { X, Trash2, FileText, Printer, Mail } from 'lucide-react';
 import type { CalculatorRow } from '../../../shared/types';
 import { calculateLineTotal, formatCurrency } from '@/lib/calculator';
 
@@ -17,6 +17,7 @@ interface CartTabProps {
   };
   onShowInvoice: () => void;
   onPrintInvoice: () => void;
+  onSendInvoice: () => void;
   isMobile: boolean;
 }
 
@@ -28,6 +29,7 @@ export default function CartTab({
   totals,
   onShowInvoice,
   onPrintInvoice,
+  onSendInvoice,
   isMobile,
 }: CartTabProps) {
   if (rows.length === 0) {
@@ -231,21 +233,31 @@ export default function CartTab({
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-2">
+        <div className="flex flex-col gap-2">
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              className="flex-1"
+              onClick={onShowInvoice}
+            >
+              <FileText className="mr-2 h-4 w-4" />
+              Preview
+            </Button>
+            <Button
+              variant="outline"
+              className="flex-1"
+              onClick={onPrintInvoice}
+            >
+              <Printer className="mr-2 h-4 w-4" />
+              Download
+            </Button>
+          </div>
           <Button
-            variant="outline"
-            className="flex-1"
-            onClick={onShowInvoice}
+            className="w-full"
+            onClick={onSendInvoice}
           >
-            <FileText className="mr-2 h-4 w-4" />
-            Preview Invoice
-          </Button>
-          <Button
-            className="flex-1"
-            onClick={onPrintInvoice}
-          >
-            <Printer className="mr-2 h-4 w-4" />
-            Download PDF
+            <Mail className="mr-2 h-4 w-4" />
+            Send Invoice to Client
           </Button>
         </div>
       </div>
