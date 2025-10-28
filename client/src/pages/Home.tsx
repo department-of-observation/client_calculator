@@ -169,40 +169,20 @@ export default function Home() {
         />
       ).toBlob();
 
-      // Convert blob to base64 for email attachment
-      const reader = new FileReader();
-      reader.readAsDataURL(blob);
+      // Create mailto link
+      // Note: mailto doesn't support attachments directly
+      // In a real app, this would call a backend API to send the email
+      const subject = encodeURIComponent(`Invoice ${invoiceConfig.invoiceNumber} from ${invoiceConfig.companyName}`);
+      const body = encodeURIComponent(message);
+      const mailtoLink = `mailto:${to}${cc ? `?cc=${cc}` : '?'}${cc ? '&' : ''}subject=${subject}&body=${body}`;
       
-      await new Promise((resolve, reject) => {
-        reader.onloadend = () => {
-          const base64data = reader.result as string;
-          
-          // Create mailto link with attachment simulation
-          // Note: mailto doesn't support attachments directly
-          // In a real app, this would call a backend API to send the email
-          const subject = encodeURIComponent(`Invoice ${invoiceConfig.invoiceNumber} from ${invoiceConfig.companyName}`);
-          const body = encodeURIComponent(message);
-          const mailtoLink = `mailto:${to}${cc ? `?cc=${cc}` : '?'}${cc ? '&' : ''}subject=${subject}&body=${body}`;
-          
-          // For now, open mailto and download the PDF
-          window.open(mailtoLink, '_blank');
-          
-          // Also download the PDF for manual attachment
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `invoice-${invoiceConfig.invoiceNumber}-${Date.now()}.pdf`;
-          a.click();
-          URL.revokeObjectURL(url);
-          
-          toast.success('Email client opened. Please attach the downloaded PDF manually.');
-          resolve(true);
-        };
-        reader.onerror = reject;
-      });
+      // Open mailto
+      window.open(mailtoLink, '_blank');
+      
+      toast.success('Email client opened with invoice details.');
     } catch (error) {
       console.error('Send invoice error:', error);
-      toast.error('Failed to prepare invoice for sending');
+      toast.error('Failed to open email client');
       throw error;
     }
   };

@@ -26,9 +26,6 @@ export interface InvoiceConfig {
   subject: string;
   notes: string;
   termsAndConditions: string;
-  
-  // Email Settings
-  autoSendInvoice: boolean;
 }
 
 export const DEFAULT_INVOICE_CONFIG: InvoiceConfig = {
@@ -49,7 +46,6 @@ export const DEFAULT_INVOICE_CONFIG: InvoiceConfig = {
   clientBillingAddress: '',
   subject: '',
   notes: 'Thanks for your business.',
-  autoSendInvoice: false,
 termsAndConditions: `Payment Instructions:
 1. PayNow to +65 9423 6920 or bank transfer to 0122792416.
 2. Once payment is sent through, please send a screenshot to +65 9423 6920 via WhatsApp for verification.

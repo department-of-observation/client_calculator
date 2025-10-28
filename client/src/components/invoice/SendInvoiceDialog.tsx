@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -27,12 +27,21 @@ export default function SendInvoiceDialog({
   config,
   onSend,
 }: SendInvoiceDialogProps) {
-  const [to, setTo] = useState(config.clientEmail);
+  const [to, setTo] = useState('');
   const [cc, setCc] = useState('');
-  const [message, setMessage] = useState(
-    `Dear ${config.clientName || 'Client'},\n\nPlease find attached the invoice for your review.\n\nThank you for your business.\n\nBest regards,\n${config.companyName}`
-  );
+  const [message, setMessage] = useState('');
   const [isSending, setIsSending] = useState(false);
+
+  // Update fields when dialog opens or config changes
+  React.useEffect(() => {
+    if (isOpen) {
+      setTo(config.clientEmail || '');
+      setCc('');
+      setMessage(
+        `Dear ${config.clientName || 'Client'},\n\nPlease find attached the invoice for your review.\n\nThank you for your business.\n\nBest regards,\n${config.companyName}`
+      );
+    }
+  }, [isOpen, config.clientEmail, config.clientName, config.companyName]);
 
   const handleSend = async () => {
     if (!to) return;
