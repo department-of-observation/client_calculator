@@ -3,11 +3,11 @@ import { StyleSheet } from '@react-pdf/renderer';
 // Colors
 const COLOR_BLACK = '#000000';
 const COLOR_WHITE = '#ffffff';
-const COLOR_GRAY_50 = '#f3f4f6';   // Light gray background
-const COLOR_GRAY_200 = '#e5e7eb';  // Light gray border
-const COLOR_GRAY_300 = '#d1d5db';  // Medium gray border
-const COLOR_GRAY_500 = '#6b7280';  // Medium gray text
-const COLOR_GRAY_600 = '#4b5563';  // Dark gray text
+const COLOR_GRAY_50 = '#f3f4f6'; // Light gray background
+const COLOR_GRAY_200 = '#e5e7eb'; // Light gray border
+const COLOR_GRAY_300 = '#d1d5db'; // Medium gray border
+const COLOR_GRAY_500 = '#6b7280'; // Medium gray text
+const COLOR_GRAY_600 = '#4b5563'; // Dark gray text
 
 // Borders
 const BORDER_THICK = `2px solid ${COLOR_BLACK}`;
@@ -115,12 +115,12 @@ export const styles = StyleSheet.create({
   subjectLabel: {
     fontFamily: FONT_BOLD,
   },
+
+  /* ---------- Table ---------- */
   tableHeader: {
     flexDirection: 'row',
     paddingLeft: PADDING_SMALL,
     paddingRight: PADDING_SMALL,
-    paddingTop: 0,
-    paddingBottom: 0,
     backgroundColor: COLOR_GRAY_50,
     fontFamily: FONT_BOLD,
     fontSize: FONT_SIZE_SMALL,
@@ -128,28 +128,23 @@ export const styles = StyleSheet.create({
   },
   tableRow: {
     flexDirection: 'row',
-    paddingTop: PADDING_SMALL,
-    paddingBottom: PADDING_SMALL,
     paddingLeft: PADDING_SMALL,
     paddingRight: PADDING_SMALL,
     borderBottom: BORDER_LIGHT,
     fontSize: FONT_SIZE_SMALL,
+    alignItems: 'stretch',
   },
   tableColumnNumber: {
     width: WIDTH_COL_NARROW,
     borderRight: BORDER_COLUMN,
     paddingLeft: PADDING_XSMALL,
     paddingRight: PADDING_XSMALL,
-    paddingTop: PADDING_SMALL,
-    paddingBottom: PADDING_SMALL,
   },
   tableColumnItemDescription: {
     width: WIDTH_COL_WIDE,
     borderRight: BORDER_COLUMN,
     paddingLeft: PADDING_XSMALL,
     paddingRight: PADDING_XSMALL,
-    paddingTop: PADDING_SMALL,
-    paddingBottom: PADDING_SMALL,
   },
   tableColumnQuantity: {
     width: WIDTH_COL_MEDIUM,
@@ -157,8 +152,6 @@ export const styles = StyleSheet.create({
     borderRight: BORDER_COLUMN,
     paddingLeft: PADDING_XSMALL,
     paddingRight: PADDING_XSMALL,
-    paddingTop: PADDING_SMALL,
-    paddingBottom: PADDING_SMALL,
   },
   tableColumnRate: {
     width: WIDTH_COL_NARROW,
@@ -166,16 +159,21 @@ export const styles = StyleSheet.create({
     borderRight: BORDER_COLUMN,
     paddingLeft: PADDING_XSMALL,
     paddingRight: PADDING_XSMALL,
-    paddingTop: PADDING_SMALL,
-    paddingBottom: PADDING_SMALL,
   },
   tableColumnAmount: {
     width: WIDTH_COL_MEDIUM,
     textAlign: 'right',
     paddingLeft: PADDING_XSMALL,
     paddingRight: PADDING_XSMALL,
+  },
+  cellContent: {
     paddingTop: PADDING_SMALL,
     paddingBottom: PADDING_SMALL,
+    justifyContent: 'center',
+  },
+  headerText: {
+    fontFamily: FONT_BOLD,
+    fontSize: FONT_SIZE_SMALL,
   },
   itemName: {
     fontFamily: FONT_BOLD,
