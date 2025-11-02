@@ -1,7 +1,8 @@
-import type { InvoiceConfig } from '../../../../../shared/invoice-types';
+import type { InvoiceConfig, DocumentType } from '../../../../../shared/invoice-types';
 import type { CalculatorRow } from '../../../../../shared/types';
 
 export interface InvoiceHeaderProps {
+  documentType: DocumentType;
   companyName: string;
   companyLogo?: string;
   companyAddress: string;
@@ -10,6 +11,7 @@ export interface InvoiceHeaderProps {
 }
 
 export interface InvoiceInfoProps {
+  documentType: DocumentType;
   invoiceNumber: string;
   invoiceDate: string;
   terms: string;

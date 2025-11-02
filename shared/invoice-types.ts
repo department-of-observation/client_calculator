@@ -1,6 +1,11 @@
 import { format, addDays } from 'date-fns';
 
+export type DocumentType = 'invoice' | 'quote';
+
 export interface InvoiceConfig {
+  // Document Type
+  documentType: DocumentType;
+  
   // Company Info
   companyName: string;
   companyAddress: string;
@@ -29,6 +34,7 @@ export interface InvoiceConfig {
 }
 
 export const DEFAULT_INVOICE_CONFIG: InvoiceConfig = {
+  documentType: 'invoice',
   companyName: 'Snap Gen Digital',
   companyAddress: 'Punggol',
   companyCity: 'Singapore',

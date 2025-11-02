@@ -4,6 +4,7 @@ import { formatDate } from '../utils/formatters';
 import { styles } from './styles';
 
 export function PDFInfo({
+  documentType,
   invoiceNumber,
   invoiceDate,
   terms,
@@ -23,7 +24,7 @@ export function PDFInfo({
           <Text>: {invoiceNumber}</Text>
         </View>
         <View style={styles.infoRow}>
-          <Text style={styles.infoLabel}>Invoice Date</Text>
+          <Text style={styles.infoLabel}>{documentType === 'quote' ? 'Date' : 'Invoice Date'}</Text>
           <Text>: {formatDate(invoiceDate)}</Text>
         </View>
         <View style={styles.infoRow}>

@@ -31,6 +31,7 @@ export default function InvoicePDF({
       <Page size="A4" style={styles.page}>
         <View style={styles.container}>
           <PDFHeader
+            documentType={config.documentType}
             companyName={config.companyName}
             companyLogo={config.companyLogo}
             companyAddress={config.companyAddress}
@@ -38,6 +39,7 @@ export default function InvoicePDF({
             companyEmail={config.companyEmail}
           />
           <PDFInfo
+            documentType={config.documentType}
             invoiceNumber={config.invoiceNumber}
             invoiceDate={config.invoiceDate}
             terms={config.terms}

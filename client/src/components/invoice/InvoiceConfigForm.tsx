@@ -2,7 +2,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import type { InvoiceConfig } from '../../../../shared/invoice-types';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import type { InvoiceConfig, DocumentType } from '../../../../shared/invoice-types';
 import { Upload } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -100,12 +101,27 @@ export default function InvoiceConfigForm({ config, onChange }: InvoiceConfigFor
 
       <Card>
         <CardHeader>
-          <CardTitle>Invoice Details</CardTitle>
+          <CardTitle>Document Details</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
+          <div>
+            <Label htmlFor="documentType">Document Type</Label>
+            <Select
+              value={config.documentType}
+              onValueChange={(value) => updateField('documentType', value as DocumentType)}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="invoice">Invoice</SelectItem>
+                <SelectItem value="quote">Quote</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="invoiceNumber">Invoice Number</Label>
+              <Label htmlFor="invoiceNumber">{config.documentType === 'quote' ? 'Quote Number' : 'Invoice Number'}</Label>
               <Input
                 id="invoiceNumber"
                 value={config.invoiceNumber}
@@ -124,7 +140,7 @@ export default function InvoiceConfigForm({ config, onChange }: InvoiceConfigFor
           </div>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <Label htmlFor="invoiceDate">Invoice Date</Label>
+              <Label htmlFor="invoiceDate">{config.documentType === 'quote' ? 'Date' : 'Invoice Date'}</Label>
               <Input
                 id="invoiceDate"
                 type="date"

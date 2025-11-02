@@ -3,6 +3,7 @@ import type { InvoiceHeaderProps } from '../shared/types';
 import { styles } from './styles';
 
 export function PDFHeader({
+  documentType,
   companyName,
   companyLogo,
   companyAddress,
@@ -21,7 +22,7 @@ export function PDFHeader({
         </View>
       </View>
       <View style={styles.headerRight}>
-        <Text style={styles.invoiceTitle}>TAX INVOICE</Text>
+        <Text style={styles.invoiceTitle}>{documentType === 'quote' ? 'QUOTE' : 'TAX INVOICE'}</Text>
       </View>
     </View>
   );
