@@ -19,27 +19,12 @@ export default function InvoiceConfigForm({ config, onChange }: InvoiceConfigFor
   };
 
   const handleDocumentTypeChange = (newType: DocumentType) => {
-    const currentNumber = config.invoiceNumber;
-    let newNumber = currentNumber;
-
-    // Update prefix based on document type
-    if (newType === 'quote') {
-      // Change INV- to QT-
-      if (currentNumber.startsWith('INV-')) {
-        newNumber = currentNumber.replace(/^INV-/, 'QT-');
-      } else if (!currentNumber.startsWith('QT-')) {
-        // If no prefix, add QT-
-        newNumber = 'QT-' + currentNumber;
-      }
-    } else {
-      // Change QT- to INV-
-      if (currentNumber.startsWith('QT-')) {
-        newNumber = currentNumber.replace(/^QT-/, 'INV-');
-      } else if (!currentNumber.startsWith('INV-')) {
-        // If no prefix, add INV-
-        newNumber = 'INV-' + currentNumber;
-      }
-    }
+    // Extract the number part (without prefix)
+    const numberPart = config.invoiceNumber.replace(/^(INV-|QT-)/, '');
+    
+    // Apply new prefix based on document type
+    const newPrefix = newType === 'quote' ? 'QT-' : 'INV-';
+    const newNumber = newPrefix + numberPart;
 
     onChange({ 
       ...config, 
@@ -153,11 +138,21 @@ export default function InvoiceConfigForm({ config, onChange }: InvoiceConfigFor
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label htmlFor="invoiceNumber">{config.documentType === 'quote' ? 'Quote Number' : 'Invoice Number'}</Label>
-              <Input
-                id="invoiceNumber"
-                value={config.invoiceNumber}
-                onChange={(e) => updateField('invoiceNumber', e.target.value)}
-              />
+              <div className="flex items-center gap-0">
+                <div className="flex items-center justify-center px-3 py-2 bg-gray-100 border border-r-0 rounded-l-md text-sm font-medium text-gray-700">
+                  {config.documentType === 'quote' ? 'QT-' : 'INV-'}
+                </div>
+                <Input
+                  id="invoiceNumber"
+                  className="rounded-l-none"
+                  value={config.invoiceNumber.replace(/^(INV-|QT-)/, '')}
+                  onChange={(e) => {
+                    const prefix = config.documentType === 'quote' ? 'QT-' : 'INV-';
+                    updateField('invoiceNumber', prefix + e.target.value);
+                  }}
+                  placeholder="000001"
+                />
+              </div>
             </div>
             <div>
               <Label htmlFor="poNumber">P.O. Number</Label>
