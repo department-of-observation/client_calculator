@@ -52,7 +52,7 @@ export default function InvoicePDF({
             clientBillingAddress={config.clientBillingAddress}
           />
           <PDFBillTo clientName={config.clientName} />
-          {config.subject && <PDFSubject subject={config.subject} />}
+          <PDFSubject subject={config.subject || ''} />
           <PDFLineItems rows={allRows} />
           <PDFTotals
             subscriptionTotal={subscriptionTotal}

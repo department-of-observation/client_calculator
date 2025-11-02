@@ -6,7 +6,7 @@ export function PDFSubject({ subject }: InvoiceSubjectProps) {
   return (
     <View style={styles.subjectSection}>
       <Text style={styles.subjectLabel}>Subject :</Text>
-      <Text>{subject}</Text>
+      {subject && <Text>{subject}</Text>}
     </View>
   );
 }
