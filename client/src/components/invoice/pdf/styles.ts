@@ -35,7 +35,7 @@ const PADDING_XSMALL = 6;
 const WIDTH_HALF = '50%';
 const WIDTH_COL_NARROW = '8.33%';
 const WIDTH_COL_MEDIUM = '16.66%';
-const WIDTH_COL_WIDE = '50%';
+const WIDTH_COL_WIDE = '41.68%'; // Adjusted to accommodate wider Rate column
 
 export const styles = StyleSheet.create({
   page: {
@@ -154,7 +154,7 @@ export const styles = StyleSheet.create({
     paddingRight: PADDING_XSMALL,
   },
   tableColumnRate: {
-    width: WIDTH_COL_NARROW,
+    width: WIDTH_COL_MEDIUM,
     textAlign: 'right',
     borderRight: BORDER_COLUMN,
     paddingLeft: PADDING_XSMALL,
