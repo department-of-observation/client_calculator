@@ -133,6 +133,7 @@ export const styles = StyleSheet.create({
     borderBottom: BORDER_LIGHT,
     fontSize: FONT_SIZE_SMALL,
     alignItems: 'stretch',
+    breakInside: 'avoid',
   },
   tableColumnNumber: {
     width: WIDTH_COL_NARROW,
