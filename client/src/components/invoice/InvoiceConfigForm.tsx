@@ -18,6 +18,36 @@ export default function InvoiceConfigForm({ config, onChange }: InvoiceConfigFor
     onChange({ ...config, [field]: value });
   };
 
+  const handleDocumentTypeChange = (newType: DocumentType) => {
+    const currentNumber = config.invoiceNumber;
+    let newNumber = currentNumber;
+
+    // Update prefix based on document type
+    if (newType === 'quote') {
+      // Change INV- to QT-
+      if (currentNumber.startsWith('INV-')) {
+        newNumber = currentNumber.replace(/^INV-/, 'QT-');
+      } else if (!currentNumber.startsWith('QT-')) {
+        // If no prefix, add QT-
+        newNumber = 'QT-' + currentNumber;
+      }
+    } else {
+      // Change QT- to INV-
+      if (currentNumber.startsWith('QT-')) {
+        newNumber = currentNumber.replace(/^QT-/, 'INV-');
+      } else if (!currentNumber.startsWith('INV-')) {
+        // If no prefix, add INV-
+        newNumber = 'INV-' + currentNumber;
+      }
+    }
+
+    onChange({ 
+      ...config, 
+      documentType: newType,
+      invoiceNumber: newNumber
+    });
+  };
+
   const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -109,7 +139,7 @@ export default function InvoiceConfigForm({ config, onChange }: InvoiceConfigFor
             <Label htmlFor="documentType">Document Type</Label>
             <SelectPrimitive.Root
               value={config.documentType}
-              onValueChange={(value) => updateField('documentType', value as DocumentType)}
+              onValueChange={(value) => handleDocumentTypeChange(value as DocumentType)}
             >
               <SelectTrigger className="w-full">
                 <SelectValue />
