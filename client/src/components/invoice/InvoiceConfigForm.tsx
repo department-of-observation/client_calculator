@@ -2,7 +2,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import * as SelectPrimitive from '@radix-ui/react-select';
+import { SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import type { InvoiceConfig, DocumentType } from '../../../../shared/invoice-types';
 import { Upload } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -106,7 +107,7 @@ export default function InvoiceConfigForm({ config, onChange }: InvoiceConfigFor
         <CardContent className="space-y-4">
           <div>
             <Label htmlFor="documentType">Document Type</Label>
-            <Select
+            <SelectPrimitive.Root
               value={config.documentType}
               onValueChange={(value) => updateField('documentType', value as DocumentType)}
             >
@@ -117,7 +118,7 @@ export default function InvoiceConfigForm({ config, onChange }: InvoiceConfigFor
                 <SelectItem value="invoice">Invoice</SelectItem>
                 <SelectItem value="quote">Quote</SelectItem>
               </SelectContent>
-            </Select>
+            </SelectPrimitive.Root>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
