@@ -80,7 +80,6 @@ export const styles = StyleSheet.create({
   infoSection: {
     flexDirection: 'row',
     borderBottom: BORDER_THICK,
-    breakInside: 'avoid',
   },
   infoLeft: {
     width: WIDTH_HALF,
@@ -101,7 +100,6 @@ export const styles = StyleSheet.create({
   billToSection: {
     padding: PADDING_SMALL,
     borderBottom: BORDER_THICK,
-    breakInside: 'avoid',
   },
   billToLabel: {
     fontFamily: FONT_BOLD,
@@ -113,7 +111,6 @@ export const styles = StyleSheet.create({
   subjectSection: {
     padding: PADDING_SMALL,
     borderBottom: BORDER_THICK,
-    breakInside: 'avoid',
   },
   subjectLabel: {
     fontFamily: FONT_BOLD,
@@ -128,7 +125,6 @@ export const styles = StyleSheet.create({
     fontFamily: FONT_BOLD,
     fontSize: FONT_SIZE_SMALL,
     alignItems: 'stretch',
-    breakInside: 'avoid',
   },
   tableRow: {
     flexDirection: 'row',
@@ -137,7 +133,6 @@ export const styles = StyleSheet.create({
     borderBottom: BORDER_LIGHT,
     fontSize: FONT_SIZE_SMALL,
     alignItems: 'stretch',
-    breakInside: 'avoid',
   },
   tableColumnNumber: {
     width: WIDTH_COL_NARROW,
