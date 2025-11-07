@@ -21,7 +21,8 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { TooltipLockable } from '@/components/ui/tooltip-lockable';
+import { Tooltip } from '@/components/ui/tooltip-radix';
+import { ScrollingText } from '@/components/ui/scrolling-text';
 import pricingData from '@/data/pricing-data.json';
 import { useMobileDetect } from '@/hooks/useMobileDetect';
 import MobileFilterDrawer from '@/components/MobileFilterDrawer';
@@ -334,12 +335,14 @@ export default function Home() {
                 isMobile ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-2 md:grid-cols-3'
               }`}>
                 {filteredItems.map((item) => (
-                  <TooltipLockable key={item.name} content={item.shortDescription || ''}>
+                  <Tooltip key={item.name} content={item.shortDescription || ''} delayDuration={300}>
                     <button
                       onClick={() => addRow(item)}
                       className="w-full h-full bg-background hover:bg-accent border-2 border-border hover:border-primary rounded-lg p-4 text-left transition-all active:scale-95 min-h-[100px]"
                     >
-                      <div className="font-semibold text-sm mb-1 line-clamp-2">{item.name}</div>
+                      <div className="font-semibold text-sm mb-1">
+                        <ScrollingText text={item.name} />
+                      </div>
                       <div className="text-lg font-bold text-primary">{formatCurrency(item.price)}</div>
                       <div className="text-xs text-muted-foreground mt-1 capitalize">
                         {item.paymentType === 'subscription' && '🔄 Recurring'}
@@ -347,7 +350,7 @@ export default function Home() {
                         {item.paymentType === 'full' && '💵 Full Payment'}
                       </div>
                     </button>
-                  </TooltipLockable>
+                  </Tooltip>
                 ))}
               </div>
 
