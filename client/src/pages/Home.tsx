@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useCalculatorStore } from '@/store/calculator';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -52,6 +52,18 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<'calculator' | 'cart' | 'invoice'>('calculator');
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
   const [isSendDialogOpen, setIsSendDialogOpen] = useState(false);
+  
+  // Debounced invoice config for PDF preview
+  const [debouncedInvoiceConfig, setDebouncedInvoiceConfig] = useState(invoiceConfig);
+  
+  // Debounce the invoice config updates to prevent PDF flashing
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setDebouncedInvoiceConfig(invoiceConfig);
+    }, 500); // 500ms debounce delay
+    
+    return () => clearTimeout(timeoutId);
+  }, [invoiceConfig]);
 
   // Load pricing data from pre-built JSON on mount
   useEffect(() => {
@@ -381,30 +393,11 @@ export default function Home() {
 
           {/* Invoice Tab */}
           <TabsContent value="invoice">
-            <div className="mb-4 flex justify-between items-center">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="outline" size="sm">
-                    <Settings className="mr-2 h-4 w-4" />
-                    Invoice Settings
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
-                  <DialogHeader>
-                    <DialogTitle>Invoice Configuration</DialogTitle>
-                    <DialogDescription>
-                      Configure company details, client information, and invoice settings
-                    </DialogDescription>
-                  </DialogHeader>
-                  <InvoiceConfigForm config={invoiceConfig} onChange={setInvoiceConfig} />
-                </DialogContent>
-              </Dialog>
-            </div>
-            
-            <div className="flex justify-center">
-              <div className="w-full max-w-4xl">
+            <div className="flex gap-6">
+              {/* Left side: PDF Preview */}
+              <div className="flex-1">
                 <InvoicePreview
-                  config={invoiceConfig}
+                  config={debouncedInvoiceConfig}
                   rows={rows}
                   subscriptionTotal={totals.subscriptionTotal}
                   depositTotal={totals.depositTotal}
@@ -412,6 +405,11 @@ export default function Home() {
                   fullTotal={totals.fullTotal}
                   grandTotal={totals.grandTotal}
                 />
+              </div>
+              
+              {/* Right side: Invoice Config Form */}
+              <div className="w-96 overflow-y-auto" style={{ maxHeight: '1400px' }}>
+                <InvoiceConfigForm config={invoiceConfig} onChange={setInvoiceConfig} />
               </div>
             </div>
           </TabsContent>
