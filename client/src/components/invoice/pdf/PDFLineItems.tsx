@@ -55,7 +55,7 @@ export function PDFLineItems({ rows }: InvoiceLineItemsProps) {
             : row.name;
 
         return (
-          <View key={row.id} style={styles.tableRow} wrap={false}>
+          <View key={row.id} style={styles.tableRow}>
             <View style={styles.tableColumnNumber}>
               <View style={styles.cellContent}>
                 <Text>{index + 1}</Text>
