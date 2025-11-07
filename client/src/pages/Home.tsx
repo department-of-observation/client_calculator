@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useCalculatorStore } from '@/store/calculator';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Upload, Plus, Settings, Menu, ShoppingCart } from 'lucide-react';
+import { Upload, Plus, Menu, ShoppingCart } from 'lucide-react';
 import readXlsxFile from 'read-excel-file';
 import type { PricingItem } from '../../../shared/types';
 import InvoiceConfigForm from '@/components/invoice/InvoiceConfigForm';
@@ -12,14 +12,7 @@ import InvoicePDF from '@/components/invoice/pdf/InvoicePDF';
 import { pdf } from '@react-pdf/renderer';
 import { calculateTotals, formatCurrency } from '@/lib/calculator';
 import { toast } from 'sonner';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Tooltip } from '@/components/ui/tooltip-radix';
 import { ScrollingText } from '@/components/ui/scrolling-text';
@@ -233,25 +226,6 @@ export default function Home() {
                 Point of Sale System
               </p>
             </div>
-            {rows.length > 0 && !isMobile && (
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="outline" size="sm">
-                    <Settings className="mr-2 h-4 w-4" />
-                    Invoice Settings
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
-                  <DialogHeader>
-                    <DialogTitle>Invoice Configuration</DialogTitle>
-                    <DialogDescription>
-                      Configure company details, client information, and invoice settings
-                    </DialogDescription>
-                  </DialogHeader>
-                  <InvoiceConfigForm config={invoiceConfig} onChange={setInvoiceConfig} />
-                </DialogContent>
-              </Dialog>
-            )}
           </div>
         </div>
       </header>

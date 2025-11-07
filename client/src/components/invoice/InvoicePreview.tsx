@@ -1,4 +1,5 @@
 import { PDFViewer } from '@react-pdf/renderer';
+import { memo } from 'react';
 import type { InvoiceComponentProps } from './shared/types';
 import InvoicePDF from './pdf/InvoicePDF';
 
@@ -6,8 +7,9 @@ import InvoicePDF from './pdf/InvoicePDF';
  * Unified Invoice Preview Component
  * Uses @react-pdf/renderer's PDFViewer to display the exact PDF that will be generated
  * This ensures the preview matches the PDF output exactly - single source of truth
+ * Memoized to prevent unnecessary re-renders during typing
  */
-export default function InvoicePreview(props: InvoiceComponentProps) {
+function InvoicePreview(props: InvoiceComponentProps) {
   return (
     <PDFViewer 
       style={{ 
@@ -21,4 +23,6 @@ export default function InvoicePreview(props: InvoiceComponentProps) {
     </PDFViewer>
   );
 }
+
+export default memo(InvoicePreview);
 
