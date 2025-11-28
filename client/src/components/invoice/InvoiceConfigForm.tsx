@@ -206,7 +206,7 @@ export default function InvoiceConfigForm({ config, onChange }: InvoiceConfigFor
             <Input
               id="clientName"
               value={config.clientName}
-              onChange={(e) => updateField('clientName', e.target.value || ' ')}
+              onChange={(e) => updateField('clientName', e.target.value === '' ? ' ' : e.target.value)}
               placeholder="e.g., Ruhan College Pte. Ltd"
             />
           </div>
@@ -217,7 +217,7 @@ export default function InvoiceConfigForm({ config, onChange }: InvoiceConfigFor
                 id="clientEmail"
                 type="email"
                 value={config.clientEmail}
-                onChange={(e) => updateField('clientEmail', e.target.value || ' ')}
+                onChange={(e) => updateField('clientEmail', e.target.value === '' ? ' ' : e.target.value)}
                 placeholder="client@example.com"
               />
             </div>
@@ -226,7 +226,7 @@ export default function InvoiceConfigForm({ config, onChange }: InvoiceConfigFor
               <Input
                 id="clientPhone"
                 value={config.clientPhone}
-                onChange={(e) => updateField('clientPhone', e.target.value || ' ')}
+                onChange={(e) => updateField('clientPhone', e.target.value === '' ? ' ' : e.target.value)}
                 placeholder="+65 1234 5678"
               />
             </div>
@@ -236,7 +236,7 @@ export default function InvoiceConfigForm({ config, onChange }: InvoiceConfigFor
             <Input
               id="clientWebsite"
               value={config.clientWebsite}
-              onChange={(e) => updateField('clientWebsite', e.target.value || ' ')}
+              onChange={(e) => updateField('clientWebsite', e.target.value === '' ? ' ' : e.target.value)}
               placeholder="https://example.com"
             />
           </div>
@@ -245,7 +245,7 @@ export default function InvoiceConfigForm({ config, onChange }: InvoiceConfigFor
             <Textarea
               id="clientBillingAddress"
               value={config.clientBillingAddress}
-              onChange={(e) => updateField('clientBillingAddress', e.target.value || ' ')}
+              onChange={(e) => updateField('clientBillingAddress', e.target.value === '' ? ' ' : e.target.value)}
               rows={3}
               placeholder="Street address, city, postal code, country"
             />

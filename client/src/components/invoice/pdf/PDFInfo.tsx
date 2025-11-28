@@ -41,31 +41,31 @@ export function PDFInfo({
         </View>
       </View>
       <View style={styles.infoRight}>
-        {clientName && clientName.trim().length > 0 && (
+        {clientName && (
           <View style={styles.infoRow}>
             <Text style={styles.infoLabel}>Client Name</Text>
             <Text style={{ flex: 1 }}>: {clientName}</Text>
           </View>
         )}
-        {clientEmail && clientEmail.trim().length > 0 && (
+        {clientEmail && (
           <View style={styles.infoRow}>
             <Text style={styles.infoLabel}>Email</Text>
             <Text style={{ flex: 1 }}>: {clientEmail}</Text>
           </View>
         )}
-        {clientWebsite && clientWebsite.trim().length > 0 && (
+        {clientWebsite && (
           <View style={styles.infoRow}>
             <Text style={styles.infoLabel}>Website</Text>
             <Text style={{ flex: 1 }}>: {clientWebsite}</Text>
           </View>
         )}
-        {clientPhone && clientPhone.trim().length > 0 && (
+        {clientPhone && (
           <View style={styles.infoRow}>
             <Text style={styles.infoLabel}>Phone</Text>
             <Text style={{ flex: 1 }}>: {clientPhone}</Text>
           </View>
         )}
-        {clientBillingAddress && clientBillingAddress.trim().length > 0 && (
+        {clientBillingAddress && (
           <View style={styles.infoRow}>
             <Text style={styles.infoLabel}>Billing Address</Text>
             <Text style={{ flex: 1 }}>: {clientBillingAddress}</Text>
