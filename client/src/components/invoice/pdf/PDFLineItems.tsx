@@ -14,7 +14,7 @@ export function PDFLineItems({ rows }: InvoiceLineItemsProps) {
           </View>
         </View>
 
-        <View style={styles.tableColumnItemDescription}>
+        <View style={[styles.tableColumnItemDescription, { flexGrow: 1 }]}>
           <View style={styles.cellContent}>
             <Text style={styles.headerText}>Item & Description</Text>
           </View>
@@ -62,7 +62,7 @@ export function PDFLineItems({ rows }: InvoiceLineItemsProps) {
               </View>
             </View>
 
-            <View style={styles.tableColumnItemDescription}>
+            <View style={[styles.tableColumnItemDescription, { flexGrow: 1 }]}>
               <View style={styles.cellContent}>
                 <Text style={styles.itemName}>{displayName}</Text>
                 {row.description && (

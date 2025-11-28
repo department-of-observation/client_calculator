@@ -149,6 +149,7 @@ export const styles = StyleSheet.create({
     borderRight: BORDER_COLUMN,
     paddingLeft: PADDING_XSMALL,
     paddingRight: PADDING_XSMALL,
+    flexGrow: 1,
   },
   tableColumnQuantity: {
     width: WIDTH_COL_MEDIUM,
