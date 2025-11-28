@@ -65,6 +65,9 @@ export const styles = StyleSheet.create({
   },
   companyInfo: {
     gap: 4,
+    // Add a transparent border to prevent text from the invoice title from overlapping
+    // This is a common fix for react-pdf layout issues where flex items don't reserve space correctly
+    borderRight: '1px solid transparent',
   },
   companyName: {
     fontSize: FONT_SIZE_LARGE,
