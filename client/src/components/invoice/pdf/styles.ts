@@ -92,10 +92,14 @@ export const styles = StyleSheet.create({
   },
   infoRow: {
     flexDirection: 'row',
+    // Allow the second Text element to take up the remaining space and wrap
+    flexWrap: 'wrap',
   },
   infoLabel: {
     fontFamily: FONT_BOLD,
     width: 100,
+    // Ensure text can wrap within the available space
+    flexShrink: 0,
   },
   billToSection: {
     padding: PADDING_SMALL,
