@@ -309,7 +309,7 @@ export default function Home() {
                 isMobile ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-2 md:grid-cols-3'
               }`}>
                 {filteredItems.map((item) => (
-                  <Tooltip key={item.name} content={item.shortDescription || ''} delayDuration={300}>
+
                     <button
                       onClick={() => addRow(item)}
                       className="w-full h-full bg-background hover:bg-accent border-2 border-border hover:border-primary rounded-lg p-4 text-left transition-all active:scale-95 min-h-[100px]"
@@ -324,7 +324,7 @@ export default function Home() {
                         {item.paymentType === 'full' && '💵 Full Payment'}
                       </div>
                     </button>
-                  </Tooltip>
+
                 ))}
               </div>
 
