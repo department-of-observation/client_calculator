@@ -1,88 +1,36 @@
-# Client Pricing Calculator
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-A web-based pricing calculator for generating custom quotes with quantity and discount controls. Built with React, TypeScript, and Tailwind CSS.
+## Getting Started
 
-## Features
-
-- **CSV Import**: Import pricing items from CSV files
-- **Dynamic Calculations**: Real-time calculation of totals with quantity and discount inputs
-- **Category Separation**: Automatically splits items into Subscription and One-Shot packages
-- **Deposit Handling**: One-shot packages show 50% deposit with full amount in parentheses
-- **Export Quotes**: Export calculated quotes as JSON
-- **Responsive Design**: Works on desktop and mobile devices
-
-## CSV Format
-
-The calculator expects CSV files with the following columns:
-
-```csv
-name,price,category
-WordPress Package A (per page),250,oneshot
-Organic Social Media Management,1000,subscription
-```
-
-- **name**: Item name/description
-- **price**: Unit price (numeric)
-- **category**: Either `subscription` or `oneshot`
-
-A sample CSV file is included at `client/public/sample-pricing.csv`.
-
-## Development
+First, run the development server:
 
 ```bash
-# Install dependencies
-pnpm install
-
-# Start development server
+npm run dev
+# or
+yarn dev
+# or
 pnpm dev
-
-# Build for production
-pnpm build
-
-# Build static files for GitHub Pages
-pnpm buildstatic
+# or
+bun dev
 ```
 
-## Static Build for GitHub Pages
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-To deploy to GitHub Pages:
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-1. Run the static build:
-   ```bash
-   pnpm buildstatic
-   ```
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-2. The output will be in `dist/public/` directory
+## Learn More
 
-3. Configure GitHub Pages to serve from this directory, or copy contents to your `gh-pages` branch
+To learn more about Next.js, take a look at the following resources:
 
-4. If deploying to a subdirectory (e.g., `https://username.github.io/client_calculator/`), you may need to set the base path in `vite.config.ts`:
-   ```ts
-   export default defineConfig({
-     base: '/client_calculator/',
-     // ... other config
-   });
-   ```
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-## Payment Terms
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-The calculator follows these business rules:
+## Deploy on Vercel
 
-- **Subscription Packages**: Paid in full at start of month
-- **One-Shot Packages**: 50% deposit upfront, balance on delivery
-  - Display format: `$1,000 ($2,000)` where first amount is deposit, parentheses show full amount
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-## Tech Stack
-
-- React 18
-- TypeScript
-- Vite
-- Tailwind CSS 4
-- shadcn/ui components
-- papaparse for CSV parsing
-- Wouter for routing
-
-## License
-
-MIT
-
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
