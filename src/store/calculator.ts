@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { PricingItem, CalculatorRow } from '../../../shared/types';
-import type { InvoiceConfig } from '../../../shared/invoice-types';
-import { DEFAULT_INVOICE_CONFIG } from '../../../shared/invoice-types';
+import type { PricingItem, CalculatorRow } from '@shared/types';
+import type { InvoiceConfig } from '@shared/invoice-types';
+import { DEFAULT_INVOICE_CONFIG } from '@shared/invoice-types';
 
 interface CalculatorState {
   // State

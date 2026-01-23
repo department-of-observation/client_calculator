@@ -1,0 +1,378 @@
+[
+  {
+    "name": "WordPress Package A (per page)",
+    "price": 300,
+    "category": "Web Design (Wordpress & Custom Coded Packages)",
+    "description": "Website Build: \n- Website built using a premium, professionally designed template\n- Colours, fonts, and layout adjusted to match your brand identity\n- Stock images integrated to match tone and aesthetic\n- Editable sections so you can update text & images without coding\n- Fully mobile responsive and cross-browser compatible\n- Speed optimization (image compression, caching setup, template performance tuning)\n\nContent Writing + SEO Optimization:\n- You provide us the key points / raw messaging, and we:\n- Write all website copy (clear, persuasive, on-brand, and structured for conversions)\n- Perform Keyword Research for your industry\n\nCreate SEO-optimized:\n- Meta titles\n- Meta descriptions\n- On-page headers (H1, H2 structure)\n- CTA phrasing\n- Write messaging that guides the reader to take action\n- Ensure tone and voice match your brand positioning\n\n(Client only needs to provide bullet points, business information, and unique selling points — we handle the full writing and optimization.)\n\nBasic SEO Setup (Technical):\n- Semantic code structure for improved crawlability\n- Clean URL structure\n- Image alt text + compression\n- SSL setup (HTTPS)\n- XML sitemap + robots.txt configuration\n- Google Analytics integration\n- Google Search Console setup\n- Blog page created (empty, ready for posting)\n\nClient Responsibilities:\n- Domain & hosting setup costs\n- Any paid plugins required for special features\n- Provide key business points and service information for each page\n- Provide branding assets (logo, brand colours, fonts)\n- Provide page requirements (e.g., Home, About, Services, Contact)",
+    "shortDescription": "Fast to deploy, affordable; limited customisation (templated look).",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "WordPress Package B (per page)",
+    "price": 150,
+    "category": "Web Design (Wordpress & Custom Coded Packages)",
+    "description": "- Website built using a premium, professionally designed template\n- Stock images integrated to match branding and design\n- Editable sections: Client can update text and images without coding knowledge\n- Mobile responsive & cross-browser compatible design\n- Fast loading speed optimization (template adjustments, caching, compression)\n\nBasic SEO Setup:\n- Semantic code structure for crawlability\n- Optimized URL structure- Image alt text & compression\n- Meta titles & descriptions (client to provide, or available via Keyword Research\nPackage)\n- SSL setup (HTTPS ready)\n- XML sitemap & robots.txt setup\n- Analytics & Blog\n- Blog page setup (blank, ready for publishing — articles not included)\n- Google Analytics & Google Search Console integration\n\nExclusions / Client Responsibilities:\n- Domain, hosting, server, SSL certificates, and email setup costs\n- Ongoing plugin costs (if template or functionality requires paid plugins)\n- All website content (unless content creation is purchased separately)\n- Provide all key points & messaging for each page\n- Purchase Keyword Research Package if keyword-optimized SEO metadata is required",
+    "shortDescription": "Fast to deploy, affordable; limited customisation (templated look).",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Wordpress Package C (per page)",
+    "price": 75,
+    "category": "Web Design (Wordpress & Custom Coded Packages)",
+    "description": "What’s Included:\n- Website built using a premium, professionally designed template\n- Template colours, fonts and layout adjusted to match your brand\n- Stock images included to support visual style\n- You will be able to edit text and images yourself (no coding required)\n- Mobile responsive and works across all major browsers\n- Basic speed optimisation (image compression, caching setup)\n\nBasic SEO Setup:\n- SEO-friendly page structure\n- Clean URL structure\n- Image alt text + compression\n- Meta titles & descriptions setup (based on the text you provide)\n- Sitemap + robots.txt submitted to Google\n- Google Analytics & Search Console linked\n\nImportant Notes:\nThis package uses a pre-built design template.\nThis means:\n- You must provide all written content for each page (Unless content writing is purchased as an add-on)\n- Turnaround time is longer than our custom packages, because we will be fitting your content into the template layout.\n- If you want faster turnaround time, or if you prefer us to handle the content writing, consider upgrading to Package B or adding our Copywriting Add-On.\n\nClient Responsibilities:\n- Provide all text & messaging for the website pages\n- Provide branding assets (logo, colours)\n- Provide domain & hosting login\n- Cover any paid plugins or integrations (if needed)",
+    "shortDescription": "Fast to deploy, affordable; limited customisation (templated look).",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Custom-coded Package A (per page)",
+    "price": 400,
+    "category": "Web Design (Wordpress & Custom Coded Packages)",
+    "description": "Custom Design & Development:\n- Fully custom website coded from scratch, no templates used\n- Unique design built to match your brand identity, style, and goals\n- Hand-coded front-end for maximum performance and flexibility\n- Clean, lightweight structure for fast loading\n- Mobile responsive and cross-browser compatible (Chrome, Safari, Edge, Firefox)\n- Scalable backend ready for future expansions (CMS, booking system, etc.)\n- Basic performance optimization (image compression, caching, and code minification)\n\nContent Copywriting + SEO Optimization:\n- Client provides key points and main ideas, and we handle everything else:\n- We write all website copy (Home, About, Services, etc.)\n- Define brand tone, voice, and key messaging\n\nWrite SEO-optimized:\n- Meta titles & descriptions\n- Headings (H1, H2)\n- CTAs and body copy structured for conversions\n- Ensure content communicates authority, clarity, and brand story effectively\n \nTechnical SEO Setup:\n- SEO-friendly HTML structure\n- Clean URL architecture\n- Image alt text + compression\n- Meta title & description fields (client to provide)\n- Google Analytics + Search Console integration\n- XML sitemap & robots.txt configuration\n- SEO-friendly code & structure\n- Fast-loading site with optimized assets\n- Google Analytics + Search Console linked\n- XML sitemap + robots.txt submitted to Google\n\nClient Responsibilities:\n- Provide all website text/copy\n- Provide brand assets (logo, fonts, colours)\n- Provide hosting & domain access\n- Cover paid plugin or integration costs (if required)",
+    "shortDescription": "Fully custom-coded; premium flexibility but higher cost.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Custom-coded Package B (per page)",
+    "price": 200,
+    "category": "Web Design (Wordpress & Custom Coded Packages)",
+    "description": "Custom Design & Development:\n- Fully custom website coded from scratch, no templates used\n- Unique design built to match your brand identity, style, and goals\n- Hand-coded front-end for maximum performance and flexibility\n- Clean, lightweight structure for fast loading\n- Mobile responsive and cross-browser compatible (Chrome, Safari, Edge, Firefox)\n- Scalable backend ready for future expansions (CMS, booking system, etc.)\n- Basic performance optimization (image compression, caching, and code minification)\n\nBasic SEO Setup:\n- SEO-friendly HTML structure\n- Clean URL architecture\n- Image alt text + compression\n- Meta title & description fields (client to provide)\n- Google Analytics + Search Console integration\n- XML sitemap & robots.txt configuration\n\nClient Responsibilities:\n- Provide all website text/copy\n- Provide brand assets (logo, fonts, colours)\n- Provide hosting & domain access\n- Cover paid plugin or integration costs (if required)",
+    "shortDescription": "Fully custom-coded; premium flexibility but higher cost.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Keyword Analysis Package",
+    "price": 2000,
+    "category": "Add-ons",
+    "description": "- 1-hour discovery meeting with client to understand the business and discover\nkeywords customers are likely to use\n- Keyword research including monthly search\nvolumes and trends\n- On-page SEO guidelines (basic, non-technical) provided for client’s web developer\n- 2 keyword-optimised meta title options (under 60 characters)\n- 2 keyword-optimised meta description options (under 160 characters)\n- Guidelines for writing H1 and H2 headings\n- Guidelines for weaving keywords naturally into website content\n\nBonus: 2 advanced SEO tips most marketing “professionals” don’t know about\n\nTurnaround time: 1 week",
+    "shortDescription": "Enhancement to base package; adds cost.",
+    "paymentType": "subscription"
+  },
+  {
+    "name": "SEO Audit",
+    "price": 250,
+    "category": "Add-ons",
+    "description": "- Check the website for SEO errors made by the developer and identify areas for improvement.\n\nTurnaround time: 3 days",
+    "shortDescription": "Enhancement to base package; adds cost.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Organic Social Media Management (1 platform only)",
+    "price": 500,
+    "category": "Social Media Management",
+    "description": "- 4 posts per month (client provides graphics or website assets)\n- Caption writing tailored to brand voice and marketing goals\n- Hashtag research and implementation to maximize reach and engagement\n- Scheduling and posting of all content on the chosen platform\n- Basic performance check and feedback (optional summary report)",
+    "shortDescription": "Monthly posts & analytics; consistent but recurring cost.",
+    "paymentType": "subscription"
+  },
+  {
+    "name": "Organic Social Media Management (4 platform only)",
+    "price": 1000,
+    "category": "Social Media Management",
+    "description": "- 4 posts per month (client provides graphics or website assets)\n- Cross-Posted to (YouTube Shorts, Facebook, Instagram and TikTok)\n- Caption writing tailored to brand voice and marketing goals (One set of captions for YouTube Shorts and TikTok and another set of captions for Facebook and Instagram)\n- Hashtag research and implementation to maximize reach and engagement\n- Scheduling and posting of all content on the chosen platform\n- Basic performance check and feedback (optional summary report)",
+    "shortDescription": "Monthly posts & analytics; consistent but recurring cost.",
+    "paymentType": "subscription"
+  },
+  {
+    "name": "Social Media Ads Management - 1 platform (Facebook & Instagram or TikTok Ads)",
+    "price": 2000,
+    "category": "Social Media Management",
+    "description": "- Up to 5 Campaigns\n- Setup of ad using multiple creatives\n- Copywriting\n- Lead Generation\n- Appointment setting AND/OR Pixels Tracking\n- A/B Testing for ad\n- Up to $20,000/month in ad budget management\n\nNot included:\n- Ad Budget",
+    "shortDescription": "Monthly posts & analytics; consistent but recurring cost.",
+    "paymentType": "subscription"
+  },
+  {
+    "name": "Ads Management - Google & YouTube (Google & YouTube Ads)",
+    "price": 3000,
+    "category": "Ads Management",
+    "description": "Account Setup & Tracking:\n• Google Ads + YouTube Ads setup/optimization\n• Conversion tracking setup (Google Tag Manager + Analytics)\n• Audience segmentation (custom intent, remarketing, lookalike audiences)\n\nCampaign Strategy & Build:\n• Campaign structuring for lead generation, sales, or brand awareness\n• Keyword + audience targeting research\n• Ad formats selection (In-Stream, In-Feed, Bumper, Search, Performance Max)\n• Landing page review + conversion recommendations\n\nOngoing Optimization:\n• Weekly performance monitoring & tweaking\n• Bid strategy and budget optimization\n• A/B testing (ad copy, CTAs, audiences)\n• Retargeting campaign setup for warm traffic\n• Monthly performance report + improvement plan\n\nNot included:\n- Ad Budget",
+    "shortDescription": "Fast ROI; ad spend separate; results vary.",
+    "paymentType": "subscription"
+  },
+  {
+    "name": "Stridesol WhatsApp AI Chatbot Setup - Standard (one funnel)",
+    "price": 1200,
+    "category": "Add-ons",
+    "description": "• Lead capture page / intake form setup\n• Custom qualification questions to filter out non-serious leads\n• Conditional logic to route qualified vs unqualified leads\n• Automated welcome & first-response message\n• Basic follow-up sequence (24–48 hours)\n• Google Sheet/CRM lead tracking setup\n\nClient Responsibilities:\n• Provide offer details and target customer profile\n• Approve screening questions and messaging\n• Pay software fees (if applicable)\n\nThis package covers the creation of the qualification funnel and basic auto-reply system. Does not include calendar booking or extended follow-up sequences.",
+    "shortDescription": "Enhancement to base package; adds cost.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Stridesol WhatsApp AI Chatbot Setup - Growth (one funnel)",
+    "price": 1800,
+    "category": "Add-ons",
+    "description": "• Lead capture page / intake form setup\n• Custom qualification questions to filter out non-serious leads\n• Conditional logic to route qualified vs unqualified leads\n• Automated welcome & first-response message\n• Basic follow-up sequence (24–48 hours)\n• Google Sheet/CRM lead tracking setup\n• Full follow-up messaging sequence (3–7 days)\n• Calendar integration (Google Calendar / Calendly / TidyCal)\n• Automatic appointment scheduling for qualified leads only\n• Appointment confirmation message\n• No-show reminder automation\n• Polite rejection message for unqualified leads\n• Lead dashboard with status indicators (Qualified / Not Qualified / Booked)\n\nClient Responsibilities:\n• Provide brand tone or messaging direction\n• Confirm availability schedule for appointment booking\n• Pay software fees (if applicable)\n\nThis package builds a full qualification + booking system that only sends you serious leads.",
+    "shortDescription": "Enhancement to base package; adds cost.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Stridesol WhatsApp AI Chatbot Setup - Scale (one funnel)",
+    "price": 2500,
+    "category": "Add-ons",
+    "description": "Lead Qualification Funnel + Auto Nurture + Optimization – Scale Package\nIncludes:\n• Everything in Growth Package, plus:\n• Full cold lead revival follow-up sequences (7–14 days)\n• Long-term nurture automation to warm up undecided leads\n• Performance tracking + funnel analytics dashboard\n• Weekly review and optimization of messaging, filters & conversion points (for 3 months)\n• Monthly improvement report and strategy updates (for 3 months)\n\nClient Responsibilities:\n• Provide feedback on lead quality during review check-ins\n• Confirm any business updates that may affect messaging or qualification criteria\n\nThis package provides a full lead filtering, follow-up, and scaling system with ongoing optimization.",
+    "shortDescription": "Enhancement to base package; adds cost.",
+    "paymentType": "subscription"
+  },
+  {
+    "name": "Stridesol AI Chatbot Maintenance",
+    "price": 350,
+    "category": "Website Support Packages",
+    "description": "• Weekly conversation review and quality check\n• Adjusting chatbot replies to maintain accuracy and tone\n• Updating follow-up sequences to improve lead conversion\n• Refining qualification questions and filtering logic\n• Monthly performance summary\n\nClient Responsibilities:\n• Notify us of changes in pricing, promotions, or offers\n• Provide access to relevant accounts as needed\n\nThis fee covers ongoing tuning and conversational optimization.\nDoes not include new chatbot builds, new funnels, or new integrations.",
+    "shortDescription": "Keeps site secure & updated; excludes new features.",
+    "paymentType": "subscription"
+  },
+  {
+    "name": "Social Media Setup",
+    "price": 800,
+    "category": "Social Media Management",
+    "description": "Meta Setup (Facebook + Instagram Linked):\n- Creation or optimization of Facebook business page and Instagram account\n- Linking accounts via Meta Business Suite for unified management\n- Profile and cover photo setup\n- Bio, business information, and contact details configured\n- Call-to-action buttons added (e.g., WhatsApp, website, email)\n- Basic account settings configured for visibility, messaging, and discoverability\n\nTikTok Account Setup:\n- Creation of TikTok account (or optimization if account exists)\n- Profile photo and bio setup according to brand guidelines\n- Account linking (if applicable, e.g., website or other social handles)\n- Basic account settings configured for privacy and discoverability\n\nYouTube Channel Setup:\n- Creation or optimization of YouTube channel\n- Channel logo and banner design and upload\n- Channel description, business details, and contact information configured\n- Custom links and call-to-actions added to banner (e.g. website, email, socials)\n- Channel settings optimized for visibility, discoverability, and audience\nengagement\n\nTurnaround Time: 2 Days",
+    "shortDescription": "Monthly posts & analytics; consistent but recurring cost.",
+    "paymentType": "subscription"
+  },
+  {
+    "name": "Social Media Ads Setup (YouTube + Google)",
+    "price": 1500,
+    "category": "Social Media Management",
+    "description": "• Google Ads account setup or cleanup\n• Conversion tracking setup: Google Tag Manager + Analytics + Search Console\n• YouTube tracking events & remarketing audiences\n• Campaign structure setup (Search / Performance Max / YouTube)\n• Keyword research + negative keyword list\n• Ad group targeting setup\n• Ad copywriting (headlines + descriptions)\n• Ad extensions setup (sitelinks, callouts, structured snippets)\n• Basic landing page conversion recommendations\n\nClient Responsibilities:\n• Pay ad spend directly to Google\n• Provide or approve video assets (we can produce, billed separately)\n• Provide website/admin access for tracking setup",
+    "shortDescription": "Monthly posts & analytics; consistent but recurring cost.",
+    "paymentType": "subscription"
+  },
+  {
+    "name": "Social Media Ads Setup (Facebook + Instagram)",
+    "price": 1500,
+    "category": "Social Media Management",
+    "description": "• Meta Business Manager setup + permissions cleanup\n• Pixel + Conversion API installation and testing\n• Custom audiences + lookalike audiences creation\n• Campaign structure setup (Cold → Warm → Retargeting)\n• Ad copywriting (primary text + headline + CTA)\n• Creative guidance (hooks, formats, messaging direction)\n• Retargeting rules setup\n• Lead routing/CRM or Google Sheet setup\n\nClient Responsibilities:\n• Pay ad spend directly to Meta\n• Provide page access + brand assets\n• Provide or approve creatives (we can produce, billed separately)",
+    "shortDescription": "Monthly posts & analytics; consistent but recurring cost.",
+    "paymentType": "subscription"
+  },
+  {
+    "name": "Social Media Ads Setup (TikTok)",
+    "price": 1000,
+    "category": "Social Media Management",
+    "description": "• Ad account setup + pixel/conversion tracking\n• Audience and targeting configuration\n• Campaign structure setup\n• Ad messaging + CTA framework\n• Warm + retargeting audience setup\n\nClient Responsibilities:\n• Pay ad spend directly to platform\n• Provide or approve creatives (we can produce, billed separately)",
+    "shortDescription": "Monthly posts & analytics; consistent but recurring cost.",
+    "paymentType": "subscription"
+  },
+  {
+    "name": "Video Basic (per minute)",
+    "price": 500,
+    "category": "Content Creation (Photography, Videography & Graphic Design)",
+    "description": "- 1x video up to 1 minute long \n- Includes scripting, planning, shooting and editing\n- Shot on professional camera in 4k\n- Subtitles included\n- Simple Graphics\n- Final Video Delivered in 1080p\n- Up to 1 hour shoot time\n- Up to 2x revisions",
+    "shortDescription": "Balanced value; limited scope.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Video Basic (per minute) - midnight shoot",
+    "price": 750,
+    "category": "Content Creation (Photography, Videography & Graphic Design)",
+    "description": "- 1x video up to 1 minute long \n- Includes scripting, planning, shooting and editing\n- Midnight shoot (between 10pm - 7am)\n- Shot on professional camera in 4k\n- Subtitles included\n- Simple Graphics\n- Final Video Delivered in 1080p\n- Up to 1 hour shoot time\n- Up to 2x revisions",
+    "shortDescription": "Balanced value; limited scope.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Video with Teleprompter (per minute)",
+    "price": 700,
+    "category": "Content Creation (Photography, Videography & Graphic Design)",
+    "description": "- 1x video up to 1 minute long \n- Includes scripting, planning, shooting and editing\n- Shot on professional camera in 4k\n- Teleprompter\n- Subtitles included\n- Simple Graphics\n- Final Video Delivered in 1080p\n- Up to 1 hour shoot time\n- Up to 2x revisions",
+    "shortDescription": "Balanced value; limited scope.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Video with Teleprompter (per minute) - midnight shoot",
+    "price": 1050,
+    "category": "Content Creation (Photography, Videography & Graphic Design)",
+    "description": "- 1x video up to 1 minute long \n- Includes scripting, planning, shooting and editing\n- Midnight shoot (between 10pm - 7am)\n- Shot on professional camera in 4k\n- Teleprompter\n- Subtitles included\n- Simple Graphics\n- Final Video Delivered in 1080p\n- Up to 1 hour shoot time\n- Up to 2x revisions",
+    "shortDescription": "Balanced value; limited scope.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Video with Teleprompter + Lights (per minute)",
+    "price": 1000,
+    "category": "Content Creation (Photography, Videography & Graphic Design)",
+    "description": "- 1x video up to 1 minute long \n- Includes scripting, planning, shooting and editing\n- Shot on professional camera in 4k\n- Teleprompter\n- 2x Lights Included\n- Subtitles included\n- Simple Graphics\n- Final Video Delivered in 1080p\n- Up to 1 hour shoot time\n- Up to 2x revisions",
+    "shortDescription": "Balanced value; limited scope.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Video with Teleprompter + Lights (per minute) - midnight shoot",
+    "price": 1500,
+    "category": "Content Creation (Photography, Videography & Graphic Design)",
+    "description": "- 1x video up to 1 minute long \n- Includes scripting, planning, shooting and editing\n- Midnight shoot (between 10pm - 7am)\n- Shot on professional camera in 4k\n- Teleprompter\n- 2x Lights Included\n- Subtitles included\n- Simple Graphics\n- Final Video Delivered in 1080p\n- Up to 1 hour shoot time\n- Up to 2x revisions",
+    "shortDescription": "Balanced value; limited scope.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Graphics (per page) - content written by client",
+    "price": 50,
+    "category": "Content Creation (Photography, Videography & Graphic Design)",
+    "description": "- 1 page of graphic design for social media platforms\n\nClients responsibilities:\n- Send us the content they want to feature on their infographic",
+    "shortDescription": "Balanced value; limited scope.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Graphics (per page) - content written by us",
+    "price": 150,
+    "category": "Content Creation (Photography, Videography & Graphic Design)",
+    "description": "- 1 page of graphic design for social media platforms\n- We write the content for the infographic based on client's key points\n\nClients responsibilities:\n- Send us the key points of content they want to feature on their infographic",
+    "shortDescription": "Balanced value; limited scope.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Talent Release Form (per head)",
+    "price": 50,
+    "category": "Add-ons",
+    "description": "- 1x Digital Talent Release Form\n- 1x digital copy for client and 1x copy for talent\n- Customised shoot details\n- Facilitate Signing of talent release form",
+    "shortDescription": "Enhancement to base package; adds cost.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Shooting Permits Admin Fee - Standard (per location)",
+    "price": 150,
+    "category": "Add-ons",
+    "description": "• Preparing and submitting filming/photography permit application\n• Communicating with venue/management for approval\n• Coordinating required documents and scheduling\n• Confirming clearance before shoot day\n\nClient Responsibilities:\n• Client pays any official permit or venue fees (if applicable)\n• Client provides accurate shoot details, ID/business info for forms\n• Client confirms date/time/location in advance\n\nThis fee covers administrative coordination only. Official permit/location fees billed separately at cost.",
+    "shortDescription": "Enhancement to base package; adds cost.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Shooting Permits Admin Fee - Private Venue (per location)",
+    "price": 250,
+    "category": "Add-ons",
+    "description": "• Permit application and approval request to venue management\n• Negotiation of shoot terms, timing and on-site conditions\n• Coordination of any required releases or insurance proof\n• Final confirmation before shoot day\n\nClient Responsibilities:\n• Client pays any private venue rental / clearance / management fees\n• Client provides shoot details, ID/company info, and brand assets if requested\n• Client confirms date/time/location in advance\n\nThis fee covers administrative coordination only. Venue fees billed separately at cost.",
+    "shortDescription": "Enhancement to base package; adds cost.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Shooting Permits Admin Fee - Complex / Government Permit (per location)",
+    "price": 400,
+    "category": "Add-ons",
+    "description": "• Submitting applications to government boards / town council / NParks, etc.\n• Handling document requirements, safety clearances, or compliance notes\n• Follow-ups and timeline tracking until approval\n• Final clearance confirmation before shoot day\n\nClient Responsibilities:\n• Client pays any government permit fees or additional compliance charges\n• Client provides identification and any required supporting documents promptly\n• Client confirms shoot date/time/location in advance\n\nThis fee covers administrative coordination only. Government permit fees billed separately at cost.",
+    "shortDescription": "Enhancement to base package; adds cost.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Location Sourcing (Administrative Service Only)",
+    "price": 200,
+    "category": "Add-ons",
+    "description": "• Researching and identifying suitable shoot locations based on client requirements\n• Contacting venues to check availability, regulations, and usage terms\n• Preparing and presenting a shortlist of viable location options\n• Coordinating initial discussions with venue management\n\nClient Responsibilities:\n• Client pays any venue rental fees, security deposits, or usage charges directly to the venue\n• Client must confirm which location to proceed with in a timely manner\n• Client is responsible for any venue-specific rules, insurance requirements, or on-site restrictions\n\nThis fee covers location research and coordination only. Venue rental/usage fees are billed separately at cost.",
+    "shortDescription": "Enhancement to base package; adds cost.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Monthly Website Support Package",
+    "price": 2000,
+    "category": "Web Design (Wordpress & Custom Coded Packages)",
+    "description": "- 4x SEO articles per month\n- 1x graphic per article\n- 2 keyword-optimised meta title options (under 60 characters)\n- 2 keyword-optimised meta description options (under 160 characters)\n- Backlinks to money making pages and external links",
+    "shortDescription": "Balanced value; limited scope.",
+    "paymentType": "subscription"
+  },
+  {
+    "name": "Monthly Website Maintenance Add-On",
+    "price": 300,
+    "category": "Web Design (Wordpress & Custom Coded Packages)",
+    "description": "Ongoing maintenance and technical support to ensure your website runs smoothly and any issues are promptly resolved.\n\nInclusions (Up to 2 Hours Per Month):\n- Troubleshooting and fixing website bugs or technical issues\n- Minor updates to text and images\n- Monitoring website performance and uptime\n- Regular backups (weekly or monthly)\n- Support via email or messaging for website-related queries",
+    "shortDescription": "Balanced value; limited scope.",
+    "paymentType": "subscription"
+  },
+  {
+    "name": "1-hr Event Photography (40 photos per hour)",
+    "price": 300,
+    "category": "Content Creation (Photography, Videography & Graphic Design)",
+    "description": "- 40x edited photos per hour of event photography\n- Shot by professional photographer\n- Shot on professional camera with professional grade photography equipment\n- Sent to client via Dropbox or Google Drive\n\nTurnaround Time: 1-2 weeks",
+    "shortDescription": "Balanced value; limited scope.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Outdoor Portrait Photo Package (10 photos)",
+    "price": 1800,
+    "category": "Content Creation (Photography, Videography & Graphic Design)",
+    "description": "- 10 professionally taken and edited portrait photos\n- 2-hour photographer-directed shoot (on-location or simple setup, no studio)\n- Full editing and retouching included\n- Custom direction for posing, composition, and mood\n\nTravel or location fees if shoot is outside a standard area (quoted separately)\n\nClient Responsibilities:\n- Bring wardrobe choices and props (if any)\n- Communicate preferences for style or mood\n- Provide access to the chosen location",
+    "shortDescription": "Balanced value; limited scope.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Studio Portrait Photo Package (10 photos)",
+    "price": 2500,
+    "category": "Content Creation (Photography, Videography & Graphic Design)",
+    "description": "- 10 professionally taken and edited portrait photos\n- 2-hour studio shoot (includes photographer and full staging)\n- Editing and retouching included\n- Custom direction for posing, composition, and mood\n\nClient Responsibilities:\nBring wardrobe choices and props (if any)\nCommunicate preferences for style or mood",
+    "shortDescription": "Balanced value; limited scope.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "1x Additional Photo (Studio Portrait Photo Package)",
+    "price": 200,
+    "category": "Content Creation (Photography, Videography & Graphic Design)",
+    "description": "Extra Photo for Studio Portrait Photo Package",
+    "shortDescription": "Balanced value; limited scope.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "1-hr Extra Shoot Time",
+    "price": 500,
+    "category": "Add-ons",
+    "description": "Extra 1-hr of shoot time with no studio involved (covers full crew ONLY)",
+    "shortDescription": "Enhancement to base package; adds cost.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "1-hr Extra Studio Time",
+    "price": 700,
+    "category": "Add-ons",
+    "description": "Extra 1-hr of studio time (covers full crew and studio use)",
+    "shortDescription": "Enhancement to base package; adds cost.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Additional revisions - minor revisions (under 5 minor revisions)",
+    "price": 150,
+    "category": "Add-ons",
+    "description": "1x additional revision for videos after the standard 2 revisions",
+    "shortDescription": "Enhancement to base package; adds cost.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Re-edit fee - major revisions (more than 5 minor revisions or if video requires major rework)",
+    "price": 500,
+    "category": "Content Creation (Photography, Videography & Graphic Design)",
+    "description": "1x additional revision for videos after the standard 2 revisions if more than 5 minor revisions or if video requires major rework",
+    "shortDescription": "Balanced value; limited scope.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Additional revisions - graphic (Per Page)",
+    "price": 50,
+    "category": "Content Creation (Photography, Videography & Graphic Design)",
+    "description": "1x additional revision for graphics after the standard 2 revisions",
+    "shortDescription": "Balanced value; limited scope.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "Teleprompter Script Pre-Loading Fee (1 script)",
+    "price": 50,
+    "category": "Add-ons",
+    "description": "- Editing of script to make it teleprompter friendly\n- Pre-Loading Script into teleprompter software\n- 1x Script",
+    "shortDescription": "Enhancement to base package; adds cost.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "1-hr teleprompter use (Ala-Carte)",
+    "price": 250,
+    "category": "Add-ons",
+    "description": "- 1-hr of teleptompter use\n- Includes manpower to set-up, operate, tear down and transport",
+    "shortDescription": "Enhancement to base package; adds cost.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "1-hr Professional Lighting use - 2x professional lights (Ala-Carte)",
+    "price": 350,
+    "category": "Add-ons",
+    "description": "- 1-hr of lighting use\n- Includes manpower to set-up, operate, tear down and transport",
+    "shortDescription": "Enhancement to base package; adds cost.",
+    "paymentType": "deposit"
+  },
+  {
+    "name": "One-time project surcharge (short video)",
+    "price": 300,
+    "category": "Content Creation (Photography, Videography & Graphic Design)",
+    "description": "Surcharge for one-time video projects",
+    "shortDescription": "Balanced value; limited scope.",
+    "paymentType": "deposit"
+  }
+]

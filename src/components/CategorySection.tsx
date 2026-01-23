@@ -1,4 +1,4 @@
-import type { CalculatorRow as CalculatorRowType } from '../../../shared/types';
+import type { CalculatorRow as CalculatorRowType } from '@shared/types';
 import CalculatorRow from './CalculatorRow';
 import { formatCurrency } from '@/lib/calculator';
 

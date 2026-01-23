@@ -12,7 +12,7 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import { Mail, Loader2 } from 'lucide-react';
-import type { InvoiceConfig } from '../../../../shared/invoice-types';
+import type { InvoiceConfig } from '@shared/invoice-types';
 
 interface SendInvoiceDialogProps {
   isOpen: boolean;

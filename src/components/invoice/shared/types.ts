@@ -1,5 +1,5 @@
-import type { InvoiceConfig, DocumentType } from '../../../../../shared/invoice-types';
-import type { CalculatorRow } from '../../../../../shared/types';
+import type { InvoiceConfig, DocumentType } from '@shared/invoice-types';
+import type { CalculatorRow } from '@shared/types';
 
 export interface InvoiceHeaderProps {
   documentType: DocumentType;

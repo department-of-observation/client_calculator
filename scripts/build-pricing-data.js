@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Read the pricing.xlsx file
-const inputPath = join(__dirname, '../client/public/pricing.xlsx');
+const inputPath = join(__dirname, '../public/pricing.xlsx');
 
 readXlsxFile(inputPath).then((rows) => {
   // Skip header row and map to pricing items
@@ -22,7 +22,7 @@ readXlsxFile(inputPath).then((rows) => {
   })).filter(item => item.name); // Filter out empty rows
 
   // Ensure output directory exists
-  const outputDir = join(__dirname, '../client/src/data');
+  const outputDir = join(__dirname, '../src/data');
   mkdirSync(outputDir, { recursive: true });
 
   // Write to JSON file

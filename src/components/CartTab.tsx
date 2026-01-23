@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { X, Trash2, FileText, Printer, Mail } from 'lucide-react';
-import type { CalculatorRow } from '../../../shared/types';
+import type { CalculatorRow } from '@shared/types';
 import { calculateLineTotal, formatCurrency } from '@/lib/calculator';
 
 interface CartTabProps {
