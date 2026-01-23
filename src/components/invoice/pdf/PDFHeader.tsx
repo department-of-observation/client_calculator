@@ -13,7 +13,7 @@ export function PDFHeader({
   return (
     <View style={styles.header}>
       <View style={styles.headerLeft}>
-        {companyLogo && <Image src={companyLogo} style={styles.logo} />}
+        {companyLogo && <Image src={companyLogo} style={styles.logo} alt="Company logo" />}
         <View style={styles.companyInfo}>
           <Text style={styles.companyName}>{companyName}</Text>
           <Text>{companyAddress}</Text>

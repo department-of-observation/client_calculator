@@ -7,6 +7,7 @@ import { SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/compone
 import type { InvoiceConfig, DocumentType } from '../../shared/invoice-types';
 import { Upload } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 interface InvoiceConfigFormProps {
   config: InvoiceConfig;
@@ -56,7 +57,14 @@ export default function InvoiceConfigForm({ config, onChange }: InvoiceConfigFor
             <Label htmlFor="companyLogo">Company Logo</Label>
             <div className="flex items-center gap-4 mt-2">
               {config.companyLogo && (
-                <img src={config.companyLogo} alt="Company Logo" className="w-16 h-16 object-contain border rounded" />
+                <Image
+                  src={config.companyLogo}
+                  alt="Company logo"
+                  width={64}
+                  height={64}
+                  className="w-16 h-16 object-contain border rounded"
+                  unoptimized
+                />
               )}
               <label htmlFor="logo-upload">
                 <Button variant="outline" asChild>

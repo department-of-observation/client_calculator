@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useCalculatorStore } from '@/store/calculator';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -22,6 +22,8 @@ import MobileFilterDrawer from '@/components/MobileFilterDrawer';
 import CartTab from '@/components/CartTab';
 
 export default function Home() {
+  type ActiveTab = 'calculator' | 'cart' | 'invoice';
+
   // Use Zustand store for state management
   const {
     pricingItems,
@@ -43,7 +45,7 @@ export default function Home() {
   const isMobile = useMobileDetect();
   
   // Local UI state (not persisted)
-  const [activeTab, setActiveTab] = useState<'calculator' | 'cart' | 'invoice'>('calculator');
+  const [activeTab, setActiveTab] = useState<ActiveTab>('calculator');
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false);
   const [isSendDialogOpen, setIsSendDialogOpen] = useState(false);
   
@@ -59,12 +61,7 @@ export default function Home() {
     return () => clearTimeout(timeoutId);
   }, [invoiceConfig]);
 
-  // Load pricing data from pre-built JSON on mount
-  useEffect(() => {
-    loadDefaultData();
-  }, []);
-
-  const loadDefaultData = () => {
+  const loadDefaultData = useCallback(() => {
     try {
       setPricingItems(pricingData as PricingItem[]);
       toast.success(`Loaded ${pricingData.length} pricing items`);
@@ -72,7 +69,12 @@ export default function Home() {
       toast.error('Failed to load pricing data');
       console.error(error);
     }
-  };
+  }, [setPricingItems]);
+
+  // Load pricing data from pre-built JSON on mount
+  useEffect(() => {
+    loadDefaultData();
+  }, [loadDefaultData]);
 
   const parseXlsxData = async (file: File | Blob) => {
     try {
@@ -163,18 +165,6 @@ export default function Home() {
       toast.info('Generating PDF...');
       
       // Generate PDF blob
-      const blob = await pdf(
-        <InvoicePDF
-          config={invoiceConfig}
-          rows={rows}
-          subscriptionTotal={totals.subscriptionTotal}
-          depositTotal={totals.depositTotal}
-          depositOriginalTotal={totals.depositOriginalTotal}
-          fullTotal={totals.fullTotal}
-          grandTotal={totals.grandTotal}
-        />
-      ).toBlob();
-
       // Create mailto link
       // Note: mailto doesn't support attachments directly
       // In a real app, this would call a backend API to send the email
@@ -231,7 +221,15 @@ export default function Home() {
       </header>
 
       <main className="container py-4">
-        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="print:hidden">
+        <Tabs
+          value={activeTab}
+          onValueChange={(value) => {
+            if (value === 'calculator' || value === 'cart' || value === 'invoice') {
+              setActiveTab(value);
+            }
+          }}
+          className="print:hidden"
+        >
           <TabsList className="mb-4 w-full grid grid-cols-3">
             <TabsTrigger value="calculator">Calculator</TabsTrigger>
             <TabsTrigger value="cart">Cart {rows.length > 0 && `(${rows.length})`}</TabsTrigger>
@@ -309,8 +307,8 @@ export default function Home() {
                 isMobile ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-2 md:grid-cols-3'
               }`}>
                 {filteredItems.map((item) => (
-
                     <button
+                      key={`${item.name}-${item.category}-${item.price}`}
                       onClick={() => addRow(item)}
                       className="w-full h-full bg-background hover:bg-accent border-2 border-border hover:border-primary rounded-lg p-4 text-left transition-all active:scale-95 min-h-[100px]"
                     >
@@ -324,7 +322,6 @@ export default function Home() {
                         {item.paymentType === 'full' && '💵 Full Payment'}
                       </div>
                     </button>
-
                 ))}
               </div>
 
@@ -363,7 +360,6 @@ export default function Home() {
                 onShowInvoice={() => setActiveTab('invoice')}
                 onPrintInvoice={printInvoice}
                 onSendInvoice={handleSendInvoice}
-                isMobile={isMobile}
               />
             </div>
           </TabsContent>

@@ -18,7 +18,6 @@ interface CartTabProps {
   onShowInvoice: () => void;
   onPrintInvoice: () => void;
   onSendInvoice: () => void;
-  isMobile: boolean;
 }
 
 export default function CartTab({
@@ -30,7 +29,6 @@ export default function CartTab({
   onShowInvoice,
   onPrintInvoice,
   onSendInvoice,
-  isMobile,
 }: CartTabProps) {
   if (rows.length === 0) {
     return (

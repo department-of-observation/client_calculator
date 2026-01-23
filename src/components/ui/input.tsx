@@ -30,7 +30,8 @@ function Input({
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     // Check if composition is active using native event property
-    const isComposing = (e.nativeEvent as any).isComposing || dialogComposition.justEndedComposing();
+    const nativeIsComposing = (e.nativeEvent as { isComposing?: boolean }).isComposing;
+    const isComposing = nativeIsComposing || dialogComposition.justEndedComposing();
 
     // Block Enter key during composition to prevent premature form submission
     if (e.key === "Enter" && isComposing) {

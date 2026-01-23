@@ -17,7 +17,6 @@ export default function InvoicePDF({
   rows,
   subscriptionTotal,
   depositTotal,
-  depositOriginalTotal,
   fullTotal,
   grandTotal,
 }: InvoiceComponentProps) {

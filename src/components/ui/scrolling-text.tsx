@@ -1,5 +1,5 @@
-import * as React from "react"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
 interface ScrollingTextProps {
   text: string;
@@ -7,31 +7,49 @@ interface ScrollingTextProps {
   speed?: number; // pixels per second
 }
 
+type TextDimensions = {
+  containerWidth: number;
+  textWidth: number;
+};
+
 export function ScrollingText({ text, className, speed = 30 }: ScrollingTextProps) {
-  const [isOverflowing, setIsOverflowing] = React.useState(false);
   const [isHovered, setIsHovered] = React.useState(false);
+  const [dimensions, setDimensions] = React.useState<TextDimensions>({
+    containerWidth: 0,
+    textWidth: 0,
+  });
   const containerRef = React.useRef<HTMLDivElement>(null);
   const textRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    const checkOverflow = () => {
-      if (containerRef.current && textRef.current) {
-        const containerWidth = containerRef.current.offsetWidth;
-        const textWidth = textRef.current.scrollWidth;
-        setIsOverflowing(textWidth > containerWidth);
-      }
+    const measure = () => {
+      if (!containerRef.current || !textRef.current) return;
+      const containerWidth = containerRef.current.offsetWidth;
+      const textWidth = textRef.current.scrollWidth;
+      setDimensions((prev) => {
+        if (prev.containerWidth === containerWidth && prev.textWidth === textWidth) {
+          return prev;
+        }
+        return { containerWidth, textWidth };
+      });
     };
 
-    checkOverflow();
-    window.addEventListener('resize', checkOverflow);
-    return () => window.removeEventListener('resize', checkOverflow);
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
   }, [text]);
 
-  const animationDuration = React.useMemo(() => {
-    if (!isOverflowing || !textRef.current) return 0;
-    const textWidth = textRef.current.scrollWidth;
-    return textWidth / speed;
-  }, [isOverflowing, speed, text]);
+  const isOverflowing = dimensions.textWidth > dimensions.containerWidth;
+  const animationDuration = isOverflowing ? dimensions.textWidth / speed : 0;
+  const scrollOffset = Math.max(dimensions.textWidth - dimensions.containerWidth, 0);
+
+  const animationStyles =
+    isOverflowing && isHovered
+      ? ({
+          animation: `scroll ${animationDuration}s linear infinite`,
+          "--scroll-offset": `${scrollOffset}px`,
+        } as React.CSSProperties)
+      : undefined;
 
   return (
     <div
@@ -46,13 +64,7 @@ export function ScrollingText({ text, className, speed = 30 }: ScrollingTextProp
           "whitespace-nowrap inline-block",
           isOverflowing && isHovered && "animate-scroll"
         )}
-        style={
-          isOverflowing && isHovered
-            ? {
-                animation: `scroll ${animationDuration}s linear infinite`,
-              }
-            : undefined
-        }
+        style={animationStyles}
       >
         {text}
       </div>
@@ -62,7 +74,7 @@ export function ScrollingText({ text, className, speed = 30 }: ScrollingTextProp
             transform: translateX(0);
           }
           100% {
-            transform: translateX(calc(-100% + ${containerRef.current?.offsetWidth || 0}px));
+            transform: translateX(calc(-1 * var(--scroll-offset, 0px)));
           }
         }
       `}</style>

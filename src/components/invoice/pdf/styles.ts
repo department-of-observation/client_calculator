@@ -4,14 +4,12 @@ import { StyleSheet } from '@react-pdf/renderer';
 const COLOR_BLACK = '#000000';
 const COLOR_WHITE = '#ffffff';
 const COLOR_GRAY_50 = '#f3f4f6'; // Light gray background
-const COLOR_GRAY_200 = '#e5e7eb'; // Light gray border
 const COLOR_GRAY_300 = '#d1d5db'; // Medium gray border
 const COLOR_GRAY_500 = '#6b7280'; // Medium gray text
 const COLOR_GRAY_600 = '#4b5563'; // Dark gray text
 
 // Borders
 const BORDER_THICK = `2px solid ${COLOR_BLACK}`;
-const BORDER_MEDIUM = `1px solid ${COLOR_BLACK}`;
 const BORDER_LIGHT = `1px solid ${COLOR_GRAY_300}`;
 const BORDER_COLUMN = `1px solid ${COLOR_BLACK}`;
 

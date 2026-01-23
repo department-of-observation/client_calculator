@@ -29,7 +29,8 @@ function Textarea({
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     // Check if composition is active using native event property
-    const isComposing = (e.nativeEvent as any).isComposing || dialogComposition.justEndedComposing();
+    const nativeIsComposing = (e.nativeEvent as { isComposing?: boolean }).isComposing;
+    const isComposing = nativeIsComposing || dialogComposition.justEndedComposing();
 
     // Block Enter key during composition (but allow Shift+Enter for newlines)
     if (e.key === "Enter" && !e.shiftKey && isComposing) {
