@@ -4,7 +4,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import * as SelectPrimitive from '@radix-ui/react-select';
 import { SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import type { InvoiceConfig, DocumentType } from '../../shared/invoice-types';
+import type { InvoiceConfig, DocumentType } from '@/lib/types';
 import { Upload } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';

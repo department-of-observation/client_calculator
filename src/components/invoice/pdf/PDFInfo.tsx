@@ -1,5 +1,5 @@
 import { View, Text } from '@react-pdf/renderer';
-import type { InvoiceInfoProps } from '../shared/types';
+import type { InvoiceInfoProps } from '@/lib/types';
 import { formatDate } from '../utils/formatters';
 import { styles } from './styles';
 

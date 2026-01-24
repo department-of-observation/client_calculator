@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Upload, Plus, Menu, ShoppingCart } from 'lucide-react';
 import readXlsxFile from 'read-excel-file';
-import type { PricingItem } from '../../shared/types';
+import type { PricingItem } from '@/lib/types';
 import InvoiceConfigForm from '@/components/invoice/InvoiceConfigForm';
 import SendInvoiceDialog from '@/components/invoice/SendInvoiceDialog';
 import InvoicePreview from '@/components/invoice/InvoicePreview';

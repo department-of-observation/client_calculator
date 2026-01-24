@@ -1,5 +1,5 @@
 import { View, Text } from '@react-pdf/renderer';
-import type { InvoiceBillToProps } from '../shared/types';
+import type { InvoiceBillToProps } from '@/lib/types';
 import { styles } from './styles';
 
 export function PDFBillTo({ clientName }: InvoiceBillToProps) {

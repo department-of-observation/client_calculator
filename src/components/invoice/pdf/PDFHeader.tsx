@@ -1,5 +1,5 @@
 import { View, Text, Image } from '@react-pdf/renderer';
-import type { InvoiceHeaderProps } from '../shared/types';
+import type { InvoiceHeaderProps } from '@/lib/types';
 import { styles } from './styles';
 
 export function PDFHeader({

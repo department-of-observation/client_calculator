@@ -1,5 +1,5 @@
 import { View, Text } from '@react-pdf/renderer';
-import type { InvoiceTotalsProps } from '../shared/types';
+import type { InvoiceTotalsProps } from '@/lib/types';
 import { toWords } from 'number-to-words';
 import { formatCurrency } from '@/lib/calculator';
 import { styles } from './styles';

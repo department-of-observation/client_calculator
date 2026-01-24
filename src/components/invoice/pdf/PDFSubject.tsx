@@ -1,5 +1,5 @@
 import { View, Text } from '@react-pdf/renderer';
-import type { InvoiceSubjectProps } from '../shared/types';
+import type { InvoiceSubjectProps } from '@/lib/types';
 import { styles } from './styles';
 
 export function PDFSubject({ subject }: InvoiceSubjectProps) {

@@ -1,5 +1,5 @@
 import { View, Text } from '@react-pdf/renderer';
-import type { InvoiceNotesProps } from '../shared/types';
+import type { InvoiceNotesProps } from '@/lib/types';
 import { styles } from './styles';
 
 export function PDFNotes({ notes }: InvoiceNotesProps) {

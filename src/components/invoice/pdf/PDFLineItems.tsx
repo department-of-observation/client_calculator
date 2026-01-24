@@ -1,5 +1,5 @@
 import { View, Text } from '@react-pdf/renderer';
-import type { InvoiceLineItemsProps } from '../shared/types';
+import type { InvoiceLineItemsProps } from '@/lib/types';
 import { calculateLineItemAmount } from '../utils/calculations';
 import { formatCurrency } from '@/lib/calculator';
 import { styles } from './styles';

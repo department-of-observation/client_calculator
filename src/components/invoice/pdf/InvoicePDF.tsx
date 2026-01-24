@@ -1,5 +1,5 @@
 import { Document, Page, View } from '@react-pdf/renderer';
-import type { InvoiceComponentProps } from '../shared/types';
+import type { InvoiceComponentProps } from '@/lib/types';
 import { PDFHeader } from './PDFHeader';
 import { PDFInfo } from './PDFInfo';
 import { PDFBillTo } from './PDFBillTo';

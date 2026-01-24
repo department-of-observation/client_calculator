@@ -1,6 +1,6 @@
 import { PDFViewer } from '@react-pdf/renderer';
 import { memo } from 'react';
-import type { InvoiceComponentProps } from './shared/types';
+import type { InvoiceComponentProps } from '@/lib/types';
 import InvoicePDF from './pdf/InvoicePDF';
 
 /**

@@ -1,4 +1,4 @@
-import type { PaymentType } from '../../../shared/types';
+import type { PaymentType } from '@/lib/types';
 
 export function calculateLineItemAmount(
   price: number,
