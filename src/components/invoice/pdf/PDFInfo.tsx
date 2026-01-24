@@ -1,7 +1,11 @@
 import { View, Text } from '@react-pdf/renderer';
 import type { InvoiceInfoProps } from '@/lib/types';
-import { formatDate } from '../utils/formatters';
 import { styles } from './styles';
+
+const formatDate = (dateStr: string): string => {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+};
 
 export function PDFInfo({
   documentType,

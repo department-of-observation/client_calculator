@@ -2,13 +2,9 @@ import { Document, Page, View } from '@react-pdf/renderer';
 import type { InvoiceComponentProps } from '@/lib/types';
 import { PDFHeader } from './PDFHeader';
 import { PDFInfo } from './PDFInfo';
-import { PDFBillTo } from './PDFBillTo';
-import { PDFSubject } from './PDFSubject';
+import { PDFBillTo, PDFSubject, PDFNotes, PDFTerms, PDFFooter } from './sections';
 import { PDFLineItems } from './PDFLineItems';
 import { PDFTotals } from './PDFTotals';
-import { PDFNotes } from './PDFNotes';
-import { PDFTerms } from './PDFTerms';
-import { PDFFooter } from './PDFFooter';
 
 import { styles } from './styles';
 

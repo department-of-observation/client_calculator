@@ -1,7 +1,6 @@
 import { View, Text } from '@react-pdf/renderer';
 import type { InvoiceLineItemsProps } from '@/lib/types';
-import { calculateLineItemAmount } from '../utils/calculations';
-import { formatCurrency } from '@/lib/calculator';
+import { calculateLineTotal, formatCurrency } from '@/lib/calculator';
 import { styles } from './styles';
 
 export function PDFLineItems({ rows }: InvoiceLineItemsProps) {
@@ -40,13 +39,7 @@ export function PDFLineItems({ rows }: InvoiceLineItemsProps) {
       </View>
 
       {rows.map((row, index) => {
-        const displayAmount = calculateLineItemAmount(
-          row.price,
-          row.quantity,
-          row.discount,
-          row.paymentType,
-          row.convertToSubscription
-        );
+        const { displayAmount } = calculateLineTotal(row);
 
         // Add "50% Deposit - " prefix for deposit items not converted to subscription
         const displayName =

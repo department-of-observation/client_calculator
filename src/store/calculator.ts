@@ -22,6 +22,11 @@ interface CalculatorState {
   reset: () => void;
 }
 
+const normalizeLogoPath = (logo?: string) => {
+  if (!logo) return logo;
+  return logo.startsWith('/client_calculator/') ? logo.replace('/client_calculator', '') : logo;
+};
+
 export const useCalculatorStore = create<CalculatorState>()(
   persist(
     (set) => ({
@@ -76,6 +81,13 @@ export const useCalculatorStore = create<CalculatorState>()(
         rows: state.rows,
         invoiceConfig: state.invoiceConfig,
       }),
+      onRehydrateStorage: () => (state) => {
+        if (!state) return;
+        const normalizedLogo = normalizeLogoPath(state.invoiceConfig.companyLogo);
+        if (normalizedLogo !== state.invoiceConfig.companyLogo) {
+          state.setInvoiceConfig({ ...state.invoiceConfig, companyLogo: normalizedLogo });
+        }
+      },
     }
   )
 );
