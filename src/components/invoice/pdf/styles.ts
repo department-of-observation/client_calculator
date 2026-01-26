@@ -1,3 +1,4 @@
+// styles.ts
 import { StyleSheet } from '@react-pdf/renderer';
 
 // Colors
@@ -28,12 +29,10 @@ const PADDING_XLARGE = 48;
 const PADDING_MEDIUM = 12;
 const PADDING_SMALL = 8;
 const PADDING_XSMALL = 6;
+const PADDING_XXSMALL = 3;
 
 // Layout
 const WIDTH_HALF = '50%';
-const WIDTH_COL_NARROW = '8.33%';
-const WIDTH_COL_MEDIUM = '16.66%';
-const WIDTH_COL_WIDE = '41.68%'; // Adjusted to accommodate wider Rate column
 
 export const styles = StyleSheet.create({
   page: {
@@ -45,6 +44,8 @@ export const styles = StyleSheet.create({
   container: {
     border: BORDER_THICK,
   },
+
+  /* ---------- Header ---------- */
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -55,6 +56,8 @@ export const styles = StyleSheet.create({
   headerLeft: {
     flexDirection: 'row',
     gap: 16,
+    flexGrow: 1,
+    paddingRight: 12,
   },
   logo: {
     maxWidth: 100,
@@ -63,8 +66,6 @@ export const styles = StyleSheet.create({
   },
   companyInfo: {
     gap: 4,
-    // Add a transparent border to prevent text from the invoice title from overlapping
-    // This is a common fix for react-pdf layout issues where flex items don't reserve space correctly
     borderRight: '1px solid transparent',
   },
   companyName: {
@@ -73,11 +74,14 @@ export const styles = StyleSheet.create({
   },
   headerRight: {
     alignItems: 'flex-end',
+    minWidth: 160,
   },
   invoiceTitle: {
     fontSize: FONT_SIZE_XLARGE,
     fontFamily: FONT_BOLD,
   },
+
+  /* ---------- Info Sections ---------- */
   infoSection: {
     flexDirection: 'row',
     borderBottom: BORDER_THICK,
@@ -93,15 +97,14 @@ export const styles = StyleSheet.create({
   },
   infoRow: {
     flexDirection: 'row',
-    // Allow the second Text element to take up the remaining space and wrap
     flexWrap: 'wrap',
   },
   infoLabel: {
     fontFamily: FONT_BOLD,
     width: 100,
-    // Ensure text can wrap within the available space
     flexShrink: 0,
   },
+
   billToSection: {
     padding: PADDING_SMALL,
     borderBottom: BORDER_THICK,
@@ -113,6 +116,7 @@ export const styles = StyleSheet.create({
     fontSize: FONT_SIZE_MEDIUM,
     fontFamily: FONT_BOLD,
   },
+
   subjectSection: {
     padding: PADDING_SMALL,
     borderBottom: BORDER_THICK,
@@ -131,6 +135,8 @@ export const styles = StyleSheet.create({
     fontSize: FONT_SIZE_SMALL,
     alignItems: 'stretch',
   },
+
+  // Main priced row
   tableRow: {
     flexDirection: 'row',
     paddingLeft: PADDING_SMALL,
@@ -139,48 +145,99 @@ export const styles = StyleSheet.create({
     fontSize: FONT_SIZE_SMALL,
     alignItems: 'stretch',
   },
+
+  // Main priced row when it has detail rows below (border moved to last detail row)
+  tableRowNoBorder: {
+    flexDirection: 'row',
+    paddingLeft: PADDING_SMALL,
+    paddingRight: PADDING_SMALL,
+    borderBottom: 0,
+    fontSize: FONT_SIZE_SMALL,
+    alignItems: 'stretch',
+  },
+
+  // Continuation rows for description lines (no pricing)
+  tableRowDetail: {
+    flexDirection: 'row',
+    paddingLeft: PADDING_SMALL,
+    paddingRight: PADDING_SMALL,
+    fontSize: FONT_SIZE_TINY,
+    alignItems: 'stretch',
+    borderBottom: 0,
+  },
+
+  // Last continuation row (adds the divider after the whole item block)
+  tableRowDetailLast: {
+    flexDirection: 'row',
+    paddingLeft: PADDING_SMALL,
+    paddingRight: PADDING_SMALL,
+    fontSize: FONT_SIZE_TINY,
+    alignItems: 'stretch',
+    borderBottom: BORDER_LIGHT,
+  },
+
+  // ✅ Use flex columns (stable, no overlap)
   tableColumnNumber: {
-    width: WIDTH_COL_NARROW,
+    flex: 0.6,
     borderRight: BORDER_COLUMN,
     paddingLeft: PADDING_XSMALL,
     paddingRight: PADDING_XSMALL,
+    alignSelf: 'stretch',
   },
   tableColumnItemDescription: {
-    width: WIDTH_COL_WIDE,
+    flex: 4.2,
     borderRight: BORDER_COLUMN,
     paddingLeft: PADDING_XSMALL,
     paddingRight: PADDING_XSMALL,
-    flexGrow: 1,
+    alignSelf: 'stretch',
   },
   tableColumnQuantity: {
-    width: WIDTH_COL_MEDIUM,
+    flex: 1.2,
     textAlign: 'right',
     borderRight: BORDER_COLUMN,
     paddingLeft: PADDING_XSMALL,
     paddingRight: PADDING_XSMALL,
+    alignSelf: 'stretch',
   },
   tableColumnRate: {
-    width: WIDTH_COL_MEDIUM,
+    flex: 1.4,
     textAlign: 'right',
     borderRight: BORDER_COLUMN,
     paddingLeft: PADDING_XSMALL,
     paddingRight: PADDING_XSMALL,
+    alignSelf: 'stretch',
   },
   tableColumnAmount: {
-    width: WIDTH_COL_MEDIUM,
+    flex: 1.4,
     textAlign: 'right',
     paddingLeft: PADDING_XSMALL,
     paddingRight: PADDING_XSMALL,
+    alignSelf: 'stretch',
   },
-  cellContent: {
+
+  // Main row content (nice centered numbers)
+  cellContentCenter: {
     paddingTop: PADDING_SMALL,
     paddingBottom: PADDING_SMALL,
     justifyContent: 'center',
+    flexGrow: 1,
+    alignSelf: 'stretch',
   },
+
+  // Detail rows (tighter + top aligned)
+  cellContentDetail: {
+    paddingTop: PADDING_XXSMALL,
+    paddingBottom: PADDING_XXSMALL,
+    justifyContent: 'flex-start',
+    flexGrow: 1,
+    alignSelf: 'stretch',
+  },
+
   headerText: {
     fontFamily: FONT_BOLD,
     fontSize: FONT_SIZE_SMALL,
   },
+
   itemName: {
     fontFamily: FONT_BOLD,
   },
@@ -193,6 +250,8 @@ export const styles = StyleSheet.create({
     color: COLOR_GRAY_500,
     lineHeight: 1.4,
   },
+
+  /* ---------- Totals ---------- */
   totalsSection: {
     flexDirection: 'row',
     borderTop: BORDER_THICK,
@@ -229,6 +288,7 @@ export const styles = StyleSheet.create({
   totalInWordsValue: {
     fontStyle: 'italic',
   },
+
   notesSection: {
     padding: PADDING_SMALL,
     borderTop: BORDER_THICK,
@@ -236,15 +296,16 @@ export const styles = StyleSheet.create({
   notesLabel: {
     fontFamily: FONT_BOLD,
   },
+
   termsSection: {
     padding: PADDING_SMALL,
     borderTop: BORDER_THICK,
     fontSize: FONT_SIZE_SMALL,
   },
+
   footer: {
     textAlign: 'center',
     fontSize: FONT_SIZE_SMALL,
     color: COLOR_GRAY_600,
   },
 });
-
